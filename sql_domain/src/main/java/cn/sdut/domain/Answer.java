@@ -3,10 +3,12 @@ package cn.sdut.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Answer  implements Serializable  {
+public class Answer implements Serializable {
     private Integer aid;
 
-    private Integer tid;
+    private Integer pid;
+
+    private Integer sid;
 
     private String language;
 
@@ -26,12 +28,20 @@ public class Answer  implements Serializable  {
         this.aid = aid;
     }
 
-    public Integer getTid() {
-        return tid;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setTid(Integer tid) {
-        this.tid = tid;
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
     }
 
     public String getLanguage() {
