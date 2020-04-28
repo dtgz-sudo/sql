@@ -1,0 +1,36 @@
+html {
+	overflow: visible;
+}
+body {
+	height: 100%;
+}
+html {
+	height: 100%;
+}
+body {
+	background: rgb(247, 246, 242);
+}
+.login {
+	padding: 30px 40px 40px; border-radius: 10px; width: 450px; margin-top: 10%; margin-right: auto; margin-left: auto; z-index: 1001; background-color: rgb(255, 255, 255);
+}
+.login h2 {
+	margin: 0px 0px 25px; text-align: center; color: rgb(50, 58, 69); font-size: 25px; font-weight: 400;
+}
+.login .account-input {
+	height: 68px; position: relative;
+}
+.login .account-input input {
+	border-radius: 5px; border: 1px solid rgba(50, 58, 69, 0.2); border-image: none; width: 370px; height: 48px; padding-right: 15px; padding-left: 15px; font-size: 16px; margin-bottom: 15px;
+}
+.login .account-input input:focus {
+	border-color: rgb(73, 157, 214); outline: 0px;
+}
+.login button {
+	border-radius: 24px; border: currentColor; transition:opacity 0.2s; border-image: none; width: 380px; height: 48px; color: rgb(255, 255, 255); font-size: 24px; cursor: pointer; background-color: rgb(50, 58, 69);
+}
+.login button:focus {
+	outline: 0px;
+}
+.login button:hover {
+	background-color: rgb(73, 157, 214);
+}

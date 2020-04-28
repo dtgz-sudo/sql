@@ -1,0 +1,228 @@
+html {
+	height: 100%; font-family: "Î¢ÈíÑÅºÚ","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+body {
+	height: 100%; font-family: "Î¢ÈíÑÅºÚ","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+button {
+	height: 100%; font-family: "Î¢ÈíÑÅºÚ","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+input {
+	height: 100%; font-family: "Î¢ÈíÑÅºÚ","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+select {
+	height: 100%; font-family: "Î¢ÈíÑÅºÚ","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+textarea {
+	height: 100%; font-family: "Î¢ÈíÑÅºÚ","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.everything {
+	height: auto; position: relative; min-height: 100%;
+}
+.main {
+	width: 100%; padding-bottom: 120px;
+}
+.footer {
+	width: 100%; height: 120px; bottom: 0px; clear: both; position: absolute;
+}
+.pad {
+	padding-top: 5px;
+}
+.bold {
+	font-weight: 700;
+}
+.error-text {
+	font-weight: 700;
+}
+.success-text {
+	font-weight: 700;
+}
+.sort {
+	cursor: pointer;
+}
+.vcode {
+	cursor: pointer;
+}
+.prob-info {
+	text-align: center;
+}
+.prob_list {
+	text-align: center;
+}
+h3.problem-header {
+	text-align: center;
+}
+.istyle em {
+	font-family: times new roman,sans-serif; font-size: 125%;
+}
+h3.problem-header {
+	margin: 0px 0px 10px; color: rgb(48, 105, 190);
+}
+.prob-info {
+	margin: 10px 0px; font-size: 14px;
+}
+.prob-content {
+	padding: 9px 15px; border-top-color: rgb(232, 232, 232); border-top-width: 1px; border-top-style: solid;
+}
+.prob-content p {
+	margin-bottom: 3px;
+}
+.prob-content img {
+	max-width: 100%;
+}
+.prob-pre {
+	margin: 0px 0px 10px; padding: 9.5px; border-radius: 4px; border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(51, 51, 51); line-height: 1.4285; font-size: 14px; display: block; -ms-word-break: break-all; -ms-word-wrap: break-word; background-color: rgb(245, 245, 245);
+}
+.block {
+	margin-bottom: 10px; border-top-color: rgb(207, 207, 207); border-top-width: 5px; border-top-style: solid;
+}
+.block .alert {
+	margin: 0px;
+}
+.block.block-danger {
+	border-top-color: rgb(255, 115, 115); border-top-width: 5px; border-top-style: solid;
+}
+.block.block-info {
+	border-top-color: rgb(86, 165, 235); border-top-width: 5px; border-top-style: solid;
+}
+.block.block-success {
+	border-top-color: rgb(155, 221, 143); border-top-width: 5px; border-top-style: solid;
+}
+.block.block-warning {
+	border-top-color: rgb(235, 207, 101); border-top-width: 5px; border-top-style: solid;
+}
+.block .block-content {
+	border-width: 0px 1px 1px; border-style: solid; border-color: rgb(221, 221, 221); border-image: none;
+}
+.block .heading {
+	background: rgb(248, 248, 248); padding: 5px 10px; color: rgb(136, 136, 136); overflow: hidden; border-bottom-color: rgb(232, 232, 232); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.block > .heading {
+	border-width: 0px 1px; border-style: solid; border-color: rgb(221, 221, 221); border-image: none;
+}
+.block .block-content .inner {
+	background: rgb(252, 252, 252); padding: 15px 10px;
+}
+.block-mini .control-label {
+	padding: 5px; font-weight: 400;
+}
+.block-mini {
+	font-size: 12px;
+}
+.block-mini input {
+	font-size: 12px;
+}
+.block-mini .form-group {
+	margin-bottom: 8px;
+}
+.block-container {
+	background: rgb(251, 251, 251); padding: 10px 15px;
+}
+.problem_list {
+	text-align: left;
+}
+.problem_list > a {
+	line-height: 25px; font-size: medium; margin-right: 0.3em; display: inline-block;
+}
+.error-text {
+	color: rgb(170, 17, 17);
+}
+.pe-text {
+	color: rgb(51, 204, 255);
+}
+.info-text {
+	color: rgb(174, 83, 192) !important;
+}
+.ce-text {
+	color: rgb(219, 140, 21);
+}
+.tmle-text {
+	color: rgb(51, 204, 255);
+}
+.accept-text {
+	color: rgb(36, 163, 41);
+}
+.wrong-text {
+	color: rgb(241, 37, 37);
+}
+.table-topic {
+	margin: 0px;
+}
+.table-topic a.user {
+	line-height: 30px;
+}
+.table-topic .cr .rl {
+	padding: 10px 0px; width: 80px; text-align: center; float: left;
+}
+.table-topic .cr .rr {
+	padding: 10px 0px; margin-left: 80px;
+}
+.table-topic .cl {
+	background: rgb(242, 242, 242); padding: 10px 0px; width: 150px; vertical-align: top; border-bottom-color: rgb(232, 232, 232); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.table-topic .cr {
+	background: rgb(255, 255, 255); padding: 10px 15px; vertical-align: top; border-bottom-color: rgb(215, 234, 251); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.table-topic .cr > .head {
+	line-height: 30px; margin-bottom: 5px;
+}
+.status-loader {
+	width: 18px; height: 18px; margin-left: 6px;
+}
+.table#status-table > tbody > tr > td {
+	vertical-align: middle;
+}
+.table#standings-table > tbody > tr > td {
+	vertical-align: middle;
+}
+.table#discusslist-table > tbody > tr > td {
+	vertical-align: middle;
+}
+.avatar {
+	border-radius: 50%; box-shadow: 0px 0px 0.25em rgba(0,0,0,0.25); -webkit-border-radius: 50%; -moz-border-radius: 50%;
+}
+.avatar-lg {
+	width: 184px; height: 184px;
+}
+.avatar-sm {
+	width: 32px; height: 32px;
+}
+.inline-left-img {
+	margin-right: 8px;
+}
+.inline-right-text {
+	overflow: hidden; white-space: nowrap; -ms-text-overflow: ellipsis;
+}
+.nowrap-td {
+	white-space: nowrap;
+}
+.result-show-detail {
+	text-decoration: underline; cursor: pointer;
+}
+.rating {
+	font-weight: 600;
+}
+.rating-elder {
+	color: rgb(251, 0, 7) !important;
+}
+.rating-immortal {
+	color: rgb(248, 191, 41) !important;
+}
+.rating-legendary {
+	color: rgb(255, 130, 18) !important;
+}
+.rating-epic {
+	color: rgb(198, 0, 255) !important;
+}
+.rating-rare {
+	color: rgb(0, 153, 255) !important;
+}
+.rating-excellent {
+	color: rgb(40, 196, 56) !important;
+}
+.rating-common {
+	color: rgb(150, 150, 150) !important;
+}
+.rating-none {
+	color: rgb(51, 51, 51) !important;
+}
