@@ -1,0 +1,138 @@
+﻿<!DOCTYPE HTML>
+<HTML><HEAD>
+ 
+<META charset="utf-8"> 
+<META http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"> 
+<META http-equiv="X-UA-Compatible" content="IE=9">	 <TITLE>ProblemList</TITLE> 
+<LINK href="ProblemList_files/bootstrap.min.css" rel="stylesheet" type="text/css"> 
+<SCRIPT language="javascript" src="ProblemList_files/jquery-3.0.0.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT language="javascript" src="ProblemList_files/bootstrap.min.js" type="text/javascript"></SCRIPT>
+ <!--IE --> 
+<SCRIPT language="javascript" src="ProblemList_files/html5shiv.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT language="javascript" src="ProblemList_files/respond.min.js" type="text/javascript"></SCRIPT>
+ <!--IE--> <LINK href="ProblemList_files/home.css" rel="stylesheet" type="text/css"> 
+<LINK href="ProblemList_files/base.css" rel="stylesheet" type="text/css"> 
+<SCRIPT language="javascript">
+	var stime = "1587958144";
+	function updatetime(){
+	stime ++;
+	var etime = new Date(parseInt(stime)*1000);
+	$("#dt").html(etime.toString("Y-m-d H:i:s"));
+	}
+	setInterval(updatetime,1000);
+</SCRIPT>
+ <!-- Global Site Tag (gtag.js) - Google Analytics --> 
+<SCRIPT src="ProblemList_files/js.js" async=""></SCRIPT>
+ 
+<SCRIPT>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-107784973-2');
+</SCRIPT>
+	 
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD> 
+<BODY>
+<DIV class="everything">
+<DIV class="banner">
+<DIV class="container"></DIV></DIV><NAV class="navbar navbar-default" role="navigation">
+  <DIV class="container">
+    <DIV class="navbar-header">
+      <BUTTON class="navbar-toggle collapsed" type="button"
+              data-toggle="collapse" data-target="#navbar-collapse"><SPAN
+              class="sr-only">Toggle navigation</SPAN>		        	 <SPAN
+              class="icon-bar"></SPAN><SPAN class="icon-bar"></SPAN><SPAN
+              class="icon-bar"></SPAN></BUTTON>
+      <A class="navbar-brand" href="">主页</A>
+    </DIV>
+    <DIV class="collapse navbar-collapse" id="navbar-collapse">
+      <UL class="nav navbar-nav">
+        <LI><A href="">SQL答题实验</A></LI>
+        <LI><A href="">历史答题分析</A></LI>
+      </UL>
+      <UL class="nav navbar-nav navbar-right">
+        <LI><A href="">登录者</A></LI>
+        <LI><A
+                href="">退出登录</A></LI>
+      </UL></DIV><!-- /.navbar-collapse -->
+  </DIV><!-- /.container-fluid -->	 </NAV>
+<DIV class="main">
+<SCRIPT>
+	  	  sessionUid = 0;	</SCRIPT>
+	 
+<SCRIPT src=""></SCRIPT>
+	 
+<DIV class="container">
+<DIV class="row block block-success" style="padding-top: 10px;">
+<H3 class="problem-header">数据操纵实验</H3>
+<DIV class="prob-info"><SPAN class="user-black">Start time:&nbsp;2019-07-20 
+21:44:02&nbsp;&nbsp;</SPAN>				 <SPAN class="user-black">End 
+time:&nbsp;2019-08-31 21:44:03</SPAN>			 </DIV>
+<DIV>
+<CENTER></CENTER></DIV></DIV>
+<DIV class="row">
+<TABLE class="table table-bordered table-hover">
+  <THEAD>
+
+    <TH class="col-md-1">Solved</TH>
+    <TH class="col-md-7">Problem</TH>
+
+  <TBODY>
+  <TR>
+    <TD></TD>
+    <TD><A href="">A
+      [3379] - 数据结构实验之查找七：线性之哈希表</A></TD>
+  </TR>
+  </TBODY></TABLE></DIV>
+</DIV>
+<SCRIPT>
+	  function preZeroFill(num, size) {
+		  if (num >= Math.pow(10, size)) {
+			  return num.toString();
+		  }
+		  else {
+			  var str = Array(size + 1).join('0') + num;
+			  return str.slice(str.length - size);
+		  }
+	  }
+
+	  function updateTime(total) {
+		  var h = parseInt(total / 3600);
+		  var m = parseInt(total % 3600 / 60);
+		  var s = parseInt(total % 60);
+		  $("#time-remaining").text(h + ":" + preZeroFill(m, 2) + ":" + preZeroFill(s, 2));
+		  if (total < 60)
+			  $("#time-remaining").css('color', 'red');
+	  }
+
+	  $(function () {
+		  var timeArr = $("#time-remaining").text().split(":");
+		  if (timeArr.length === 3) {
+			  var h = parseInt(timeArr[0]);
+			  var m = parseInt(timeArr[1]);
+			  var s = parseInt(timeArr[2]);
+			  total = parseInt(h * 3600 + m * 60 + s);
+			  updateTime(total);
+			  var timer = window.setInterval(function () {
+				  if (total === 0) {
+					  window.clearInterval(timer);
+					  window.location.reload();
+				  }
+				  else {
+					  total--;
+					  updateTime(total);
+				  }
+			  }, 1000);
+		  }
+	  });
+	</SCRIPT>
+	 </DIV>
+  <DIV class="footer">
+    <DIV class="container">
+      <DIV class="row">
+      </DIV>
+      <DIV class="row">
+        <DIV class="col-sm-11 text-center"><SPAN id="dt"></SPAN>
+        </DIV></DIV></DIV></DIV></DIV></BODY></HTML>

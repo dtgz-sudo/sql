@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="sql_common" />
+        <module name="sql_service_interface" />
+        <module name="sql_server_impl" />
+        <module name="sql_dao" />
+        <module name="sql_student_web" />
+        <module name="sql_domain" />
+        <module name="sql_teacher_web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sql" target="1.7" />
+      <module name="sql_common" target="1.7" />
+      <module name="sql_dao" target="1.7" />
+      <module name="sql_domain" target="1.7" />
+      <module name="sql_server_impl" target="1.7" />
+      <module name="sql_service_interface" target="1.7" />
+      <module name="sql_student_web" target="1.7" />
+      <module name="sql_teacher_web" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

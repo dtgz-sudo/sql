@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/sql.iml" filepath="$PROJECT_DIR$/sql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_common/sql_common.iml" filepath="$PROJECT_DIR$/sql_common/sql_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_dao/sql_dao.iml" filepath="$PROJECT_DIR$/sql_dao/sql_dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_domain/sql_domain.iml" filepath="$PROJECT_DIR$/sql_domain/sql_domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_server_impl/sql_server_impl.iml" filepath="$PROJECT_DIR$/sql_server_impl/sql_server_impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_service_interface/sql_service_interface.iml" filepath="$PROJECT_DIR$/sql_service_interface/sql_service_interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_student_web/sql_student_web.iml" filepath="$PROJECT_DIR$/sql_student_web/sql_student_web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql_teacher_web/sql_teacher_web.iml" filepath="$PROJECT_DIR$/sql_teacher_web/sql_teacher_web.iml" />
+    </modules>
+  </component>
+</project>

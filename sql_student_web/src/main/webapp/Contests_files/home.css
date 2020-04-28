@@ -1,0 +1,24 @@
+.footer {
+	height: 100px; color: rgb(85, 85, 85); padding-top: 30px; background-color: rgb(211, 211, 211);
+}
+.search {
+	right: 50px; bottom: 150px; position: fixed;
+}
+.btn-custom {
+	padding: 6px 10px; width: 60px; height: 60px; color: rgb(255, 255, 255); background-color: rgb(123, 174, 35);
+}
+.btn-custom:hover {
+	background-color: rgb(154, 201, 75);
+}
+.custom-glyph-color {
+	color: rgb(255, 255, 255);
+}
+.custom-glyph-color:hover {
+	color: rgb(177, 177, 177);
+}
+.text {
+	color: black; padding-left: 60px; font-family: »ªÎÄÏ¸ºÚ; font-size: 20px;
+}
+.welcome {
+	border-radius: 10px; background-color: rgb(193, 193, 193);
+}
