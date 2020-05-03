@@ -27,13 +27,14 @@
         // 定义sql模块
         var app = angular.module("sql", []);
         // 设置控制器
-        app.controller("loginController", function ($scope) {
+        app.controller("loginController", function ($scope,$http) {
 
             // 定义方法
             $scope.login = function () {
                 $http.post("../teacher/login", $scope.user).success(function (resp) {
                     if (resp.success) {
                       // 登录成功
+                        alert("登录成功")
 
                     } else {
                         alert(resp.message);

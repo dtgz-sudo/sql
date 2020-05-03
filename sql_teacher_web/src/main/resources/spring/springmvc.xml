@@ -11,7 +11,7 @@
 	<!--加载属性文件
 		此文件虽然没有任何属性但是删除会报错
 	-->
-	<context:property-placeholder location="classpath:config/*.properties" />
+	<context:property-placeholder location="classpath:config/application.properties" />
 
 	<!--Controller返回json数据格式，使用的是FastJson工具包进行转换-->
 	<mvc:annotation-driven>
@@ -29,12 +29,9 @@
 	</mvc:annotation-driven>
 
 
-<!--	&lt;!&ndash; 引用dubbo服务 &ndash;&gt;-->
-<!--	<dubbo:application name="legou-manager-web" />-->
-<!--	&lt;!&ndash;dubbo服务地址&ndash;&gt;-->
-<!--	<dubbo:registry address="zookeeper://192.168.25.128:2181"/>-->
+
 	<!--扫描controller的包结构-->
-	<dubbo:annotation package="cn.sdut.controlle" />
+	<dubbo:annotation package="cn.sdut.controller" />
 	<!--静态资源不处理，走默认的Servlet-->
 	<mvc:default-servlet-handler />
 

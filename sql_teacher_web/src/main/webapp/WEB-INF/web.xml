@@ -41,7 +41,7 @@
     </listener>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:spring/*.xml</param-value>
+        <param-value>classpath*:spring/applicationContext*.xml</param-value>
     </context-param>
 
     <!--    &lt;!&ndash;springSecurity委派过滤器 名字不能改&ndash;&gt;-->

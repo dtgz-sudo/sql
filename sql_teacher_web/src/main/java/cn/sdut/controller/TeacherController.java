@@ -28,6 +28,7 @@ public class TeacherController {
         Result result = null;
         try {
              teacher  = teacherService.login(teacher);
+
             result = new Result(true,"登录成功",teacher);
         } catch (Exception e) {
             e.printStackTrace();

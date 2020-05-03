@@ -63,4 +63,16 @@ public class Teacher   implements Serializable {
     public void setPermission(String permission) {
         this.permission = permission == null ? null : permission.trim();
     }
+
+    @Override
+    public String   toString() {
+        return "Teacher{" +
+                "tid=" + tid +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", createdate=" + createdate +
+                ", permission='" + permission + '\'' +
+                '}';
+    }
 }
