@@ -2,7 +2,6 @@ package cn.sdut.service.impl;
 
 import cn.sdut.domain.Teacher;
 import cn.sdut.domain.TeacherExample;
-import cn.sdut.mapper.TeacherMapper;
 import cn.sdut.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 

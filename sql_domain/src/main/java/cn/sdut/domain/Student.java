@@ -6,6 +6,18 @@ import java.util.Date;
 public class Student   implements Serializable {
     private Integer sid;
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "sid=" + sid +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", createdate=" + createdate +
+                ", permission='" + permission + '\'' +
+                '}';
+    }
+
     private String password;
 
     private String nickname;
