@@ -255,16 +255,7 @@
       createDate = #{createdate,jdbcType=TIMESTAMP}
     where aid = #{aid,jdbcType=INTEGER}
   </update>
-  <resultMap id="BaseResultMap" type="cn.sdut.domain.Answer">
-    <id column="aid" jdbcType="INTEGER" property="aid" />
-    <result column="tid" jdbcType="INTEGER" property="tid" />
-    <result column="sid" jdbcType="INTEGER" property="sid" />
-    <result column="Language" jdbcType="VARCHAR" property="language" />
-    <result column="input" jdbcType="VARCHAR" property="input" />
-    <result column="output" jdbcType="VARCHAR" property="output" />
-    <result column="score" jdbcType="DOUBLE" property="score" />
-    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
-  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
