@@ -83,4 +83,18 @@ public class Problem  implements Serializable {
     public void setLanguage(String language) {
         this.language = language == null ? null : language.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "pid=" + pid +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", input='" + input + '\'' +
+                ", output='" + output + '\'' +
+                ", hint='" + hint + '\'' +
+                ", createdate=" + createdate +
+                ", language='" + language + '\'' +
+                '}';
+    }
 }

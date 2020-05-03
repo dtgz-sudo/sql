@@ -6,18 +6,6 @@
     <META http-equiv="X-UA-Compatible" content="IE=9">
     <title>发布题目</title>
 
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'UA-107784973-2');
-    </script>
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -25,9 +13,46 @@
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
+    <!--    使用angularjs框架的双向绑定-->
+    <script src="plugins/angularjs/angular.min.js"></script>
 
+
+    <script type="text/javascript">
+
+        // 定义sql模块
+        var app = angular.module("sql", []);
+        // 设置控制器
+        app.controller("addProblemController", function ($scope, $http) {
+
+            // 定义方法
+            $scope.add = function () {
+                $http.post("../teacher/add", $scope.p).success(function (resp) {
+                    if (resp.success) {
+                        // 登录成功
+                        alert("添加成功")
+
+                    } else {
+                        alert(resp.message);
+                    }
+                });
+            };
+            // 定义方法
+            $scope.input = function () {
+                $http.post("../teacher/inputSql", $scope.p).success(function (resp) {
+                    if (resp.success) {
+                        // 登录成功
+                        alert("您输入的sql语句符合要求")
+                        $scope.p.output=  resp.data;
+                    } else {
+                        alert(resp.message);
+                    }
+                });
+            };
+        });
+
+    </script>
 </head>
-<body class="vsc-initialized">
+<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  ">
 <div class="everything">
     <div class="banner">
         <div class="container">
@@ -38,7 +63,7 @@
             <DIV class="navbar-header">
                 <BUTTON class="navbar-toggle collapsed" type="button"
                         data-toggle="collapse" data-target="#navbar-collapse"><SPAN
-                        class="sr-only">Toggle navigation</SPAN>		        	 <SPAN
+                        class="sr-only">Toggle navigation</SPAN> <SPAN
                         class="icon-bar"></SPAN><SPAN class="icon-bar"></SPAN><SPAN
                         class="icon-bar"></SPAN></BUTTON>
                 <A class="navbar-brand" href="">主页</A>
@@ -55,8 +80,9 @@
                     <LI><A href="">登录者</A></LI>
                     <LI><A
                             href="">退出登录</A></LI>
-                </UL></DIV><!-- /.navbar-collapse -->
-        </DIV><!-- /.container-fluid -->	 </NAV>
+                </UL>
+            </DIV><!-- /.navbar-collapse -->
+        </DIV><!-- /.container-fluid -->     </NAV>
 
     <div class="main">
 
@@ -69,13 +95,13 @@
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">题目</label>
                             <div class="col-sm-10 form-inline">
-                                <textarea name="code" rows="1" class="form-control"></textarea>
+                                <input required="required" type="text" name="code" rows="1" class="form-control" ng-model="p.title"></input>
                             </div>
                         </div>
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">实验分类</label>
                             <div class="col-sm-10 form-inline">
-                                <select name="lang" class="form-control input-sm">
+                                <select name="lang" class="form-control input-sm" ng-model="p.category">
                                     <option value="1" selected="selected">数据操纵实验</option>
                                     <option value="2">数据控制实验</option>
                                     <option value="3">事务实验</option>
@@ -85,24 +111,25 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">题目描述</label>
                             <div class="col-sm-7">
-                                <textarea name="code" rows="10" class="form-control"></textarea>
+                                <textarea required="required"  name="code" rows="10" class="form-control" ng-model="p.Description"  ></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">正确SQL答案</label>
                             <div class="col-sm-7">
-                                <textarea name="code" rows="5" class="form-control"></textarea>
+                                <textarea  required="required" name="code" rows="5" class="form-control" ng-model="p.input"
+                                           ng-mouseleave="input()"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">可能出现SQL答案</label>
                             <div class="col-sm-7">
-                                <textarea name="code" rows="5" class="form-control"></textarea>
+                                <textarea  required="required" name="code" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-7">
-                                <button type="submit" class="btn btn-primary btn-bg">确定发布</button>
+                                <button type="submit" ng-click="add()" class="btn btn-primary btn-bg">确定发布</button>
                             </div>
                         </div>
                     </form>
@@ -111,8 +138,6 @@
         </div>
 
     </div>
-
-
 
 
 </body>

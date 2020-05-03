@@ -1,8 +1,11 @@
 package cn.sdut.service;
 
+import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
 
 /**
  * Teacher 服务层
@@ -14,4 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TeacherService {
     // 教室登录 根据用户名 密码
    public Teacher login(Teacher teacher);
+
+    /**
+     * 异步的检查老师输入的SQL语句是否正确
+     * @param problem
+     * @return
+     */
+   public String inputSql(Problem problem) throws SQLException;
+
+    /**
+     * 数据库添加 一个新的题目
+     * @param problem
+     */
+   public void add(Problem problem);
 }
