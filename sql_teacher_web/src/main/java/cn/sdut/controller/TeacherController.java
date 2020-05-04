@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @RestController 返回的所有数据用 json返回
@@ -73,6 +74,12 @@ public class TeacherController {
             }
 
         }
+        return result;
+    }
+    @RequestMapping("/test")
+    public <body> Result test(@RequestBody Map map) {
+        Result result = null;
+        System.out.println(map);
         return result;
     }
 }

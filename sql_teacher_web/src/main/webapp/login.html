@@ -27,22 +27,29 @@
         // 定义sql模块
         var app = angular.module("sql", []);
         // 设置控制器
-        app.controller("loginController", function ($scope,$http) {
+        app.controller("loginController", function ($scope, $http) {
+
 
             // 定义方法
             $scope.login = function () {
-                $http.post("../teacher/login", $scope.user).success(function (resp) {
-                    if (resp.success) {
-                      // 登录成功
-                        alert("登录成功")
 
-                    } else {
-                        alert(resp.message);
-                    }
-                });
+                // $http.post("../teacher/login", $scope.user).success(function (resp) {
+                //     if (resp.success) {
+                //       // 登录成功
+                //
+                //         alert("登录成功")
+                //
+                //     } else {
+                //         alert(resp.message);
+                //     }
+                // });
+                var form = document.getElementById('form1');
+                var formData = new FormData(form);
+                // 向表单中添加file属性和值
+                formData.username="admin";
+                formData.password="123456";
+                $http.post("/loginBySpringSecurity",formData);
             };
-
-
         });
 
     </script>
@@ -56,13 +63,14 @@
     <DIV class="main">
         <DIV class="login">
             <H2 class="text-center">SQL评测系统登录</H2>
-            <FORM action="" method="post">
+            <FORM action="/loginBySpringSecurity" method="post" id="login">
                 <DIV class="account-input">
-                    <INPUT type="text" placeholder="用户名" ng-model="user.nickname">
+                    <INPUT type="text" placeholder="用户名" name="username" ng-model="user.nickname">
                 </DIV>
                 <DIV class="account-input">
-                    <INPUT type="password" placeholder="密码" ng-model="user.password">
+                    <INPUT type="password" placeholder="密码" name="password" ng-model="user.password">
                 </DIV>
+<!--                ng-click="login()"-->
                 <BUTTON type="submit" ng-click="login()">登录</BUTTON>
             </FORM>
         </DIV>

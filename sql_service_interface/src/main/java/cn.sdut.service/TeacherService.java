@@ -30,4 +30,10 @@ public interface TeacherService {
      * @param problem
      */
    public void add(Problem problem);
+
+    /**
+     * 根据用户名获取队形
+     * @return
+     */
+    public Teacher findByName(String nickName);
 }

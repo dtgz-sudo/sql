@@ -24,13 +24,21 @@
         // 设置控制器
         app.controller("addProblemController", function ($scope, $http) {
 
+
+                $scope.findLoginname = function(){
+                    $http.get("../index/findLoginUser").success(function(resp){
+                        if (resp.success) {
+                            $scope.loginName = resp.data;
+                        } else {
+                            alert(resp.message);
+                        }
+                    });
+                };
             // 定义方法
             $scope.add = function () {
                 $http.post("../teacher/add", $scope.p).success(function (resp) {
                     if (resp.success) {
-                        // 登录成功
-                        alert("添加成功")
-
+                        alert("新增成功 ")
                     } else {
                         alert(resp.message);
                     }
@@ -52,7 +60,7 @@
 
     </script>
 </head>
-<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  ">
+<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  " ng-init="findLoginname()">
 <div class="everything">
     <div class="banner">
         <div class="container">
@@ -77,9 +85,9 @@
                     <LI><A href="">评价反馈</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
-                    <LI><A href="">登录者</A></LI>
+                    <LI><A href="">{{loginName}}</A></LI>
                     <LI><A
-                            href="">退出登录</A></LI>
+                            href="/logout">退出登录</A></LI>
                 </UL>
             </DIV><!-- /.navbar-collapse -->
         </DIV><!-- /.container-fluid -->     </NAV>

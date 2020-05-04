@@ -20,6 +20,8 @@ public class Problem  implements Serializable {
 
     private String language;
 
+    private Integer cid;
+
     public Integer getPid() {
         return pid;
     }
@@ -84,6 +86,14 @@ public class Problem  implements Serializable {
         this.language = language == null ? null : language.trim();
     }
 
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
+
     @Override
     public String toString() {
         return "Problem{" +
@@ -95,6 +105,7 @@ public class Problem  implements Serializable {
                 ", hint='" + hint + '\'' +
                 ", createdate=" + createdate +
                 ", language='" + language + '\'' +
+                ", cid=" + cid +
                 '}';
     }
 }

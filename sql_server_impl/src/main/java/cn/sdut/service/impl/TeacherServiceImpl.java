@@ -115,6 +115,29 @@ public class TeacherServiceImpl  implements TeacherService {
         problemMapper.insert(problem);
 
     }
+
+    /**
+     * 根据用户名获取队形
+     *
+     * @return
+     */
+    @Override
+    public Teacher findByName(String  nickname) {
+        TeacherExample teacherExample = new TeacherExample();
+        TeacherExample.Criteria criteria = teacherExample.createCriteria();
+        criteria.andNicknameEqualTo(nickname);
+        List<Teacher> teachers = teacherMapper.selectByExample(teacherExample);
+        if(teachers == null || teachers.size() == 0)
+        {
+            return null;
+        }
+        else
+        {
+            return  teachers.get(0);
+        }
+
+    }
+
     private  List convertList(ResultSet rs) throws SQLException{
         List list = new ArrayList();
         ResultSetMetaData md = rs.getMetaData();//获取键名
