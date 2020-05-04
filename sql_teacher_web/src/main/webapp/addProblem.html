@@ -24,23 +24,24 @@
         // 设置控制器
         app.controller("addProblemController", function ($scope, $http) {
 
-
-                $scope.findLoginname = function(){
-                    $http.get("../index/findLoginUser").success(function(resp){
-                        if (resp.success) {
-                            $scope.loginName = resp.data;
-                        } else {
-                            alert(resp.message);
-                        }
-                    });
-                    $http.post("../teacher/findAllcategory").success(function(resp){
-                        if (resp.success) {
-                            $scope.categoryList = resp.data;
-                        } else {
-                            alert(resp.message);
-                        }
-                    });
-                };
+            $scope.p = {cid: 1,hint:'默认升序排列'};
+            $scope.findLoginname = function () {
+                $http.get("../index/findLoginUser").success(function (resp) {
+                    if (resp.success) {
+                        $scope.loginName = resp.data;
+                        $scope.p.cid = resp.data.cid;
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+                $http.post("../teacher/findAllcategory").success(function (resp) {
+                    if (resp.success) {
+                        $scope.categoryList = resp.data;
+                    } else {
+                        alert(resp.message);
+                    }
+                });
+            };
             // 定义方法
             $scope.add = function () {
                 $http.post("../teacher/add", $scope.p).success(function (resp) {
@@ -57,7 +58,7 @@
                     if (resp.success) {
                         // 登录成功
                         alert("您输入的sql语句符合要求")
-                        $scope.p.output=  resp.data;
+                        $scope.p.output = resp.data;
                     } else {
                         alert(resp.message);
                     }
@@ -111,7 +112,8 @@
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">题目</label>
                             <div class="col-sm-10 form-inline">
-                                <input required="required" type="text" name="code" rows="1" class="form-control" ng-model="p.title"></input>
+                                <input required="required" type="text" name="code" rows="1" class="form-control"
+                                       ng-model="p.title"></input>
                             </div>
                         </div>
                         <div class="form-group form-group-sm">
@@ -120,29 +122,40 @@
                                 <select name="lang" class="form-control input-sm"
                                         ng-model="p.category">
 
-                                    <option ng-repeat="category in categoryList" value="{{category.cid}}" >{{category.categoryname}}</option>
-<!--                                    <option value="2">数据控制实验</option>-->
-<!--                                    <option value="3">事务实验</option>-->
+                                    <option ng-repeat="category in categoryList" value="{{category.cid}}">
+                                        {{category.categoryname}}
+                                    </option>
+                                    <!--                                    <option value="2">数据控制实验</option>-->
+                                    <!--                                    <option value="3">事务实验</option>-->
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">题目描述</label>
                             <div class="col-sm-7">
-                                <textarea required="required"  name="code" rows="10" class="form-control" ng-model="p.Description"  ></textarea>
+                                <textarea required="required" name="code" rows="10" class="form-control"
+                                          ng-model="p.Description"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">正确SQL答案</label>
                             <div class="col-sm-7">
-                                <textarea  required="required" name="code" rows="5" class="form-control" ng-model="p.input"
-                                           ng-mouseleave="input()"></textarea>
+                                <textarea required="required" name="code" rows="5" class="form-control"
+                                          ng-model="p.input"
+                                          ng-mouseleave="input()"></textarea>
                             </div>
                         </div>
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-sm-2 control-label">可能出现SQL答案</label>-->
+<!--                            <div class="col-sm-7">-->
+<!--                                <textarea required="required" name="code" rows="5" class="form-control"></textarea>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">可能出现SQL答案</label>
+                            <label class="col-sm-2 control-label">提示信息</label>
                             <div class="col-sm-7">
-                                <textarea  required="required" name="code" rows="5" class="form-control"></textarea>
+                                <textarea required="required"  ng-model="p.hint"
+                                          name="hint" rows="2" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
