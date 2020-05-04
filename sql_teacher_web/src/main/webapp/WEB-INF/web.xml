@@ -1,9 +1,10 @@
-<!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
 
-<web-app>
-    <!-- 解决post乱码 -->
+    <!-- 解决post中文乱码过滤器 -->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -21,30 +22,26 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--前端控制器-->
+    <!--配置前端控制器-->
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--加载类路径下的配置文件-->
         <init-param>
-            <!--			springmvc 和 springSecurity的配置文件一起加载到springioc的容器中
-                         那么就只存在一个ioc容器了 -->
             <param-name>contextConfigLocation</param-name>
+            <!--			springmvc 和 springSecurity的配置文件一起加载到springioc的容器中
+                            那么就只存在一个ioc容器了 -->
             <param-value>classpath:spring/springmvc.xml,classpath*:spring/applicationContext*.xml</param-value>
+            <!--			只加载springmvc的配置文件-->
+            <!--            <param-value>classpath:spring/springmvc.xml</param-value>-->
         </init-param>
+        <!--配置启动项-->
+        <load-on-startup>2</load-on-startup>
     </servlet>
-    <!-- 拦截资源 -->
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-<!--    &lt;!&ndash;Spring框架监听器，用来加载spring的配置文件&ndash;&gt;-->
-<!--    <listener>-->
-<!--        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-<!--    </listener>-->
-<!--    <context-param>-->
-<!--        <param-name>contextConfigLocation</param-name>-->
-<!--        <param-value>classpath*:spring/applicationContext*.xml</param-value>-->
-<!--    </context-param>-->
 
     <!--springSecurity委派过滤器 名字不能改-->
     <filter>
@@ -55,4 +52,6 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
 </web-app>

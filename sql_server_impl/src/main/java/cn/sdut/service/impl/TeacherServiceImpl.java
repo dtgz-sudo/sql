@@ -127,6 +127,9 @@ public class TeacherServiceImpl  implements TeacherService {
         TeacherExample.Criteria criteria = teacherExample.createCriteria();
         criteria.andNicknameEqualTo(nickname);
         List<Teacher> teachers = teacherMapper.selectByExample(teacherExample);
+        System.out.println("******************************************");
+        System.out.println(teachers);
+        System.out.println("******************************************");
         if(teachers == null || teachers.size() == 0)
         {
             return null;

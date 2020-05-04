@@ -1,8 +1,10 @@
 package cn.sdut.controller;
 
+import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Result;
+import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +24,8 @@ import java.util.Map;
 public class TeacherController {
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    CategoryMapper categoryMapper;
 
     /**
      * 老师登录的controller
@@ -76,10 +81,18 @@ public class TeacherController {
         }
         return result;
     }
-    @RequestMapping("/test")
-    public <body> Result test(@RequestBody Map map) {
+
+    @RequestMapping("/findAllcategory")
+    public <body> Result test() {
         Result result = null;
-        System.out.println(map);
+        try {
+            List<Category> categories = categoryMapper.selectByExample(null);
+            result = new Result(true, "查询分类成功", categories);
+        }catch (Exception e){
+            e.printStackTrace();
+            result = new Result(false, "查询分类失败");
+        }
+
         return result;
     }
 }
