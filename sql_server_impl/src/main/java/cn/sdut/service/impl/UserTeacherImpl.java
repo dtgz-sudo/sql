@@ -1,11 +1,10 @@
-package cn.sdut.controller;
+package cn.sdut.service.impl;
 
 import cn.sdut.domain.Teacher;
 import cn.sdut.domain.TeacherExample;
 import cn.sdut.mapper.TeacherMapper;
 import cn.sdut.service.TeacherService;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +20,9 @@ import java.util.List;
 /**
  * 权限校验
  */
-@Service("userDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService {
+
+@Service
+public class UserTeacherImpl implements UserDetailsService {
 
     @Autowired
     private TeacherMapper tetacherMapper;

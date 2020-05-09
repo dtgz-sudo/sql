@@ -65,7 +65,9 @@ public class TeacherController {
 
     @RequestMapping("/inputSql")
     public Result inputSql(@RequestBody Problem problem) {
+        System.out.println(problem);
         Result result = null;
+        System.out.println(problem);
         try {
             String output = teacherService.inputSql(problem);
 

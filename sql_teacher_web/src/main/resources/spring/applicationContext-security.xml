@@ -57,7 +57,8 @@
          使用明文加密 没有使用md5加密
         -->
     <authentication-manager>
-        <authentication-provider user-service-ref="userDetailsService">
+        <authentication-provider user-service-ref="userTeacherImpl">
         </authentication-provider>
     </authentication-manager>
+
 </beans:beans>
