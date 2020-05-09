@@ -26,6 +26,7 @@
 
 
 
+    <context:component-scan base-package="cn.sdut.controller"></context:component-scan>
     <!--不拦截静态资源-->
     <mvc:default-servlet-handler/>
 

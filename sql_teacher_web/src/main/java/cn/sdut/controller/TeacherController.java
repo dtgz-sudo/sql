@@ -85,7 +85,8 @@ public class TeacherController {
     }
 
     @RequestMapping("/findAllcategory")
-    public <body> Result test() {
+    public <body> Result findAllcategory() {
+        System.out.println("findAllcategory");
         Result result = null;
         try {
             List<Category> categories = categoryMapper.selectByExample(null);

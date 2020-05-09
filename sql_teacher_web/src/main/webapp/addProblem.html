@@ -26,14 +26,14 @@
 
             $scope.p = {cid: 1,hint:'默认升序排列'};
             $scope.findLoginname = function () {
-                $http.get("../index/findLoginUser").success(function (resp) {
-                    if (resp.success) {
-                        $scope.loginName = resp.data;
-                        $scope.p.cid = resp.data.cid;
-                    } else {
-                        console.log(resp.message);
-                    }
-                });
+                // $http.get("../index/findLoginUser").success(function (resp) {
+                //     if (resp.success) {
+                //         $scope.loginName = resp.data;
+                //         $scope.p.cid = resp.data.cid;
+                //     } else {
+                //         console.log(resp.message);
+                //     }
+                // });
                 $http.post("../teacher/findAllcategory").success(function (resp) {
                     if (resp.success) {
                         $scope.categoryList = resp.data;
@@ -68,7 +68,7 @@
 
     </script>
 </head>
-<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  " ng-init="findLoginUser()">
+<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  " ng-init="findLoginname()">
 
 <div class="everything">
     <div class="banner">
