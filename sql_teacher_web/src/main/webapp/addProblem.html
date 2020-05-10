@@ -25,7 +25,7 @@
         app.controller("addProblemController", function ($scope, $http) {
 
             $scope.p = {cid: 1,hint:'默认升序排列'};
-            $scope.findLoginname = function () {
+            $scope.init = function () {
                 // $http.get("../index/findLoginUser").success(function (resp) {
                 //     if (resp.success) {
                 //         $scope.loginName = resp.data;
@@ -68,7 +68,7 @@
 
     </script>
 </head>
-<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  " ng-init="findLoginname()">
+<body class="vsc-initialized" ng-app="sql" ng-controller="addProblemController  " ng-init="init()">
 
 <div class="everything">
     <div class="banner">

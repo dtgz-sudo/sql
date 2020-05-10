@@ -46,8 +46,8 @@
                 var form = document.getElementById('form1');
                 var formData = new FormData(form);
                 // 向表单中添加file属性和值
-                formData.username="admin";
-                formData.password="123456";
+                formData.username=$scope.user.username;
+                formData.password=$scope.user.password;
                 $http.post("/loginBySpringSecurity",formData);
             };
         });

@@ -4,15 +4,15 @@
         xmlns:beans="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
-                  http://www.springframework.org/schema/beans/spring-beans.xsd
-                  http://www.springframework.org/schema/security
-                  http://www.springframework.org/schema/security/spring-security.xsd">
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <!-- 以下页面不被拦截 -->
     <http pattern="/login.html" security="none"></http>
     <http pattern="/login_error.html" security="none"></http>
-    <http pattern="/css/**" security="none"></http>
-    <http pattern="/img/**" security="none"></http>
+    <http pattern="/index/**" security="none"></http>
+    <http pattern="/Login_files/**" security="none"></http>
     <http pattern="/js/**" security="none"></http>
     <http pattern="/plugins/**" security="none"></http>
 
@@ -21,7 +21,7 @@
     -->
     <http use-expressions="false">
         <!--拦截所有的请求，要求必须先登录，并且登录成功的用户必须具有管理员的权限-->
-        <intercept-url pattern="/**" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/**" access="ROLE_STU"/>
         <!--拦截的具体规则-->
         <!--
                        login-page= 登录的地址
@@ -32,8 +32,9 @@
         <!--        配置登录-->
         <form-login
                 login-page="/login.html"
-                default-target-url="/admin/index.html"
-                authentication-failure-url="/login_error.html"
+                login-processing-url="/loginBySpringSecurity"
+                default-target-url="/ProblemList.html#?cid=1"
+                authentication-failure-url="/login.html "
                 always-use-default-target="true"/>
 
         <!--        配置注销
@@ -46,20 +47,13 @@
                 logout-success-url="/login.html"/>
         <!--关闭跨域攻击-->
         <csrf disabled="true"/>
-
-        <!-- iframe策略 -->
-        <headers>
-            <frame-options policy="SAMEORIGIN"/>
-        </headers>
     </http>
-
-    <!-- 认证管理器 -->
+    <!-- 认真管理器 从数据库中查询用户并且赋予权限
+         使用明文加密 没有使用md5加密
+        -->
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <!--                手动配置一组用户-->
-                <user name="admin" password="123456" authorities="ROLE_ADMIN"/>
-            </user-service>
+        <authentication-provider user-service-ref="userStudentImpl">
         </authentication-provider>
     </authentication-manager>
+
 </beans:beans>
