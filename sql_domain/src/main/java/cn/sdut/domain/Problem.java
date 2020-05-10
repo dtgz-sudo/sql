@@ -1,9 +1,8 @@
 package cn.sdut.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Problem  implements Serializable {
+public class Problem {
     private Integer pid;
 
     private String title;
@@ -21,6 +20,10 @@ public class Problem  implements Serializable {
     private String language;
 
     private Integer cid;
+
+    private String exampleinput;
+
+    private String exampleoutput;
 
     public Integer getPid() {
         return pid;
@@ -94,18 +97,19 @@ public class Problem  implements Serializable {
         this.cid = cid;
     }
 
-    @Override
-    public String toString() {
-        return "Problem{" +
-                "pid=" + pid +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", input='" + input + '\'' +
-                ", output='" + output + '\'' +
-                ", hint='" + hint + '\'' +
-                ", createdate=" + createdate +
-                ", language='" + language + '\'' +
-                ", cid=" + cid +
-                '}';
+    public String getExampleinput() {
+        return exampleinput;
+    }
+
+    public void setExampleinput(String exampleinput) {
+        this.exampleinput = exampleinput == null ? null : exampleinput.trim();
+    }
+
+    public String getExampleoutput() {
+        return exampleoutput;
+    }
+
+    public void setExampleoutput(String exampleoutput) {
+        this.exampleoutput = exampleoutput == null ? null : exampleoutput.trim();
     }
 }

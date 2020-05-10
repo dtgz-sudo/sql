@@ -1,10 +1,10 @@
 package cn.sdut.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class CategoryExample  implements Serializable {
+public class CategoryExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -232,6 +232,126 @@ public class CategoryExample  implements Serializable {
 
         public Criteria andCategorynameNotBetween(String value1, String value2) {
             addCriterion("categoryName not between", value1, value2, "categoryname");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeIsNull() {
+            addCriterion("starttime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeIsNotNull() {
+            addCriterion("starttime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeEqualTo(Date value) {
+            addCriterion("starttime =", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeNotEqualTo(Date value) {
+            addCriterion("starttime <>", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeGreaterThan(Date value) {
+            addCriterion("starttime >", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("starttime >=", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeLessThan(Date value) {
+            addCriterion("starttime <", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeLessThanOrEqualTo(Date value) {
+            addCriterion("starttime <=", value, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeIn(List<Date> values) {
+            addCriterion("starttime in", values, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeNotIn(List<Date> values) {
+            addCriterion("starttime not in", values, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeBetween(Date value1, Date value2) {
+            addCriterion("starttime between", value1, value2, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarttimeNotBetween(Date value1, Date value2) {
+            addCriterion("starttime not between", value1, value2, "starttime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeIsNull() {
+            addCriterion("endtime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeIsNotNull() {
+            addCriterion("endtime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeEqualTo(Date value) {
+            addCriterion("endtime =", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeNotEqualTo(Date value) {
+            addCriterion("endtime <>", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeGreaterThan(Date value) {
+            addCriterion("endtime >", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("endtime >=", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeLessThan(Date value) {
+            addCriterion("endtime <", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeLessThanOrEqualTo(Date value) {
+            addCriterion("endtime <=", value, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeIn(List<Date> values) {
+            addCriterion("endtime in", values, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeNotIn(List<Date> values) {
+            addCriterion("endtime not in", values, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeBetween(Date value1, Date value2) {
+            addCriterion("endtime between", value1, value2, "endtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndtimeNotBetween(Date value1, Date value2) {
+            addCriterion("endtime not between", value1, value2, "endtime");
             return (Criteria) this;
         }
     }

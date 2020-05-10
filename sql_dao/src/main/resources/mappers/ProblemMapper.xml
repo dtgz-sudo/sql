@@ -11,6 +11,8 @@
     <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
     <result column="Language" jdbcType="VARCHAR" property="language" />
     <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="exampleinput" jdbcType="VARCHAR" property="exampleinput" />
+    <result column="exampleoutput" jdbcType="VARCHAR" property="exampleoutput" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    pid, title, Description, input, output, hint, createDate, Language, cid
+    pid, title, Description, input, output, hint, createDate, Language, cid, exampleinput, 
+    exampleoutput
   </sql>
   <select id="selectByExample" parameterType="cn.sdut.domain.ProblemExample" resultMap="BaseResultMap">
     select
@@ -106,12 +109,12 @@
   <insert id="insert" parameterType="cn.sdut.domain.Problem">
     insert into problem (pid, title, Description, 
       input, output, hint, 
-      createDate, Language, cid
-      )
+      createDate, Language, cid, 
+      exampleinput, exampleoutput)
     values (#{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{input,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR}, #{hint,jdbcType=VARCHAR}, 
-      #{createdate,jdbcType=TIMESTAMP}, #{language,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}
-      )
+      #{createdate,jdbcType=TIMESTAMP}, #{language,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
+      #{exampleinput,jdbcType=VARCHAR}, #{exampleoutput,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sdut.domain.Problem">
     insert into problem
@@ -143,6 +146,12 @@
       <if test="cid != null">
         cid,
       </if>
+      <if test="exampleinput != null">
+        exampleinput,
+      </if>
+      <if test="exampleoutput != null">
+        exampleoutput,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pid != null">
@@ -171,6 +180,12 @@
       </if>
       <if test="cid != null">
         #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="exampleinput != null">
+        #{exampleinput,jdbcType=VARCHAR},
+      </if>
+      <if test="exampleoutput != null">
+        #{exampleoutput,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -210,6 +225,12 @@
       <if test="record.cid != null">
         cid = #{record.cid,jdbcType=INTEGER},
       </if>
+      <if test="record.exampleinput != null">
+        exampleinput = #{record.exampleinput,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exampleoutput != null">
+        exampleoutput = #{record.exampleoutput,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -225,7 +246,9 @@
       hint = #{record.hint,jdbcType=VARCHAR},
       createDate = #{record.createdate,jdbcType=TIMESTAMP},
       Language = #{record.language,jdbcType=VARCHAR},
-      cid = #{record.cid,jdbcType=INTEGER}
+      cid = #{record.cid,jdbcType=INTEGER},
+      exampleinput = #{record.exampleinput,jdbcType=VARCHAR},
+      exampleoutput = #{record.exampleoutput,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,6 +280,12 @@
       <if test="cid != null">
         cid = #{cid,jdbcType=INTEGER},
       </if>
+      <if test="exampleinput != null">
+        exampleinput = #{exampleinput,jdbcType=VARCHAR},
+      </if>
+      <if test="exampleoutput != null">
+        exampleoutput = #{exampleoutput,jdbcType=VARCHAR},
+      </if>
     </set>
     where pid = #{pid,jdbcType=INTEGER}
   </update>
@@ -269,7 +298,9 @@
       hint = #{hint,jdbcType=VARCHAR},
       createDate = #{createdate,jdbcType=TIMESTAMP},
       Language = #{language,jdbcType=VARCHAR},
-      cid = #{cid,jdbcType=INTEGER}
+      cid = #{cid,jdbcType=INTEGER},
+      exampleinput = #{exampleinput,jdbcType=VARCHAR},
+      exampleoutput = #{exampleoutput,jdbcType=VARCHAR}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
 </mapper>

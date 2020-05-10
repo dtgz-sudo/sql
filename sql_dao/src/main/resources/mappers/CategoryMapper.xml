@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="cn.sdut.domain.Category">
     <id column="cid" jdbcType="INTEGER" property="cid" />
     <result column="categoryName" jdbcType="VARCHAR" property="categoryname" />
+    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    cid, categoryName
+    cid, categoryName, starttime, endtime
   </sql>
   <select id="selectByExample" parameterType="cn.sdut.domain.CategoryExample" resultMap="BaseResultMap">
     select
@@ -97,8 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.sdut.domain.Category">
-    insert into category (cid, categoryName)
-    values (#{cid,jdbcType=INTEGER}, #{categoryname,jdbcType=VARCHAR})
+    insert into category (cid, categoryName, starttime, 
+      endtime)
+    values (#{cid,jdbcType=INTEGER}, #{categoryname,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.sdut.domain.Category">
     insert into category
@@ -109,6 +113,12 @@
       <if test="categoryname != null">
         categoryName,
       </if>
+      <if test="starttime != null">
+        starttime,
+      </if>
+      <if test="endtime != null">
+        endtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cid != null">
@@ -116,6 +126,12 @@
       </if>
       <if test="categoryname != null">
         #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -134,6 +150,12 @@
       <if test="record.categoryname != null">
         categoryName = #{record.categoryname,jdbcType=VARCHAR},
       </if>
+      <if test="record.starttime != null">
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null">
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +164,9 @@
   <update id="updateByExample" parameterType="map">
     update category
     set cid = #{record.cid,jdbcType=INTEGER},
-      categoryName = #{record.categoryname,jdbcType=VARCHAR}
+      categoryName = #{record.categoryname,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +177,20 @@
       <if test="categoryname != null">
         categoryName = #{categoryname,jdbcType=VARCHAR},
       </if>
+      <if test="starttime != null">
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.sdut.domain.Category">
     update category
-    set categoryName = #{categoryname,jdbcType=VARCHAR}
+    set categoryName = #{categoryname,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
 </mapper>

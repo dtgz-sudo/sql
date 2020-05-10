@@ -105,7 +105,7 @@
 
         <DIV class="container">
             <DIV class="row block block-success" style="padding-top: 10px;">
-                <H3 class="problem-header">{{}}</H3>
+                <H3 class="problem-header">{{category.categoryname}}</H3>
                 <DIV class="prob-info"><SPAN class="user-black">Start time:&nbsp;2019-07-20
 21:44:02&nbsp;&nbsp;</SPAN> <SPAN class="user-black">End
 time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>
@@ -117,14 +117,14 @@ time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
 
-                    <TH class="col-md-1">Solved</TH>
+                    <TH class="col-md-1">Cno</TH>
                     <TH class="col-md-7">Problem</TH>
 
                     <TBODY>
-                    <TR>
-                        <TD></TD>
-                        <TD><A href="">A
-                            [3379] - 数据结构实验之查找七：线性之哈希表</A></TD>
+<!--                {{category.problemList}}-->
+                    <TR ng-repeat="obj in category.problemList ">
+                        <TD>{{obj.pid}}</TD>
+                        <TD><A href="/problem.html#?pid={{obj.pid}}">{{obj.title}}</A></TD>
                     </TR>
                     </TBODY>
                 </TABLE>

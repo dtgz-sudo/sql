@@ -1,11 +1,10 @@
 package cn.sdut.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProblemExample   implements Serializable {
+public class ProblemExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -703,6 +702,146 @@ public class ProblemExample   implements Serializable {
 
         public Criteria andCidNotBetween(Integer value1, Integer value2) {
             addCriterion("cid not between", value1, value2, "cid");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputIsNull() {
+            addCriterion("exampleinput is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputIsNotNull() {
+            addCriterion("exampleinput is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputEqualTo(String value) {
+            addCriterion("exampleinput =", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputNotEqualTo(String value) {
+            addCriterion("exampleinput <>", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputGreaterThan(String value) {
+            addCriterion("exampleinput >", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputGreaterThanOrEqualTo(String value) {
+            addCriterion("exampleinput >=", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputLessThan(String value) {
+            addCriterion("exampleinput <", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputLessThanOrEqualTo(String value) {
+            addCriterion("exampleinput <=", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputLike(String value) {
+            addCriterion("exampleinput like", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputNotLike(String value) {
+            addCriterion("exampleinput not like", value, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputIn(List<String> values) {
+            addCriterion("exampleinput in", values, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputNotIn(List<String> values) {
+            addCriterion("exampleinput not in", values, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputBetween(String value1, String value2) {
+            addCriterion("exampleinput between", value1, value2, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleinputNotBetween(String value1, String value2) {
+            addCriterion("exampleinput not between", value1, value2, "exampleinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputIsNull() {
+            addCriterion("exampleoutput is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputIsNotNull() {
+            addCriterion("exampleoutput is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputEqualTo(String value) {
+            addCriterion("exampleoutput =", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputNotEqualTo(String value) {
+            addCriterion("exampleoutput <>", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputGreaterThan(String value) {
+            addCriterion("exampleoutput >", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputGreaterThanOrEqualTo(String value) {
+            addCriterion("exampleoutput >=", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputLessThan(String value) {
+            addCriterion("exampleoutput <", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputLessThanOrEqualTo(String value) {
+            addCriterion("exampleoutput <=", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputLike(String value) {
+            addCriterion("exampleoutput like", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputNotLike(String value) {
+            addCriterion("exampleoutput not like", value, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputIn(List<String> values) {
+            addCriterion("exampleoutput in", values, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputNotIn(List<String> values) {
+            addCriterion("exampleoutput not in", values, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputBetween(String value1, String value2) {
+            addCriterion("exampleoutput between", value1, value2, "exampleoutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andExampleoutputNotBetween(String value1, String value2) {
+            addCriterion("exampleoutput not between", value1, value2, "exampleoutput");
             return (Criteria) this;
         }
     }
