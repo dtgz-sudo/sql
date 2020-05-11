@@ -112,4 +112,21 @@ public class Problem {
     public void setExampleoutput(String exampleoutput) {
         this.exampleoutput = exampleoutput == null ? null : exampleoutput.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "pid=" + pid +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", input='" + input + '\'' +
+                ", output='" + output + '\'' +
+                ", hint='" + hint + '\'' +
+                ", createdate=" + createdate +
+                ", language='" + language + '\'' +
+                ", cid=" + cid +
+                ", exampleinput='" + exampleinput + '\'' +
+                ", exampleoutput='" + exampleoutput + '\'' +
+                '}';
+    }
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @RestController 返回的所有数据用 json返回
@@ -37,6 +36,7 @@ public class TeacherController {
     public Result login(@RequestBody Teacher teacher) {
         Result result = null;
         try {
+
             teacher = teacherService.login(teacher);
 
             result = new Result(true, "登录成功", teacher);
@@ -86,10 +86,12 @@ public class TeacherController {
 
     @RequestMapping("/findAllcategory")
     public <body> Result findAllcategory() {
+        System.out.println("*****************************");
         System.out.println("findAllcategory");
         Result result = null;
         try {
             List<Category> categories = categoryMapper.selectByExample(null);
+            System.out.println("category :" + categories);
             result = new Result(true, "查询分类成功", categories);
         }catch (Exception e){
             e.printStackTrace();

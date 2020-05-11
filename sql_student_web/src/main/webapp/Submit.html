@@ -40,9 +40,45 @@
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
+    <!--    使用angularjs框架的双向绑定-->
+    <script src="plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript">
 
+        // 定义sql模块
+        var app = angular.module("sql", []);
+        // 设置控制器
+        app.controller("submit", function ($scope, $http, $location) {
+
+            $scope.init = function () {
+                $scope.url = $location.absUrl();
+                $scope.pid = $location.search()['pid'];
+                $scope.answer={"pid":$scope.pid,"sid":0};
+                $http.post("../index/findLoginStudent").success(function (resp) {
+                    if (resp.success) {
+                        $scope.loginName = resp.data;
+                        $scope.answer.sid = resp.data.sid;
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+            };
+
+            $scope.submit = function () {
+                $http.post("../student/sudmit",$scope.answer).success(function (resp) {
+                    if (resp.success) {
+                        window.location.href="/ProblemList.html#?cid=1";
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+            };
+
+
+        });
+
+    </script>
 </head>
-<body class="vsc-initialized">
+<body class="vsc-initialized" ng-app="sql" ng-controller="submit" ng-init="init()">
 <div class="everything">
     <div class="banner">
         <div class="container">
@@ -64,9 +100,9 @@
                     <LI><A href="">历史答题分析</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
-                    <LI><A href="">登录者</A></LI>
+                    <LI><A href="">{{loginName}}</A></LI>
                     <LI><A
-                            href="">退出登录</A></LI>
+                            href="/logout">退出登录</A></LI>
                 </UL></DIV><!-- /.navbar-collapse -->
         </DIV><!-- /.container-fluid -->	 </NAV>
 
@@ -81,13 +117,13 @@
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">Problem</label>
                             <div class="col-sm-10 form-inline">
-                                <span class="form-control" type="text" name="pid">题目编号</span>
+                                <span class="form-control" type="text" name="pid">{{pid}}</span>
                             </div>
                         </div>
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">Language</label>
                             <div class="col-sm-10 form-inline">
-                                <select name="lang" class="form-control input-sm">
+                                <select name="lang" class="form-control input-sm" ng-model="answer.language">
                                     <option value="mysql" selected="selected">mysql</option>
                                 </select>
                             </div>
@@ -95,12 +131,12 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">SQL代码</label>
                             <div class="col-sm-7">
-                                <textarea name="code" rows="25" class="form-control"></textarea>
+                                <textarea ng-model="answer.input" name="code" rows="25" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-7">
-                                <button type="submit" class="btn btn-primary btn-bg">Submit</button>
+                                <button type="submit"  ng-click="submit()" class="btn btn-primary btn-bg">Submit</button>
                             </div>
                         </div>
                     </form>

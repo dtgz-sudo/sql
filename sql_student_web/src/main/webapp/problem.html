@@ -90,7 +90,7 @@
                     <h3 class="problem-header">{{problem.title}}</h3>
 
                     <div align="center" class="form-group form-inline">
-                        <a href="#"
+                        <a href="/Submit.html#?pid={{problem.pid}}"
                            class="btn btn-default btn-sm ">答题</a>
                     </div>
                     <h4>Problem Description</h4>
@@ -99,19 +99,15 @@
                     </div>
                     <h4>Input</h4>
                     <div class="prob-content">
-                        <p>输入格式</p>
-                    </div>
-                    <h4>Output</h4>
-                    <div class="prob-content">
-                        <p>输出格式</p>
+                        <p>请输入您的SQL语句 默认升序</p>
                     </div>
                     <h4>Sample Input</h4>
                     <div class="prob-content">
-                        <pre>输入的例子</pre>
+                        <pre>{{problem.exampleinput}}</pre>
                     </div>
                     <h4>结果的例子</h4>
                     <div class="prob-content">
-                        <pre>输入的结果</pre>
+                        <pre>{{problem.exampleoutput}}</pre>
                     </div>
                 </div>
 

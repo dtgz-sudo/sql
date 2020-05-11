@@ -2,11 +2,21 @@ package cn.sdut.service.impl;
 
 import cn.sdut.domain.Teacher;
 import cn.sdut.service.TeacherService;
+import org.apache.http.ParseException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
+import org.junit.internal.runners.statements.FailOnTimeout;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.IOException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:spring/*.xml")
@@ -31,4 +41,29 @@ public class TeacherServiceImplTest {
         System.out.println(login);
 
     }
+    
+
+    public void testTestLogin() {
+    }
+
+    public void testInputSql() {
+    }
+
+    public void testAdd() {
+    }
+
+    public void testFindByName() {
+    }
+    @Test
+    public void testSql()
+    {
+        String sql = " select * from  music l;jfdkl;aj;sfdkl  where id = 1 ";
+        String[] sqlArray = sql.split("from");
+        sql = sqlArray[1].trim();
+        sqlArray= sql.split(" ");
+
+        System.out.println(sqlArray[0]);
+
+    }
+
 }

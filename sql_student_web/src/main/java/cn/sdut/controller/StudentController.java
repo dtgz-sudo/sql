@@ -1,18 +1,20 @@
 package cn.sdut.controller;
 
+import cn.sdut.domain.Answer;
 import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.ProblemExample;
 import cn.sdut.entity.Result;
+import cn.sdut.mapper.AnswerMapper;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.mapper.ProblemMapper;
-import cn.sdut.mapper.StudentMapper;
-import cn.sdut.service.TeacherService;
+import cn.sdut.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,14 +23,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
+
     @Autowired
-    private TeacherService teacherService;
-    @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private StudentMapper studentMapper;
+    private StudentService studentService;
     @Autowired
     private ProblemMapper problemMapper;
+    @Autowired
+    private AnswerMapper answerMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
 
     @RequestMapping("/findCatogy")
@@ -44,6 +47,7 @@ public class StudentController {
             List<Problem> problems = problemMapper.selectByExample(problemExample);
             category.setProblemList(problems);
             result = new Result(true, "查询分类成功", category);
+            System.out.println(category.getProblemsList());
         } catch (Exception e) {
             e.printStackTrace();
             result = new Result(false, "查询分类失败");
@@ -62,6 +66,23 @@ public class StudentController {
         } catch (Exception e) {
             e.printStackTrace();
             result = new Result(false, "查询分类失败");
+        }
+
+        return result;
+    }
+
+
+    @RequestMapping("/sudmit")
+    public Result sudmit(@RequestBody Answer answer) {
+        System.out.println("findCatogy");
+        Result result = null;
+        try {
+            answer.setCreatedate(new Date());
+            studentService.submitAnswer(answer);
+            result = new Result(true, "提交答案成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "提交答案成功");
         }
 
         return result;

@@ -6,6 +6,7 @@ import cn.sdut.domain.TeacherExample;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.TeacherMapper;
 import cn.sdut.service.TeacherService;
+import com.alibaba.druid.support.json.JSONParser;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,7 @@ public class TeacherServiceImpl  implements TeacherService {
      */
     @Override
     public String inputSql(Problem problem) throws SQLException {
+        System.out.println("problem" + problem);
         String sql = problem.getInput();
         Connection connection = null;
         String output = "";
@@ -82,12 +84,31 @@ public class TeacherServiceImpl  implements TeacherService {
 
             }else
             {
-                // 增删改
+                /**
+                 * 增删改的策略：
+                 *           保存sql语句的执行状态
+                 *           并且保存执行sql语句之后数据库的状态
+                 */
                 Integer num  = preparedStatement.executeUpdate();
-                output = num.toString();
+                String  qurry = "SELECT * FROM " ;
+                // 获得需要操作的数据库 根据from拆分
+                String[] sqlArray = sql.toLowerCase().split("from");
+                // 获取到form以后的内容并且去除空格
+                sql = sqlArray[1].trim();
+                sqlArray= sql.split(" ");
+                qurry += sqlArray[0];
+                ResultSet resultSet = preparedStatement.executeQuery(qurry);
+                List list = this.convertList(resultSet);
+                Map<String ,Object> map = new HashMap();
+                map.put("resultSet",list);
+                map.put("num",num);
+                output=  JSON.toJSONString(map);
+
             }
 
             } catch (SQLException throwables) {
+                // 回滚操作
+                connection.rollback();
             throwables.printStackTrace();
             throw  throwables;
         }

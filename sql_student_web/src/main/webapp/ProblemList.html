@@ -121,8 +121,9 @@ time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>
                     <TH class="col-md-7">Problem</TH>
 
                     <TBODY>
-<!--                {{category.problemList}}-->
-                    <TR ng-repeat="obj in category.problemList ">
+<!--                {{category}}-->
+<!--                {{category.problemsList}}-->
+                    <TR ng-repeat="obj in category.problemsList ">
                         <TD>{{obj.pid}}</TD>
                         <TD><A href="/problem.html#?pid={{obj.pid}}">{{obj.title}}</A></TD>
                     </TR>

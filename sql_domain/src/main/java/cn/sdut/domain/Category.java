@@ -4,15 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Category {
-    private Integer cid;
-
-    private String categoryname;
-
-    private Date starttime;
-
-    private Date endtime;
-private List<Problem> problemsList;
-
     @Override
     public String toString() {
         return "Category{" +
@@ -20,16 +11,25 @@ private List<Problem> problemsList;
                 ", categoryname='" + categoryname + '\'' +
                 ", starttime=" + starttime +
                 ", endtime=" + endtime +
-                ", problemsList=" + problemsList +
+                ", problemList=" + problemList +
                 '}';
     }
 
+    private Integer cid;
+
+    private String categoryname;
+
+    private Date starttime;
+
+    private Date endtime;
+    private List<Problem> problemList;
+
     public List<Problem> getProblemsList() {
-        return problemsList;
+        return problemList;
     }
 
-    public void setProblemsList(List<Problem> problemsList) {
-        this.problemsList = problemsList;
+    public void setProblemList(List<Problem> problemsList) {
+        this.problemList = problemsList;
     }
 
     public Integer getCid() {
