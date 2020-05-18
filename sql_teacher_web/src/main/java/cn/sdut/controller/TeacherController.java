@@ -1,19 +1,24 @@
 package cn.sdut.controller;
 
+import cn.sdut.ImportExcel;
 import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @RestController 返回的所有数据用 json返回
@@ -100,5 +105,19 @@ public class TeacherController {
         }
 
         return result;
+    }
+    @RequestMapping("/importStudent")
+    public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile) {
+        System.out.println("*****************************");
+        System.out.println("importStudent");
+        Result result = null;
+        try {
+            teacherService.importstudent(mFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("importStudent");
+        return mv;
     }
 }

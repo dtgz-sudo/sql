@@ -34,7 +34,7 @@
         <form-login
                 login-page="/login.html"
                 login-processing-url="/loginBySpringSecurity"
-                default-target-url="/addProblem.html"
+                default-target-url="/importStudent.html"
                 authentication-failure-url="/login.html"
                 always-use-default-target="true"/>
 

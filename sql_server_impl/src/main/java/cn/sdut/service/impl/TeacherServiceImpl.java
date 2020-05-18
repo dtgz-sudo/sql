@@ -1,9 +1,13 @@
 package cn.sdut.service.impl;
 
+import cn.sdut.ImportExcel;
 import cn.sdut.domain.Problem;
+import cn.sdut.domain.Student;
 import cn.sdut.domain.Teacher;
 import cn.sdut.domain.TeacherExample;
+import cn.sdut.entity.Result;
 import cn.sdut.mapper.ProblemMapper;
+import cn.sdut.mapper.StudentMapper;
 import cn.sdut.mapper.TeacherMapper;
 import cn.sdut.service.TeacherService;
 import com.alibaba.druid.support.json.JSONParser;
@@ -13,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.util.Date;
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +45,8 @@ public class TeacherServiceImpl  implements TeacherService {
     DataSource dataSource;
     @Autowired
     ProblemMapper problemMapper;
-
+    @Autowired
+    StudentMapper studentMapper;
     /**
      * 登录
      * @param teacher
@@ -161,6 +170,36 @@ public class TeacherServiceImpl  implements TeacherService {
         else
         {
             return  teachers.get(0);
+        }
+
+    }
+    //学生名单导入
+    @Override
+    public void importstudent(MultipartFile mFile) throws Exception {
+        String fileName = mFile.getOriginalFilename();
+        // 获取上传文件的输入流
+        InputStream inputStream = null;
+        inputStream = mFile.getInputStream();
+            // 调用工具类中方法，读取excel文件中数据
+        List<Map<String, Object>> sourceList = ImportExcel.readExcel(fileName, inputStream);
+        for (Map<String, Object> studentMap : sourceList) {
+            Student student = new Student();
+            String password = (String)studentMap.get("password");
+            String nickname = (String)studentMap.get("nickname");
+            String email = (String)studentMap.get("email");
+            String permission = (String)studentMap.get("permission");
+            Date date = new Date();
+            String strDateFormat = "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+            String stringdate = sdf.format(date);
+            Date date1 = sdf.parse(stringdate);
+            student.setPassword(password);
+            student.setCreatedate(date1);
+            student.setNickname(nickname);
+            student.setEmail(email);
+            student.setPermission(permission);
+            student.setTid(1);
+            studentMapper.insert(student);
         }
 
     }

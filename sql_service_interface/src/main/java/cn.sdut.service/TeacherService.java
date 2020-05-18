@@ -4,7 +4,9 @@ import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -36,4 +38,5 @@ public interface TeacherService {
      * @return
      */
     public Teacher findByName(String nickName);
+    public void importstudent(MultipartFile mFile) throws Exception;
 }
