@@ -28,6 +28,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+<!--    springmvc的注解扫描-->
 	<context:component-scan base-package="cn.sdut.controller"></context:component-scan>
     <!--静态资源不处理，走默认的Servlet-->
     <mvc:default-servlet-handler/>

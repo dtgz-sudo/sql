@@ -70,9 +70,11 @@ public class TeacherServiceImpl  implements TeacherService {
         System.out.println("problem" + problem);
         String sql = problem.getInput();
         Connection connection = null;
+        connection= dataSource.getConnection();
+        connection.setAutoCommit(false);
         String output = "";
         try {
-            connection= dataSource.getConnection();
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             if(sql.toLowerCase().contains("select"))
             {
@@ -80,6 +82,7 @@ public class TeacherServiceImpl  implements TeacherService {
                 final ResultSet resultSet = preparedStatement.executeQuery();
                 // 讲结果集封装到list集合中 并别返回到数据中
                 List list = this.convertList(resultSet);
+                //
                output=  JSONArray.toJSONString(list);
 
             }else
@@ -162,6 +165,12 @@ public class TeacherServiceImpl  implements TeacherService {
 
     }
 
+    /**
+     * 封装结果集
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
     private  List convertList(ResultSet rs) throws SQLException{
         List list = new ArrayList();
         ResultSetMetaData md = rs.getMetaData();//获取键名

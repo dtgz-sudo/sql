@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * @RestController 返回的所有数据用 json返回
+ * http://localhost:8080/teacher/findAllcategory
  */
 @RestController
 @RequestMapping("/teacher")
