@@ -8,6 +8,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
     <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    sid, password, nickname, email, createDate, permission
+    sid, password, nickname, email, createDate, permission, tid
   </sql>
   <select id="selectByExample" parameterType="cn.sdut.domain.StudentExample" resultMap="BaseResultMap">
     select
@@ -102,11 +103,11 @@
   </delete>
   <insert id="insert" parameterType="cn.sdut.domain.Student">
     insert into student (sid, password, nickname, 
-      email, createDate, permission
-      )
+      email, createDate, permission, 
+      tid)
     values (#{sid,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{permission,jdbcType=VARCHAR}
-      )
+      #{email,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{permission,jdbcType=VARCHAR}, 
+      #{tid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.sdut.domain.Student">
     insert into student
@@ -129,6 +130,9 @@
       <if test="permission != null">
         permission,
       </if>
+      <if test="tid != null">
+        tid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sid != null">
@@ -148,6 +152,9 @@
       </if>
       <if test="permission != null">
         #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -178,6 +185,9 @@
       <if test="record.permission != null">
         permission = #{record.permission,jdbcType=VARCHAR},
       </if>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +200,8 @@
       nickname = #{record.nickname,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       createDate = #{record.createdate,jdbcType=TIMESTAMP},
-      permission = #{record.permission,jdbcType=VARCHAR}
+      permission = #{record.permission,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +224,9 @@
       <if test="permission != null">
         permission = #{permission,jdbcType=VARCHAR},
       </if>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
     </set>
     where sid = #{sid,jdbcType=INTEGER}
   </update>
@@ -222,7 +236,8 @@
       nickname = #{nickname,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       createDate = #{createdate,jdbcType=TIMESTAMP},
-      permission = #{permission,jdbcType=VARCHAR}
+      permission = #{permission,jdbcType=VARCHAR},
+      tid = #{tid,jdbcType=INTEGER}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,22 +1,9 @@
 package cn.sdut.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Student   implements Serializable {
+public class Student {
     private Integer sid;
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "sid=" + sid +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", createdate=" + createdate +
-                ", permission='" + permission + '\'' +
-                '}';
-    }
 
     private String password;
 
@@ -27,6 +14,8 @@ public class Student   implements Serializable {
     private Date createdate;
 
     private String permission;
+
+    private Integer tid;
 
     public Integer getSid() {
         return sid;
@@ -74,5 +63,13 @@ public class Student   implements Serializable {
 
     public void setPermission(String permission) {
         this.permission = permission == null ? null : permission.trim();
+    }
+
+    public Integer getTid() {
+        return tid;
+    }
+
+    public void setTid(Integer tid) {
+        this.tid = tid;
     }
 }

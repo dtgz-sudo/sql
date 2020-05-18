@@ -1,11 +1,8 @@
 package cn.sdut.domain;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-public class StudentExample   implements Serializable {
+public class StudentExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -503,6 +500,66 @@ public class StudentExample   implements Serializable {
 
         public Criteria andPermissionNotBetween(String value1, String value2) {
             addCriterion("permission not between", value1, value2, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidIsNull() {
+            addCriterion("tid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidIsNotNull() {
+            addCriterion("tid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidEqualTo(Integer value) {
+            addCriterion("tid =", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotEqualTo(Integer value) {
+            addCriterion("tid <>", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidGreaterThan(Integer value) {
+            addCriterion("tid >", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("tid >=", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidLessThan(Integer value) {
+            addCriterion("tid <", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidLessThanOrEqualTo(Integer value) {
+            addCriterion("tid <=", value, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidIn(List<Integer> values) {
+            addCriterion("tid in", values, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotIn(List<Integer> values) {
+            addCriterion("tid not in", values, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidBetween(Integer value1, Integer value2) {
+            addCriterion("tid between", value1, value2, "tid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTidNotBetween(Integer value1, Integer value2) {
+            addCriterion("tid not between", value1, value2, "tid");
             return (Criteria) this;
         }
     }
