@@ -26,14 +26,15 @@
 
             $scope.p = {cid: 1,hint:'默认升序排列'};
             $scope.init = function () {
-                // $http.get("../index/findLoginUser").success(function (resp) {
-                //     if (resp.success) {
-                //         $scope.loginName = resp.data;
-                //         $scope.p.cid = resp.data.cid;
-                //     } else {
-                //         console.log(resp.message);
-                //     }
-                // });
+                $http.get("../index/findLoginUser").success(function (resp) {
+                    if (resp.success) {
+                        $scope.loginName = resp.data;
+                       // 老师的id
+                        $scope.p.cid = resp.data.tid;
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
                 $http.post("../teacher/findAllcategory").success(function (resp) {
                     if (resp.success) {
                         $scope.categoryList = resp.data;
@@ -94,7 +95,7 @@
                     <LI><A href="">评价反馈</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
-                    <LI><A href="">{{loginName}}</A></LI>
+                    <LI><A href="">{{loginName.nickname}}</A></LI>
                     <LI><A
                             href="/logout">退出登录</A></LI>
                 </UL>

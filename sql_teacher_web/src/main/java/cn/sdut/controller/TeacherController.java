@@ -106,6 +106,12 @@ public class TeacherController {
 
         return result;
     }
+
+    /**
+     *  根据excel表格 导入学生的数据
+     * @param mFile
+     * @return
+     */
     @RequestMapping("/importStudent")
     public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile) {
         System.out.println("*****************************");

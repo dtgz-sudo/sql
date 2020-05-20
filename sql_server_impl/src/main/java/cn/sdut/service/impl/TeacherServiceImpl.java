@@ -173,6 +173,27 @@ public class TeacherServiceImpl  implements TeacherService {
         }
 
     }
+
+
+    /**
+     * 封装结果集
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
+    private  List convertList(ResultSet rs) throws SQLException{
+        List list = new ArrayList();
+        ResultSetMetaData md = rs.getMetaData();//获取键名
+        int columnCount = md.getColumnCount();//获取行的数量
+        while (rs.next()) {
+            Map rowData = new HashMap();//声明Map
+            for (int i = 1; i <= columnCount; i++) {
+                rowData.put(md.getColumnName(i), rs.getObject(i));//获取键名及值
+            }
+            list.add(rowData);
+        }
+        return list;
+    }
     //学生名单导入
     @Override
     public void importstudent(MultipartFile mFile) throws Exception {
@@ -180,7 +201,7 @@ public class TeacherServiceImpl  implements TeacherService {
         // 获取上传文件的输入流
         InputStream inputStream = null;
         inputStream = mFile.getInputStream();
-            // 调用工具类中方法，读取excel文件中数据
+        // 调用工具类中方法，读取excel文件中数据
         List<Map<String, Object>> sourceList = ImportExcel.readExcel(fileName, inputStream);
         for (Map<String, Object> studentMap : sourceList) {
             Student student = new Student();
@@ -202,26 +223,6 @@ public class TeacherServiceImpl  implements TeacherService {
             studentMapper.insert(student);
         }
 
-    }
-
-    /**
-     * 封装结果集
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
-    private  List convertList(ResultSet rs) throws SQLException{
-        List list = new ArrayList();
-        ResultSetMetaData md = rs.getMetaData();//获取键名
-        int columnCount = md.getColumnCount();//获取行的数量
-        while (rs.next()) {
-            Map rowData = new HashMap();//声明Map
-            for (int i = 1; i <= columnCount; i++) {
-                rowData.put(md.getColumnName(i), rs.getObject(i));//获取键名及值
-            }
-            list.add(rowData);
-        }
-        return list;
     }
 }
 

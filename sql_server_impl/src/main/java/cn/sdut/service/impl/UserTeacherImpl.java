@@ -1,10 +1,10 @@
 package cn.sdut.service.impl;
 
+
 import cn.sdut.domain.Teacher;
 import cn.sdut.domain.TeacherExample;
 import cn.sdut.mapper.TeacherMapper;
 import cn.sdut.service.TeacherService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -61,6 +61,19 @@ public class UserTeacherImpl implements UserDetailsService {
 
         }
         System.out.println("user :" + user);
+
         return user;
     }
+    /**
+     *         User user = null;
+     *
+     *         TbSeller seller = sellerService.findOne(username);
+     *
+     *         List<GrantedAuthority> list = new ArrayList<>();
+     *         SimpleGrantedAuthority  = new SimpleGrantedAuthority("ROLE_SELLER");
+     *         list.add(simpleGrantedAuthority);
+     *         user = new User(seller.getName(), seller.getPassword(), list);
+     *
+     *         return user;
+     */
 }

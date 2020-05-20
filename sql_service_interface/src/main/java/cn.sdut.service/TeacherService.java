@@ -38,5 +38,6 @@ public interface TeacherService {
      * @return
      */
     public Teacher findByName(String nickName);
-    public void importstudent(MultipartFile mFile) throws Exception;
+    // 导入学生的名单
+     public void importstudent(MultipartFile mFile) throws Exception;
 }
