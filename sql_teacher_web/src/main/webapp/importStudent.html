@@ -16,26 +16,27 @@
     <!--    使用angularjs框架的双向绑定-->
     <script src="plugins/angularjs/angular.min.js"></script>
     <script type="text/javascript" src="layer/2.4/layer.js"></script>
+    <script src="js/plugins/jquery/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "../index/findLoginUser",// ajax请求的url地址
+                type: "post",// 提交的方法
+                success: function (data) { // ajax请求回调后执行的方法,data表示从服务器返回的数据
+                  var loginName = data;
+                  console.log(loginName.data.nickname    );
+               //   alert(loginName.data.nickname );
+                  $("#loginName").html(loginName.data.nickname);
+                    // 老师的id
+                   var cid = data.tid;
+                }
+            });
 
-<!--    <script type="text/javascript">-->
+        });
 
-<!--        // 定义sql模块-->
-<!--        var app = angular.module("sql", []);-->
-<!--        // 设置控制器-->
-<!--        app.controller("importStudentController", function ($scope, $http) {-->
-<!--            // 定义方法-->
-<!--            $scope.add = function () {-->
-<!--                $http.post("../teacher/importstudent", $scope.p).success(function (resp) {-->
-<!--                    if (resp.success) {-->
-<!--                        alert("导入成功")-->
-<!--                    } else {-->
-<!--                        alert(resp.message);-->
-<!--                    }-->
-<!--                });-->
-<!--            };-->
-<!--        });-->
+    </script>
 
-<!--    </script>-->
+
 </head>
 <body class="vsc-initialized">
 
@@ -63,7 +64,7 @@
                     <LI><A href="">评价反馈</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
-                    <LI><A href="">{{loginName}}</A></LI>
+                    <LI><A href="" id="loginName" ></A></LI>
                     <LI><A
                             href="/logout">退出登录</A></LI>
                 </UL>
