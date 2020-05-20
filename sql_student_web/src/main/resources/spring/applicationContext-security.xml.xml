@@ -32,7 +32,7 @@
         <form-login
                 login-page="/login.html"
                 login-processing-url="/loginBySpringSecurity"
-                default-target-url="/ProblemList.html#?cid=1"
+                default-target-url="/Contests.html"
                 authentication-failure-url="/login.html "
                 always-use-default-target="true"/>
 

@@ -4,16 +4,18 @@
 <META charset="utf-8"> 
 <META http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"> 
 <META http-equiv="X-UA-Compatible" content="IE=9">			 <TITLE>Contests</TITLE> 
-<LINK href="Contests_files/bootstrap.min.css" rel="stylesheet" type="text/css"> 
-<SCRIPT language="javascript" src="Contests_files/jquery-3.0.0.min.js" type="text/javascript"></SCRIPT>
- 
-<SCRIPT language="javascript" src="Contests_files/bootstrap.min.js" type="text/javascript"></SCRIPT>
- <!--IE --> 
-<SCRIPT language="javascript" src="Contests_files/html5shiv.min.js" type="text/javascript"></SCRIPT>
- 
-<SCRIPT language="javascript" src="Contests_files/respond.min.js" type="text/javascript"></SCRIPT>
- <!--IE--> <LINK href="Contests_files/home.css" rel="stylesheet" 
-type="text/css"> <LINK href="Contests_files/base.css" rel="stylesheet" type="text/css"> 
+<LINK href="Contests_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
+  <script src="plugins/bootstrap/js/bootstrap.js"></script>
+  <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-datetimepicker.css">
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap-theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <!--    使用angularjs框架的双向绑定-->
+  <script src="plugins/angularjs/angular.min.js"></script>
+
+
+
 <SCRIPT language="javascript">
 	var stime = "1587956386";
 	function updatetime(){
@@ -57,54 +59,66 @@ type="text/css"> <LINK href="Contests_files/base.css" rel="stylesheet" type="tex
         <LI><A href="">登录者</A></LI>
         <LI><A
                 href="">退出登录</A></LI>
-      </UL></DIV><!-- /.navbar-collapse -->
-  </DIV><!-- /.container-fluid -->	 </NAV>
-<SCRIPT>
-	  sessionUid = 23201;
-	  	</SCRIPT>
-	 
-<DIV class="main">
-<DIV class="container"><!--<div class="row text-center">-->				 <!--<marquee scrollAmount=3 width=750 behavior=alternate onmouseover=stop() onmouseout=start()>-->
-					 <!--<span style="font-size:18px;color:red;padding:0 32px;">山东理工大学第十届 ACM 程序设计竞赛开始报名！校赛 QQ 群：645671985<a-->
-									 <!--href="https://acm.sdut.edu.cn/10thSDUTACMPC/">【点此报名】</a>（校赛时间已调整到 6.9、6.10）</span>-->
-				 <!--</marquee>-->			 <!--</div>-->		 </DIV>
-<DIV class="container">
-<DIV class="row block block-info">
-</DIV>
-<DIV class="row">
-<TABLE class="table table-bordered table-hover">
-  <THEAD>
-  <TR>
-    <TH style="width: 5%;">编号</TH>
-    <TH style="width: 43%;">实验模块</TH>
-    <TH style="width: 17%;">开始时间</TH>
-    <TH style="width: 17%;">结束时间</TH>
-    <TH style="width: 6%;">状态</TH></TR></THEAD>
-  <TBODY>
-  <TR>
-    <TD>1</TD>
-    <TD><A href="">数据操纵实验</A></TD>
-    <TD>2020-04-26 14:00:00</TD>
-    <TD>2020-04-26 17:00:00</TD>
-    <TD class="bold accept-text">Ended</TD></TR>
-  <TR>
-    <TD>2</TD>
-    <TD><A href="">数据控制实验</A></TD>
-    <TD>2020-04-01 19:00:00</TD>
-    <TD>2020-04-01 21:30:00</TD>
-    <TD class="bold accept-text">Ended</TD></TR>
-  <TR>
-    <TD>3</TD>
-    <TD><A href="">事务实验</A></TD>
-    <TD>2020-01-24 22:30:00</TD>
-    <TD>2020-01-25 00:30:00</TD>
-    <TD class="bold accept-text">Ended</TD></TR>
-  </TBODY>
-</TABLE></DIV></DIV></DIV>
-  <DIV class="footer">
+      </UL>
+    </DIV><!-- /.navbar-collapse -->
+  </DIV><!-- /.container-fluid -->     </NAV>
+  <SCRIPT>
+    sessionUid = 23201;
+  </SCRIPT>
+
+  <DIV class="main">
     <DIV class="container">
-      <DIV class="row">
+      <DIV class="container">
+        <DIV class="row block block-info">
+        </DIV>
+        <DIV class="row">
+          <TABLE class="table table-bordered table-hover">
+            <THEAD>
+            <TR>
+              <TH style="width: 5%;">编号</TH>
+              <TH style="width: 43%;">实验模块</TH>
+              <TH style="width: 17%;">开始时间</TH>
+              <TH style="width: 17%;">结束时间</TH>
+              <TH style="width: 6%;">状态</TH>
+            </TR>
+            </THEAD>
+            <TBODY>
+            <TR>
+              <TD>1</TD>
+              <TD><A href="/ProblemList.html#?cid=1">数据操纵实验</A></TD>
+              <TD>2020-04-26 14:00:00</TD>
+              <TD>2020-04-26 17:00:00</TD>
+              <TD class="bold accept-text">Ended</TD>
+            </TR>
+            <TR>
+              <TD>2</TD>
+              <TD><A href="/ProblemList.html#?cid=2">数据控制实验</A></TD>
+              <TD>2020-04-01 19:00:00</TD>
+              <TD>2020-04-01 21:30:00</TD>
+              <TD class="bold accept-text">Ended</TD>
+            </TR>
+            <TR>
+              <TD>3</TD>
+              <TD><A href="/ProblemList.html#?cid=3">事务实验</A></TD>
+              <TD>2020-01-24 22:30:00</TD>
+              <TD>2020-01-25 00:30:00</TD>
+              <TD class="bold accept-text">Ended</TD>
+            </TR>
+            </TBODY>
+          </TABLE>
+        </DIV>
       </DIV>
-      <DIV class="row">
-        <DIV class="col-sm-11 text-center"><SPAN id="dt"></SPAN>
-        </DIV></DIV></DIV></DIV></DIV></BODY></HTML>
+    </DIV>
+    <DIV class="footer">
+      <DIV class="container">
+        <DIV class="row">
+        </DIV>
+        <DIV class="row">
+          <DIV class="col-sm-11 text-center"><SPAN id="dt"></SPAN>
+          </DIV>
+        </DIV>
+      </DIV>
+    </DIV>
+  </DIV>
+</BODY>
+</HTML>

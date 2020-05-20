@@ -34,6 +34,11 @@ public class StudentController {
     private CategoryMapper categoryMapper;
 
 
+    /**
+     * 获取学生的实验分类
+     * @param cid
+     * @return
+     */
     @RequestMapping("/findCatogy")
     public Result findAllcategory(@RequestBody Integer cid) {
         System.out.println("findCatogy");
@@ -55,6 +60,12 @@ public class StudentController {
 
         return result;
     }
+
+    /**
+     * 根据前端传过来的pid查询对应的problem
+     * @param pid
+     * @return
+     */
     @RequestMapping("/findByPid")
     public Result findByPid(@RequestBody Integer pid) {
         System.out.println("findCatogy");
@@ -72,9 +83,15 @@ public class StudentController {
     }
 
 
+    /**
+     * 学生提交答案
+     * 后台分数判断
+     * @param answer
+     * @return
+     */
     @RequestMapping("/sudmit")
     public Result sudmit(@RequestBody Answer answer) {
-        System.out.println("findCatogy");
+        System.out.println("sudmit");
         Result result = null;
         try {
             answer.setCreatedate(new Date());
@@ -84,7 +101,6 @@ public class StudentController {
             e.printStackTrace();
             result = new Result(false, "提交答案成功");
         }
-
         return result;
     }
 }

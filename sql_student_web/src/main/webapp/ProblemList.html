@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE HTML>
-
 <HTML>
 <HEAD>
 
@@ -48,9 +47,10 @@
                 $scope.url = $location.absUrl();
                 $scope.cid = $location.search()['cid'];
 
-                $http.get("../index/findLoginUser").success(function (resp) {
+                $http.get("../index/findLoginStudent").success(function (resp) {
                     if (resp.success) {
                         $scope.loginName = resp.data;
+
                     } else {
                         console.log(resp.message);
                     }
