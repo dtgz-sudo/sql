@@ -3,6 +3,8 @@ package cn.sdut.service;
 import cn.sdut.domain.Answer;
 import cn.sdut.domain.Category;
 
+import java.sql.SQLException;
+
 /**
  * Teacher 服务层
  * @author 赵德锋
@@ -16,5 +18,5 @@ public interface StudentService {
      * 添加answer 并且打分
      * @param answer
      */
-   public  void submitAnswer(Answer answer);
+   public  void submitAnswer(Answer answer) throws SQLException;
 }

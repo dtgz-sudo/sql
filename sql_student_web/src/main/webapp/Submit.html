@@ -68,9 +68,10 @@
             $scope.submit = function () {
                 $http.post("../student/sudmit",$scope.answer).success(function (resp) {
                     if (resp.success) {
-                        window.location.href="/ProblemList.html#?cid=1";
+                        //    window.location.href="/ProblemList.html#?cid=1";
+                        alert("添加成功");
                     } else {
-                        console.log(resp.message);
+                        alert(resp.message);
                     }
                 });
             };

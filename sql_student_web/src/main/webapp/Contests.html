@@ -13,7 +13,24 @@
   <link rel="stylesheet" href="css/base.css">
   <!--    使用angularjs框架的双向绑定-->
   <script src="plugins/angularjs/angular.min.js"></script>
+  <script>
+    $(function () {
+      $.ajax({
+        url: "../index/findLoginUser",// ajax请求的url地址
+        type: "post",// 提交的方法
+        success: function (data) { // ajax请求回调后执行的方法,data表示从服务器返回的数据
+          var loginName = data;
+          console.log(loginName.data.nickname    );
+          //   alert(loginName.data.nickname );
+          $("#loginName").html(loginName.data.nickname);
+          // 老师的id
+          var cid = data.tid;
+        }
+      });
 
+    });
+
+  </script>
 
 
 <SCRIPT language="javascript">
@@ -56,9 +73,8 @@
         <LI><A href="">历史答题分析</A></LI>
       </UL>
       <UL class="nav navbar-nav navbar-right">
-        <LI><A href="">登录者</A></LI>
-        <LI><A
-                href="">退出登录</A></LI>
+        <LI><A id="loginName" href="#"></A></LI>
+        <LI><A href="/login.html">退出登录</A></LI>
       </UL>
     </DIV><!-- /.navbar-collapse -->
   </DIV><!-- /.container-fluid -->     </NAV>

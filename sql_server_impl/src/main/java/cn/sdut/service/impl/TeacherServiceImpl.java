@@ -5,12 +5,10 @@ import cn.sdut.domain.Problem;
 import cn.sdut.domain.Student;
 import cn.sdut.domain.Teacher;
 import cn.sdut.domain.TeacherExample;
-import cn.sdut.entity.Result;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.mapper.TeacherMapper;
 import cn.sdut.service.TeacherService;
-import com.alibaba.druid.support.json.JSONParser;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.Date;
+
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
+import java.util.*;
 
 /**
  * Teacher 服务层
@@ -82,39 +77,34 @@ public class TeacherServiceImpl  implements TeacherService {
         connection= dataSource.getConnection();
         connection.setAutoCommit(false);
         String output = "";
+        PreparedStatement preparedStatement = null;
         try {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            if(sql.toLowerCase().contains("select"))
-            {
+            preparedStatement = connection.prepareStatement(sql);
+            if ( sql.toLowerCase().contains("select") ) {
                 //查询
                 final ResultSet resultSet = preparedStatement.executeQuery();
                 // 讲结果集封装到list集合中 并别返回到数据中
                 List list = this.convertList(resultSet);
                 //
-               output=  JSONArray.toJSONString(list);
+                output = JSONArray.toJSONString(list);
 
-            }else
-            {
+            } else {
                 /**
                  * 增删改的策略：
                  *           保存sql语句的执行状态
                  *           并且保存执行sql语句之后数据库的状态
                  */
-                Integer num  = preparedStatement.executeUpdate();
-                String  qurry = "SELECT * FROM " ;
-                // 获得需要操作的数据库 根据from拆分
-                String[] sqlArray = sql.toLowerCase().split("from");
-                // 获取到form以后的内容并且去除空格
-                sql = sqlArray[1].trim();
-                sqlArray= sql.split(" ");
-                qurry += sqlArray[0];
-                ResultSet resultSet = preparedStatement.executeQuery(qurry);
-                List list = this.convertList(resultSet);
-                Map<String ,Object> map = new HashMap();
-                map.put("resultSet",list);
-                map.put("num",num);
-                output=  JSON.toJSONString(map);
+
+
+                Integer num = preparedStatement.executeUpdate();
+                // 获取当前操作的数据库的全部数据
+                List list = this.qurryAllData(sql, connection);
+
+                Map<String, Object> map = new HashMap();
+                map.put("resultSet", list);
+                map.put("num", num);
+                output = JSON.toJSONString(map);
 
             }
 
@@ -130,11 +120,35 @@ public class TeacherServiceImpl  implements TeacherService {
                 connection.rollback();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-                throw  throwables;
+                throw throwables;
             }
+            preparedStatement.close();
+            connection.close();
+
         }
         System.out.println(output);
         return output;
+    }
+
+    /**
+     * 获取老师操作的数据库的全部数据
+     *
+     * @param sql
+     * @param connection
+     * @return
+     */
+    private List qurryAllData(String sql, Connection connection) throws SQLException {
+        String qurry = "SELECT * FROM ";
+        // 获得需要操作的数据库 根据from拆分
+        String[] sqlArray = sql.toLowerCase().split("from");
+        // 获取到form以后的内容并且去除空格
+        sql = sqlArray[1].trim();
+        sqlArray = sql.split(" ");
+        qurry += sqlArray[0];
+        PreparedStatement preparedStatement = connection.prepareStatement(qurry);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List list = this.convertList(resultSet);
+        return list;
     }
 
     /**

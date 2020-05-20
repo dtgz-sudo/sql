@@ -18,6 +18,20 @@
     <script src="plugins/angularjs/angular.min.js"></script>
     <script type="text/javascript">
 
+        /**
+         data:
+         cid: 1
+         createdate: "2020-05-10 23:00:12"
+         description: "查询全部数据"
+         exampleinput: "不告诉你"
+         exampleoutput: "自己研究"
+         hint: "默认升序"
+         input: "SELECT * FROM sql_course"
+         language: "mysql"
+         output: "[{"Cno":1,"Cname":"数据库"},{"Cno":2,"Cname":"数学"},{"Cno":3,"Cname":"信息系统"},{"Cno":4,"Cname":"操作系统"},{"Cno":5,"Cname":"数据结构"},{"Cno":6,"Cname":"离散数学"}]"
+         pid: 5
+         title: "查询数据"
+         */
         // 定义sql模块
         var app = angular.module("sql", []);
         // 设置控制器
@@ -108,6 +122,10 @@
                     <h4>结果的例子</h4>
                     <div class="prob-content">
                         <pre>{{problem.exampleoutput}}</pre>
+                    </div>
+                    <h4>Hint</h4>
+                    <div class="prob-content">
+                        <pre>{{problem.hint }}</pre>
                     </div>
                 </div>
 
