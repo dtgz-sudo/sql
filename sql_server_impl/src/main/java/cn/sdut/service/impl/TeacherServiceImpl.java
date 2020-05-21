@@ -31,7 +31,7 @@ import java.util.*;
  * @Service 添加到ioc容器
  */
 
-@Transactional(isolation = Isolation.DEFAULT)
+
 @Service
 public class TeacherServiceImpl  implements TeacherService {
     @Autowired
@@ -69,6 +69,7 @@ public class TeacherServiceImpl  implements TeacherService {
      * @param problem
      * @return
      */
+    @Transactional(isolation = Isolation.DEFAULT)
     @Override
     public String inputSql(Problem problem) throws SQLException {
         System.out.println("problem" + problem);
@@ -153,6 +154,7 @@ public class TeacherServiceImpl  implements TeacherService {
      *
      * @param problem
      */
+    @Transactional(isolation = Isolation.DEFAULT)
     @Override
     public void add(Problem problem) {
         System.out.println(problem);

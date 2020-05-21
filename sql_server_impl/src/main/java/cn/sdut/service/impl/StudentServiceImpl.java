@@ -52,6 +52,7 @@ public class StudentServiceImpl implements StudentService {
      *
      * @param answer
      */
+    @Transactional
     @Override
     public void submitAnswer(Answer answer) throws SQLException {
         System.out.println("存储并且打分");
@@ -62,13 +63,15 @@ public class StudentServiceImpl implements StudentService {
         String outputStudent = null;
         String outputTeacher=null;
         Problem problem = null;
+        String sqlTeacher = null;
 
         try {
             connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
             sqlStudent = answer.getInput();
             // 1：先从数据库查询出老师输入的数据库和答案然后进行判断
             problem = problemMapper.selectByPrimaryKey(answer.getPid());
-            String sqlTeacher = problem.getInput().toLowerCase();
+            sqlTeacher  = problem.getInput().toLowerCase();
             preparedStatement = connection.prepareStatement(sqlStudent);
             //获取标准答案
             outputTeacher  = problem.getOutput();
@@ -95,15 +98,13 @@ public class StudentServiceImpl implements StudentService {
                     if ( numTeacher.equals(liststudentExecute.size()) ) {
                         score += 20d;
                     }
-
                 }
-
             } else {
                 //如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
                 // 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最多80分
 
                 Integer num = preparedStatement.executeUpdate();
-                List list = this.qurryAllData(sqlStudent, connection);
+                List list = this.qurryAllData(sqlStudent, connection,problem.getTablename());
                 Map<String, Object> map = new HashMap();
                 map.put("resultSet", list);
                 map.put("num", num);
@@ -116,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
                     score = 50.0;
 
                     //把老师的执行结果解析成 map
-                    Map mapTeacher = JSON.parseObject(sqlTeacher, Map.class);
+                    Map mapTeacher = JSON.parseObject(outputTeacher, Map.class);
                     Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
                     if ( numTeacher.equals(num) )
                     {
@@ -178,14 +179,9 @@ public class StudentServiceImpl implements StudentService {
      * @param connection
      * @return
      */
-    private List qurryAllData(String sql, Connection connection) throws SQLException {
-        String qurry = "SELECT * FROM ";
-        // 获得需要操作的数据库 根据from拆分
-        String[] sqlArray = sql.toLowerCase().split("from");
-        // 获取到form以后的内容并且去除空格
-        sql = sqlArray[1].trim();
-        sqlArray = sql.split(" ");
-        qurry += sqlArray[0];
+    private List qurryAllData(String sql, Connection connection,String tablename) throws SQLException {
+        String qurry = "SELECT * FROM " +tablename ;
+
         PreparedStatement preparedStatement = connection.prepareStatement(qurry);
         ResultSet resultSet = preparedStatement.executeQuery();
         List list = this.convertList(resultSet);
