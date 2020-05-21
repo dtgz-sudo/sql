@@ -52,7 +52,7 @@ public class StudentController {
             List<Problem> problems = problemMapper.selectByExample(problemExample);
             category.setProblemList(problems);
             result = new Result(true, "查询分类成功", category);
-            System.out.println(category.getProblemsList());
+            System.out.println(category.getProblemList());
         } catch (Exception e) {
             e.printStackTrace();
             result = new Result(false, "查询分类失败");
@@ -96,16 +96,12 @@ public class StudentController {
         try {
             answer.setCreatedate(new Date());
             studentService.submitAnswer(answer);
-            result = new Result(true, "提交答案成功");
+            result = new Result(true, "本题得分:"+answer.getScore());
         } catch (Exception e) {
             e.printStackTrace();
-            result = new Result(false, "提交答案成功");
+            result = new Result(false, "提交答案失败");
         }
         return result;
     }
 }
 
-/**
- *
- * 老师 请问研招网的调剂信息 什么时候可以查看完毕啊
- */

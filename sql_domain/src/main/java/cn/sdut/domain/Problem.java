@@ -25,6 +25,8 @@ public class Problem {
 
     private String exampleoutput;
 
+    private String tablename;
+
     public Integer getPid() {
         return pid;
     }
@@ -113,6 +115,14 @@ public class Problem {
         this.exampleoutput = exampleoutput == null ? null : exampleoutput.trim();
     }
 
+    public String getTablename() {
+        return tablename;
+    }
+
+    public void setTablename(String tablename) {
+        this.tablename = tablename == null ? null : tablename.trim();
+    }
+
     @Override
     public String toString() {
         return "Problem{" +
@@ -127,6 +137,7 @@ public class Problem {
                 ", cid=" + cid +
                 ", exampleinput='" + exampleinput + '\'' +
                 ", exampleoutput='" + exampleoutput + '\'' +
+                ", tablename='" + tablename + '\'' +
                 '}';
     }
 }

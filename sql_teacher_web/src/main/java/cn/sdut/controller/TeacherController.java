@@ -55,6 +55,7 @@ public class TeacherController {
 
     @RequestMapping("/add")
     public Result add(@RequestBody Problem problem) {
+        System.out.println(problem);
         Result result = null;
         try {
            // teacherService.add(problem);
@@ -126,4 +127,5 @@ public class TeacherController {
         mv.setViewName("importStudent");
         return mv;
     }
+
 }

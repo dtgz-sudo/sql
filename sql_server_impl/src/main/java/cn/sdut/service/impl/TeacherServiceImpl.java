@@ -75,6 +75,7 @@ public class TeacherServiceImpl  implements TeacherService {
         String sql = problem.getInput();
         Connection connection = null;
         connection= dataSource.getConnection();
+       // 取消自动提交
         connection.setAutoCommit(false);
         String output = "";
         PreparedStatement preparedStatement = null;
@@ -87,7 +88,10 @@ public class TeacherServiceImpl  implements TeacherService {
                 // 讲结果集封装到list集合中 并别返回到数据中
                 List list = this.convertList(resultSet);
                 //
-                output = JSONArray.toJSONString(list);
+                Map<String, Object> map = new HashMap();
+                map.put("resultSet", list);
+                map.put("num", list.size());
+                output = JSON.toJSONString(map);
 
             } else {
                 /**
@@ -95,11 +99,9 @@ public class TeacherServiceImpl  implements TeacherService {
                  *           保存sql语句的执行状态
                  *           并且保存执行sql语句之后数据库的状态
                  */
-
-
                 Integer num = preparedStatement.executeUpdate();
                 // 获取当前操作的数据库的全部数据
-                List list = this.qurryAllData(sql, connection);
+                List list = this.qurryAllData(sql, connection,problem.getTablename());
 
                 Map<String, Object> map = new HashMap();
                 map.put("resultSet", list);
@@ -137,14 +139,9 @@ public class TeacherServiceImpl  implements TeacherService {
      * @param connection
      * @return
      */
-    private List qurryAllData(String sql, Connection connection) throws SQLException {
-        String qurry = "SELECT * FROM ";
-        // 获得需要操作的数据库 根据from拆分
-        String[] sqlArray = sql.toLowerCase().split("from");
-        // 获取到form以后的内容并且去除空格
-        sql = sqlArray[1].trim();
-        sqlArray = sql.split(" ");
-        qurry += sqlArray[0];
+    private List qurryAllData(String sql, Connection connection,String table) throws SQLException {
+        String qurry = "SELECT * FROM " + table;
+
         PreparedStatement preparedStatement = connection.prepareStatement(qurry);
         ResultSet resultSet = preparedStatement.executeQuery();
         List list = this.convertList(resultSet);
@@ -239,4 +236,3 @@ public class TeacherServiceImpl  implements TeacherService {
 
     }
 }
-

@@ -3,17 +3,9 @@ package cn.sdut.domain;
 import java.util.Date;
 import java.util.List;
 
+
 public class Category {
-    @Override
-    public String toString() {
-        return "Category{" +
-                "cid=" + cid +
-                ", categoryname='" + categoryname + '\'' +
-                ", starttime=" + starttime +
-                ", endtime=" + endtime +
-                ", problemList=" + problemList +
-                '}';
-    }
+
 
     private Integer cid;
 
@@ -23,14 +15,6 @@ public class Category {
 
     private Date endtime;
     private List<Problem> problemList;
-
-    public List<Problem> getProblemsList() {
-        return problemList;
-    }
-
-    public void setProblemList(List<Problem> problemsList) {
-        this.problemList = problemsList;
-    }
 
     public Integer getCid() {
         return cid;
@@ -45,7 +29,7 @@ public class Category {
     }
 
     public void setCategoryname(String categoryname) {
-        this.categoryname = categoryname == null ? null : categoryname.trim();
+        this.categoryname = categoryname;
     }
 
     public Date getStarttime() {
@@ -62,5 +46,24 @@ public class Category {
 
     public void setEndtime(Date endtime) {
         this.endtime = endtime;
+    }
+
+    public List<Problem> getProblemList() {
+        return problemList;
+    }
+
+    public void setProblemList(List<Problem> problemList) {
+        this.problemList = problemList;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "cid=" + cid +
+                ", categoryname='" + categoryname + '\'' +
+                ", starttime=" + starttime +
+                ", endtime=" + endtime +
+                ", problemList=" + problemList +
+                '}';
     }
 }

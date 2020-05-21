@@ -844,6 +844,76 @@ public class ProblemExample {
             addCriterion("exampleoutput not between", value1, value2, "exampleoutput");
             return (Criteria) this;
         }
+
+        public Criteria andTablenameIsNull() {
+            addCriterion("tablename is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameIsNotNull() {
+            addCriterion("tablename is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameEqualTo(String value) {
+            addCriterion("tablename =", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameNotEqualTo(String value) {
+            addCriterion("tablename <>", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameGreaterThan(String value) {
+            addCriterion("tablename >", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameGreaterThanOrEqualTo(String value) {
+            addCriterion("tablename >=", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameLessThan(String value) {
+            addCriterion("tablename <", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameLessThanOrEqualTo(String value) {
+            addCriterion("tablename <=", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameLike(String value) {
+            addCriterion("tablename like", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameNotLike(String value) {
+            addCriterion("tablename not like", value, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameIn(List<String> values) {
+            addCriterion("tablename in", values, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameNotIn(List<String> values) {
+            addCriterion("tablename not in", values, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameBetween(String value1, String value2) {
+            addCriterion("tablename between", value1, value2, "tablename");
+            return (Criteria) this;
+        }
+
+        public Criteria andTablenameNotBetween(String value1, String value2) {
+            addCriterion("tablename not between", value1, value2, "tablename");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

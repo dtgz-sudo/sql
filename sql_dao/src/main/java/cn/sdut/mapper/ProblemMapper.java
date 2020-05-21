@@ -1,6 +1,5 @@
 package cn.sdut.mapper;
 
-
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.ProblemExample;
 import org.apache.ibatis.annotations.Param;

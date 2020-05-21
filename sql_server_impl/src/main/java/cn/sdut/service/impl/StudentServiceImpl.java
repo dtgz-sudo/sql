@@ -59,30 +59,43 @@ public class StudentServiceImpl implements StudentService {
         Double score = 0.0;
         PreparedStatement preparedStatement = null;
         String sqlStudent = null;
+        String outputStudent = null;
+        String outputTeacher=null;
+        Problem problem = null;
 
         try {
             connection = dataSource.getConnection();
             sqlStudent = answer.getInput();
             // 1：先从数据库查询出老师输入的数据库和答案然后进行判断
-            Problem problem = problemMapper.selectByPrimaryKey(answer.getPid());
-            String sql = problem.getInput().toLowerCase();
-            preparedStatement = connection.prepareStatement(sql);
+            problem = problemMapper.selectByPrimaryKey(answer.getPid());
+            String sqlTeacher = problem.getInput().toLowerCase();
+            preparedStatement = connection.prepareStatement(sqlStudent);
             //获取标准答案
-            String output = problem.getOutput();
-            if ( sql.contains("select") ) {
+            outputTeacher  = problem.getOutput();
+            if ( sqlTeacher.contains("select") ) {
                 //2: 如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
                 // 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最高八十分
-
                 final ResultSet resultSet = preparedStatement.executeQuery();
-                List list = this.convertList(resultSet);
-                String studentExecute = JSONArray.toJSONString(list);
-
-                if ( output.equals(studentExecute) ) {
+                 List liststudentExecute = this.convertList(resultSet);
+                Map<String, Object> map = new HashMap();
+                map.put("resultSet", liststudentExecute);
+                map.put("num", liststudentExecute.size());
+                outputStudent = JSON.toJSONString(map);
+                if ( outputTeacher.equals(outputStudent) ) {
                     //执行结果和老师的完全一致
                     score = 100d;
                 } else {
+                    //不报错先给50分
                     score = 50.0;
-                    // 判断关键字加分
+                    // 查获出来的数据数量正常+20
+                    //把老师的结果转换为map
+                    Map mapTeacher = JSON.parseObject(outputTeacher, Map.class);
+                    //查询数据相同+20
+                    Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
+                    if ( numTeacher.equals(liststudentExecute.size()) ) {
+                        score += 20d;
+                    }
+
                 }
 
             } else {
@@ -94,8 +107,8 @@ public class StudentServiceImpl implements StudentService {
                 Map<String, Object> map = new HashMap();
                 map.put("resultSet", list);
                 map.put("num", num);
-                String studentExecute = JSON.toJSONString(map);
-                if ( output.equals(studentExecute) == true ) {
+                outputStudent = JSON.toJSONString(map);
+                if ( outputTeacher.equals(outputStudent) == true ) {
                     // 执行结果和老师的完全一致
                     score = 100d;
                 } else {
@@ -103,15 +116,14 @@ public class StudentServiceImpl implements StudentService {
                     score = 50.0;
 
                     //把老师的执行结果解析成 map
-                    Map mapTeacher = JSON.parseObject(sql, Map.class);
+                    Map mapTeacher = JSON.parseObject(sqlTeacher, Map.class);
                     Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
-                    if(numTeacher.equals(num) )
+                    if ( numTeacher.equals(num) )
                     {
                         score +=20d;
                     }
                     // 判断关键字加分
                 }
-
 
             }
         } catch (Exception e) {
@@ -120,17 +132,17 @@ public class StudentServiceImpl implements StudentService {
         } finally {
 
             answer.setScore(score);
+            answer.setOutput(outputStudent);
+            answerMapper.insert(answer);
             try {
                 // 回滚操作
                 connection.rollback();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-
             }
             preparedStatement.close();
             connection.close();
         }
-
 
     }
 
@@ -180,3 +192,11 @@ public class StudentServiceImpl implements StudentService {
         return list;
     }
 }
+/**
+ * 0451 8660 8812
+ * 黑龙江大学电子信息计算机专硕 300分查看一下解锁 待定
+ *
+ * 河北农业大学：
+ * 0312-7521776
+ * 目前都没查看
+ */

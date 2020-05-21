@@ -4,6 +4,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Answer implements Serializable {
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "aid=" + aid +
+                ", pid=" + pid +
+                ", sid=" + sid +
+                ", language='" + language + '\'' +
+                ", input='" + input + '\'' +
+                ", output='" + output + '\'' +
+                ", score=" + score +
+                ", createdate=" + createdate +
+                '}';
+    }
+
     private Integer aid;
 
     private Integer pid;
