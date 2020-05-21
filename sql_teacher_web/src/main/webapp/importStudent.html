@@ -28,7 +28,8 @@
                //   alert(loginName.data.nickname );
                   $("#loginName").html(loginName.data.nickname);
                     // 老师的id
-                   var cid = data.tid;
+                   var tid = data.data.tid;
+                   $("#tid").val(tid);
                 }
             });
 
@@ -83,7 +84,7 @@
                             <label class="col-sm-2 control-label">选择导入文件</label>
                             <div class="col-sm-10 form-inline">
                                 <input required="required" type="file" name="file1"></input>
-                                <input type="hidden" name="tid" id="tid">
+                                <input type="hidden" name="tid" id="tid" value="123">
                             </div>
                         </div>
                         <div class="form-group">

@@ -114,7 +114,8 @@ public class TeacherController {
      * @return
      */
     @RequestMapping("/importStudent")
-    public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile) {
+    public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile,@RequestParam(value = "tid") String  tid) {
+        System.out.println(tid  );
         System.out.println("*****************************");
         System.out.println("importStudent");
         Result result = null;
