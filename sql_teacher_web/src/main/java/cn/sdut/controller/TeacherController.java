@@ -1,24 +1,20 @@
 package cn.sdut.controller;
 
-import cn.sdut.ImportExcel;
 import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @RestController 返回的所有数据用 json返回
@@ -55,7 +51,6 @@ public class TeacherController {
 
     @RequestMapping("/add")
     public Result add(@RequestBody Problem problem) {
-        System.out.println(problem);
         Result result = null;
         try {
            // teacherService.add(problem);
@@ -114,8 +109,7 @@ public class TeacherController {
      * @return
      */
     @RequestMapping("/importStudent")
-    public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile,@RequestParam(value = "tid") String  tid) {
-        System.out.println(tid  );
+    public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile) {
         System.out.println("*****************************");
         System.out.println("importStudent");
         Result result = null;
@@ -128,5 +122,16 @@ public class TeacherController {
         mv.setViewName("importStudent");
         return mv;
     }
-
+    @RequestMapping("/finddata")
+    public <body> Result finddata() {
+        System.out.println("*****************************");
+        System.out.println("finddata");
+        Result result = null;
+        List<Product> list = new ArrayList<Product>();
+        list.add(new Product("衬衣", 10));
+        list.add(new Product("短袖", 20));
+        list.add(new Product("大衣", 30));
+        result = new Result(true, "查询成功", list);
+        return result;
+    }
 }
