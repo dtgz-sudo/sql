@@ -18,26 +18,28 @@
     <script type="text/javascript" src="layer/2.4/layer.js"></script>
     <script src="js/plugins/jquery/jquery.min.js"></script>
     <script>
+        var tid = "";
         $(function () {
             $.ajax({
                 url: "../index/findLoginUser",// ajax请求的url地址
                 type: "post",// 提交的方法
+                async:false,
                 success: function (data) { // ajax请求回调后执行的方法,data表示从服务器返回的数据
-                  var loginName = data;
-                  console.log(loginName.data.nickname    );
-               //   alert(loginName.data.nickname );
-                  $("#loginName").html(loginName.data.nickname);
+                    var loginName = data;
+                    console.log(loginName.data.nickname);
+                    //   alert(loginName.data.nickname );
+                    $(" #loginName").html(loginName.data.nickname);
                     // 老师的id
-                   var tid = data.data.tid;
-                   $("#tid").val(tid);
+                    tid = data.data.tid;
+                    $("#tid").val(tid);
+
                 }
             });
-
         });
-
+        function test() {
+            alert(tid);
+        }
     </script>
-
-
 </head>
 <body class="vsc-initialized">
 
