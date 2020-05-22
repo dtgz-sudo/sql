@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Teacher 服务层
@@ -39,5 +40,7 @@ public interface TeacherService {
      */
     public Teacher findByName(String nickName);
     // 导入学生的名单
-     public void importstudent(MultipartFile mFile) throws Exception;
+     public void importstudent(MultipartFile mFile,int tid) throws Exception;
+//     获取学生答题整体情况
+    public List findalldata(int tid) throws SQLException;
 }

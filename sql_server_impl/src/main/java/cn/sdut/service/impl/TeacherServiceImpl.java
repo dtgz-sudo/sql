@@ -5,6 +5,7 @@ import cn.sdut.domain.Problem;
 import cn.sdut.domain.Student;
 import cn.sdut.domain.Teacher;
 import cn.sdut.domain.TeacherExample;
+import cn.sdut.entity.Alldata;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.mapper.TeacherMapper;
@@ -209,7 +210,7 @@ public class TeacherServiceImpl  implements TeacherService {
     }
     //学生名单导入
     @Override
-    public void importstudent(MultipartFile mFile) throws Exception {
+    public void importstudent(MultipartFile mFile,int tid) throws Exception {
         String fileName = mFile.getOriginalFilename();
         // 获取上传文件的输入流
         InputStream inputStream = null;
@@ -232,9 +233,46 @@ public class TeacherServiceImpl  implements TeacherService {
             student.setNickname(nickname);
             student.setEmail(email);
             student.setPermission(permission);
-            student.setTid(1);
+            student.setTid(tid);
             studentMapper.insert(student);
         }
 
+    }
+
+//    查询学生整体答题情况
+    //    select count(*) as num,pid,score from (select pid,sid,MAX(score) as score from answer group by sid,pid having sid in (select sid from student where tid = 1))A GROUP BY pid,score
+    @Override
+    public List findalldata(int tid) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        connection= dataSource.getConnection();
+        String sql = "select count(*) as num,pid,score from (select pid,sid,MAX(score) as score from answer group by sid,pid having sid in (select sid from student where tid = ?))A GROUP BY pid,score";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,tid);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Map> list = this.convertList(resultSet);
+
+        //将数据进行分类
+        List<Alldata> listdata = new ArrayList<Alldata>();
+        for (int i = 0;i < list.size();) {
+            Alldata data1 = new Alldata();
+            int pid = (int)list.get(i).get("pid");
+            int score = (int)list.get(i).get("score");
+            int num = (int)list.get(i).get("num");
+            data1.setPid(pid);
+            if(score == 0) data1.setNum0(num);
+            else if(score == 50) data1.setNum50(num);
+            else if(score == 70) data1.setNum70(num);
+            else if(score == 100) data1.setNum100(num);
+            if(i != list.size() - 1) i++;
+            while((int)list.get(i).get("pid") == pid)
+            {
+
+            }
+        }
+
+        preparedStatement.close();
+        connection.close();
+        return null;
     }
 }

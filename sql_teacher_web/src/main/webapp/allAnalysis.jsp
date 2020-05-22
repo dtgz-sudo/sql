@@ -27,6 +27,7 @@
     <script src="js/plugins/jquery/jquery.min.js"></script>
     <script src="js/echarts.min.js"></script>
     <script>
+        var tid;
         $(function () {
             $.ajax({
                 url: "../index/findLoginUser",// ajax请求的url地址
@@ -37,7 +38,7 @@
                     //   alert(loginName.data.nickname );
                     $("#loginName").html(loginName.data.nickname);
                     // 老师的id
-                    var cid = data.tid;
+                    tid = loginName.data.tid;
                 }
             });
 
@@ -107,14 +108,41 @@
                             }
                         },
                         legend: {
-                            data:['成绩']
+                            data:['0分','50分','70分','100分']
                         },
                         xAxis: {
                             data: []
                         },
                         yAxis: {},
                         series: [{
-                            name: '成绩',
+                            name: '0分',
+                            type: 'bar',
+                            data: [],
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'}
+                                ]
+                            }
+                        },{
+                                name: '50分',
+                                type: 'bar',
+                                data: [],
+                                markLine : {
+                                    data : [
+                                        {type : 'average', name : '平均值'}
+                                    ]
+                                }
+                            },{
+                            name: '70分',
+                            type: 'bar',
+                            data: [],
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'}
+                                ]
+                            }
+                            },{
+                            name: '100分',
                             type: 'bar',
                             data: [],
                             markLine : {
@@ -127,33 +155,57 @@
 
                     myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
 
-                    var names=[];    //类别数组（实际用来盛放X轴坐标值）
-                    var nums=[];    //销量数组（实际用来盛放Y坐标值）
+                    var pid=[];    //题号数组（实际用来盛放X轴坐标值）
+                    var num0=[];    //0分数组（实际用来盛放Y坐标值）
+                    var num50=[];    //50分数组（实际用来盛放Y坐标值）
+                    var num70=[];    //70分数组（实际用来盛放Y坐标值）
+                    var num100=[];    //100分数组（实际用来盛放Y坐标值）
 
                     $.ajax({
                         type : "post",
                         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-                        url : "../teacher/finddata",    //请求发送到TestServlet处
-                        data : {},
+                        url : "../teacher/findalldata",    //请求发送
+                        data : {tid: 1},
                         dataType : "json",        //返回数据形式为json
                         success : function(result) {
                             //请求成功时执行该函数内容，result即为服务器返回的json对象
                             if (result) {
                                 for(var i=0;i<result.data.length;i++){
-                                    names.push(result.data[i].name);    //挨个取出类别并填入类别数组
+                                    pid.push(result.data[i].pid);    //挨个取出类别并填入类别数组
                                 }
                                 for(var i=0;i<result.data.length;i++){
-                                    nums.push(result.data[i].num);    //挨个取出销量并填入销量数组
+                                    num0.push(result.data[i].num0);
+                                }
+                                for(var i=0;i<result.data.length;i++){
+                                    num50.push(result.data[i].num50);
+                                }
+                                for(var i=0;i<result.data.length;i++){
+                                    num70.push(result.data[i].num70);
+                                }
+                                for(var i=0;i<result.data.length;i++){
+                                    num100.push(result.data[i].num100);
                                 }
                                 myChart.hideLoading();    //隐藏加载动画
                                 myChart.setOption({        //加载数据图表
                                     xAxis: {
-                                        data: names
+                                        data: pid
                                     },
                                     series: [{
                                         // 根据名字对应到相应的系列
-                                        name: '成绩',
-                                        data: nums
+                                        name: '0分',
+                                        data: num0
+                                    },{
+                                        // 根据名字对应到相应的系列
+                                        name: '50分',
+                                        data: num50
+                                    },{
+                                        // 根据名字对应到相应的系列
+                                        name: '70分',
+                                        data: num70
+                                    },{
+                                        // 根据名字对应到相应的系列
+                                        name: '100分',
+                                        data: num100
                                     }]
                                 });
 
