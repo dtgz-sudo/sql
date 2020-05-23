@@ -3,9 +3,9 @@
 <HEAD>
 
     <META charset="utf-8">
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
-    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <link href="plugins/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="plugins/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
@@ -40,7 +40,18 @@
         var app = angular.module("sql", []);
         // 设置控制器
         app.controller("proList", function ($scope, $http, $location) {
-
+            // 提交反馈
+            $scope.submit = function () {
+                console.log($scope.list);
+                var url = "../teacher/submitComment/"+$scope.tid;
+                $http.post(url,$scope.list).success(function (resp) {
+                    if (resp.success) {
+                        $scope.list = resp.data;
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+            };
             $scope.init = function () {
                 $scope.url = $location.absUrl();
                 $scope.cid = $location.search()['cid'];
@@ -49,11 +60,11 @@
                     if (resp.success) {
                         $scope.loginName = resp.data;
                         $scope.tid = resp.data.tid;
-                        var url = "../teacher/findTeacherProblem/"+$scope.tid;
+                        var url = "../teacher/findCommontAnswer/"+$scope.tid;
                         $http.post(url).success(function (resp) {
                             if (resp.success) {
                                // $scope.data = resp.data;
-                                console.log(resp)
+                                $scope.list = resp.data;
                             } else {
                                 console.log(resp.message);
                             }
@@ -66,13 +77,6 @@
 
 
             };
-            $http.post("../student/findCatogy", $scope.cid).success(function (resp) {
-                if (resp.success) {
-                    $scope.category = resp.data;
-                } else {
-                    console.log(resp.message);
-                }
-            });
 
         });
 
@@ -92,7 +96,7 @@
                         class="sr-only">Toggle navigation</SPAN> <SPAN
                         class="icon-bar"></SPAN><SPAN class="icon-bar"></SPAN><SPAN
                         class="icon-bar"></SPAN></BUTTON>
-                <A class="navbar-brand" href="">主页</A>
+                <A class="navbar-brand" href    ="">主页</A>
             </DIV>
             <DIV class="collapse navbar-collapse" id="navbar-collapse">
                 <UL class="nav navbar-nav">
@@ -114,33 +118,30 @@
 
         <DIV class="container">
             <DIV class="row block block-success" style="padding-top: 10px;">
-                <H3 class="problem-header">历史答题</H3>
-<!--                <DIV class="prob-info"><SPAN class="user-black">Start time:&nbsp;2019-07-20-->
-<!--21:44:02&nbsp;&nbsp;</SPAN> <SPAN class="user-black">End-->
-<!--time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>-->
+                <H3 class="problem-header">学生答题</H3>
                 <DIV>
-                    <CENTER></CENTER>
+                    <input  type="button" value="提交" ng-click="submit()">
                 </DIV>
             </DIV>
             <DIV class="row">
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
 
-                    <TH class="col-md-1">Ano</TH>
-                    <TH class="col-md-3">Title</TH>
+                    <TH class="col-md-1">学生姓名</TH>
+                    <TH class="col-md-1">题目标题</TH>
                     <TH class="col-md-5">SQL语句</TH>
                     <TH class="col-md-1">分数</TH>
                     <TH class="col-md-3">评论</TH>
 
                     <TBODY>
 
-                    <TR ng-repeat="obj in data ">
+                    <TR ng-repeat="obj in list ">
 
-                        <TD>{{obj.aid}}</TD>
-                        <TD><A href="/problem.html#?pid=">{{obj.problem.title}}</A></TD>
-                        <TD>{{obj.input}}</TD>
+                        <TD>{{obj.stuName}}</TD>
+                        <TD>{{obj.title}}</TD>
+                        <TD>{{obj.sql}}</TD>
                         <TD>{{obj.score}}</TD>
-                        <TD>{{obj.comment}}</TD>
+                        <TD><input type="text" ng-model="obj.comment"></TD>
                     </TR>
                     </TBODY>
                 </TABLE>

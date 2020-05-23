@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @RestController 返回的所有数据用 json返回
+ * @author 赵德锋
  */
 @RestController
 @RequestMapping("/student")
@@ -24,12 +26,7 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private ProblemMapper problemMapper;
-    @Autowired
-    private AnswerMapper answerMapper;
-    @Autowired
-    private CategoryMapper categoryMapper;
+
 
 
     /**
@@ -42,12 +39,7 @@ public class StudentController {
         System.out.println("findCatogy");
         Result result = null;
         try {
-            Category category = categoryMapper.selectByPrimaryKey(cid);
-            ProblemExample problemExample = new ProblemExample();
-            ProblemExample.Criteria criteria = problemExample.createCriteria();
-            criteria.andCidEqualTo(cid);
-            List<Problem> problems = problemMapper.selectByExample(problemExample);
-            category.setProblemList(problems);
+            Category category =  studentService.findAllcategory(cid);
             result = new Result(true, "查询分类成功", category);
             System.out.println(category.getProblemList());
         } catch (Exception e) {
@@ -64,17 +56,11 @@ public class StudentController {
      * @return
      */
     @RequestMapping("/findCatogyByTeacher/{cid}/{tid}")
-    public Result findCatogyByTeacher(@PathVariable("cid") Integer cid,@PathVariable("tid") Integer tid) {
+    public Result findCatogyByTeacher(@PathVariable("cid") Integer cid, @PathVariable("tid") Integer tid) {
         System.out.println("findCatogyByTeacheran");
         Result result = null;
         try {
-            Category category = categoryMapper.selectByPrimaryKey(cid);
-            ProblemExample problemExample = new ProblemExample();
-            ProblemExample.Criteria criteria = problemExample.createCriteria();
-            criteria.andCidEqualTo(cid);
-            criteria.andTidEqualTo(tid);
-            List<Problem> problems = problemMapper.selectByExample(problemExample);
-            category.setProblemList(problems);
+            Category category = studentService.findCatogyByCidAndTid(cid,tid);
             result = new Result(true, "查询分类成功", category);
             System.out.println(category.getProblemList());
         } catch (Exception e) {
@@ -93,15 +79,8 @@ public class StudentController {
         System.out.println("findStudentAnswer");
         Result result = null;
         try {
-            AnswerExample answerExample = new AnswerExample();
-            AnswerExample.Criteria criteria = answerExample.createCriteria();
-            criteria.andSidEqualTo(sid);
-            List<Answer> answers = answerMapper.selectByExample(answerExample);
-            for (Answer answer : answers) {
-                Integer pid = answer.getPid();
-                Problem problem = problemMapper.selectByPrimaryKey(pid);
-                answer.setProblem(problem);
-            }
+            List<Answer> answers =    studentService.findByAnswerBySid(sid);
+
             result = new Result(true, "查询历史答案", answers);
             System.out.println(answers);
         } catch (Exception e) {
@@ -125,7 +104,7 @@ public class StudentController {
         Result result = null;
         try {
 
-            Problem problem = problemMapper.selectByPrimaryKey(pid);
+            Problem problem = studentService.selectProblemByPid(pid);
             result = new Result(true, "查询分类成功", problem);
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,4 +136,3 @@ public class StudentController {
         return result;
     }
 }
-

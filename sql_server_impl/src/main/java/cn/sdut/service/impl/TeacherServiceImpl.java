@@ -1,12 +1,9 @@
 package cn.sdut.service.impl;
 
 import cn.sdut.ImportExcel;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Student;
-import cn.sdut.domain.Teacher;
-import cn.sdut.domain.TeacherExample;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
-import cn.sdut.entity.Piedata;
+import cn.sdut.mapper.AnswerMapper;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.mapper.TeacherMapper;
@@ -38,6 +35,25 @@ import java.util.*;
 public class TeacherServiceImpl  implements TeacherService {
     @Autowired
     TeacherMapper teacherMapper;
+    @Autowired
+    AnswerMapper answerMapper;
+
+    /**
+     * 提交评论
+     *
+     * @param list
+     */
+    @Override
+    public void updateComment(List<Answer> list) {
+        for (Answer answer : list) {
+            Integer aid = answer.getAid();
+            Answer answer1 = answerMapper.selectByPrimaryKey(aid);
+            answer1.setComment(answer.getComment());
+            answerMapper.updateByPrimaryKey(answer1);
+
+        }
+    }
+
     @Autowired
     DataSource dataSource;
     @Autowired
@@ -294,45 +310,35 @@ public class TeacherServiceImpl  implements TeacherService {
         return listdata;
     }
 
-    //    查询学生部分完成的人数 select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = 1) and snum > 0)C
-//  查询学生全部完成的人数select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = 1))C
+    /**
+     * 查询指定老师未评论的问题
+     *
+     * @param tid
+     * @return
+     */
     @Override
-    public Piedata findpiedata(int tid) throws SQLException {
-        System.out.println("teacherservicefindpiedata");
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        connection= dataSource.getConnection();
-        String sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where tid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = ?) and snum > 0)C";
-        preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
-        preparedStatement.setInt(2,tid);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        List<Map> listpart = this.convertList(resultSet);
+    public List<Map> findCommontAnswer(Integer tid) {
+        List<Map> list = new ArrayList<>();
+        AnswerExample answerExample = new AnswerExample();
+        AnswerExample.Criteria criteria = answerExample.createCriteria();
+        criteria.andTidEqualTo(tid);
+        criteria.andCommentIsNull();
+        List<Answer> answers = answerMapper.selectByExample(answerExample);
+        for (Answer answer : answers) {
+            Integer pid = answer.getPid();
+            Integer sid = answer.getSid();
+            Problem problem = problemMapper.selectByPrimaryKey(pid);
+            Student student = studentMapper.selectByPrimaryKey(sid);
 
-        sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where tid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = ?))C";
-        preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
-        preparedStatement.setInt(2,tid);
-        ResultSet resultSet2 = preparedStatement.executeQuery();
-        List<Map> listall = this.convertList(resultSet2);
-
-        sql = "select count(*) as allstudent from student where tid = ?";
-        preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
-        ResultSet resultSet3 = preparedStatement.executeQuery();
-        List<Map> all = this.convertList(resultSet3);
-        long partnum = (long)listpart.get(0).get("num");
-        long allnum = (long)listall.get(0).get("num");
-        long allstudent = (long)all.get(0).get("allstudent");
-
-        Piedata piedata = new Piedata();
-        piedata.setAllvalue(allnum);
-        piedata.setPartvalue(partnum);
-        piedata.setNotvalue(allstudent-allnum-partnum);
-        preparedStatement.close();
-        connection.close();
-        return piedata;
+            Map map = new HashMap();
+            map.put("aid",answer.getAid());
+            map.put("sql",answer.getInput());
+            map.put("score",answer.getScore());
+            map.put("title",problem.getTitle());
+            map.put("stuName",student.getNickname());
+            map.put("comment",null);
+            list.add(map);
+        }
+        return list;
     }
-
-
 }

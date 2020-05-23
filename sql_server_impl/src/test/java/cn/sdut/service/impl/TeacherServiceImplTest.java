@@ -43,7 +43,7 @@ public class TeacherServiceImplTest {
     }
     @Test
     public void testfindpiedata() throws SQLException {
-        teacherService.findpiedata(1);
+     //   teacherService.findpiedata(1);
     }
     public void testTestLogin() {
     }
