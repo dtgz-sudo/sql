@@ -1,5 +1,6 @@
 package cn.sdut.service;
 
+import cn.sdut.domain.Answer;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Teacher 服务层
@@ -43,4 +45,17 @@ public interface TeacherService {
      public void importstudent(MultipartFile mFile,int tid) throws Exception;
 //     获取学生答题整体情况
     public List findalldata(int tid) throws SQLException;
+
+    /**
+     * 查询指定老师未评论的问题
+     * @param tid
+     * @return
+     */
+   public List<Map> findCommontAnswer(Integer tid);
+
+    /**
+     * 提交评论
+     * @param list
+     */
+ public    void updateComment(List<Answer> list);
 }

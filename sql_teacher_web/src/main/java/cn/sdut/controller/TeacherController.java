@@ -1,5 +1,6 @@
 package cn.sdut.controller;
 
+import cn.sdut.domain.Answer;
 import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
@@ -13,9 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @RestController 返回的所有数据用 json返回
@@ -140,6 +141,52 @@ public class TeacherController {
             List<Alldata> findalldata = teacherService.findalldata(int_tid);
             result = new Result(true, "查询成功", findalldata);
         } catch (SQLException e) {
+            e.printStackTrace();
+            result = new Result(false, "查询失败");
+        }
+        return result;
+    }
+
+    /**
+     * 根据老师的id查询此老师全部未回答的学生问题
+     *
+     * @param tid
+     * @param
+     * @return
+     */
+    @RequestMapping("/findCommontAnswer/{tid}")
+    public Result findCommontAnswer(@PathVariable(value = "tid") Integer tid) {
+        System.out.println("*****************************");
+        Result result = null;
+
+        try {
+            List<Map> list = teacherService.findCommontAnswer(tid);
+            result = new Result(true, "查询成功", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询失败");
+        }
+        return result;
+    }
+
+    /**
+     * 提交 老师输入的评论 并且返回下一次评论的数据
+     *
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/submitComment/{tid}")
+    public Result submitComment(@RequestBody List<Answer> list, @PathVariable("tid") Integer tid) {
+        System.out.println("*****************************");
+        System.out.println(list);
+        Result result = null;
+
+        try {
+            teacherService.updateComment(list);
+            List<Map> commontAnswer = teacherService.findCommontAnswer(tid);
+            result = new Result(true, "查询成功", commontAnswer);
+        } catch (Exception e) {
             e.printStackTrace();
             result = new Result(false, "查询失败");
         }

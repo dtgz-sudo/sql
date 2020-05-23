@@ -1,11 +1,9 @@
 package cn.sdut.service.impl;
 
 import cn.sdut.ImportExcel;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Student;
-import cn.sdut.domain.Teacher;
-import cn.sdut.domain.TeacherExample;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
+import cn.sdut.mapper.AnswerMapper;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.mapper.TeacherMapper;
@@ -37,6 +35,25 @@ import java.util.*;
 public class TeacherServiceImpl  implements TeacherService {
     @Autowired
     TeacherMapper teacherMapper;
+    @Autowired
+    AnswerMapper answerMapper;
+
+    /**
+     * 提交评论
+     *
+     * @param list
+     */
+    @Override
+    public void updateComment(List<Answer> list) {
+        for (Answer answer : list) {
+            Integer aid = answer.getAid();
+            Answer answer1 = answerMapper.selectByPrimaryKey(aid);
+            answer1.setComment(answer.getComment());
+            answerMapper.updateByPrimaryKey(answer1);
+
+        }
+    }
+
     @Autowired
     DataSource dataSource;
     @Autowired
@@ -291,5 +308,37 @@ public class TeacherServiceImpl  implements TeacherService {
         preparedStatement.close();
         connection.close();
         return listdata;
+    }
+
+    /**
+     * 查询指定老师未评论的问题
+     *
+     * @param tid
+     * @return
+     */
+    @Override
+    public List<Map> findCommontAnswer(Integer tid) {
+        List<Map> list = new ArrayList<>();
+        AnswerExample answerExample = new AnswerExample();
+        AnswerExample.Criteria criteria = answerExample.createCriteria();
+        criteria.andTidEqualTo(tid);
+        criteria.andCommentIsNull();
+        List<Answer> answers = answerMapper.selectByExample(answerExample);
+        for (Answer answer : answers) {
+            Integer pid = answer.getPid();
+            Integer sid = answer.getSid();
+            Problem problem = problemMapper.selectByPrimaryKey(pid);
+            Student student = studentMapper.selectByPrimaryKey(sid);
+
+            Map map = new HashMap();
+            map.put("aid",answer.getAid());
+            map.put("sql",answer.getInput());
+            map.put("score",answer.getScore());
+            map.put("title",problem.getTitle());
+            map.put("stuName",student.getNickname());
+            map.put("comment",null);
+            list.add(map);
+        }
+        return list;
     }
 }
