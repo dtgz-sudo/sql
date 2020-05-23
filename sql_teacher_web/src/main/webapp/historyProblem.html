@@ -1,0 +1,162 @@
+﻿<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+
+    <META charset="utf-8">
+    <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <link href="plugins/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="plugins/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <!--    使用angularjs框架的双向绑定-->
+    <script src="plugins/angularjs/angular.min.js"></script>
+    <SCRIPT language="javascript">
+        var stime = "1587958144";
+
+        function updatetime() {
+            stime++;
+            var etime = new Date(parseInt(stime) * 1000);
+            $("#dt").html(etime.toString("Y-m-d H:i:s"));
+        }
+
+        setInterval(updatetime, 1000);
+    </SCRIPT>
+
+    <SCRIPT>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'UA-107784973-2');
+    </SCRIPT>
+    <script type="text/javascript">
+
+        // 定义sql模块
+        var app = angular.module("sql", []);
+        // 设置控制器
+        app.controller("proList", function ($scope, $http, $location) {
+
+            $scope.init = function () {
+                $scope.url = $location.absUrl();
+                $scope.cid = $location.search()['cid'];
+
+                $http.get("../index/findLoginUser").success(function (resp) {
+                    if (resp.success) {
+                        $scope.loginName = resp.data;
+                        $scope.tid = resp.data.tid;
+                        var url = "../teacher/findTeacherProblem/"+$scope.tid;
+                        $http.post(url).success(function (resp) {
+                            if (resp.success) {
+                               // $scope.data = resp.data;
+                                console.log(resp)
+                            } else {
+                                console.log(resp.message);
+                            }
+                        });
+
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+
+
+            };
+            $http.post("../student/findCatogy", $scope.cid).success(function (resp) {
+                if (resp.success) {
+                    $scope.category = resp.data;
+                } else {
+                    console.log(resp.message);
+                }
+            });
+
+        });
+
+    </script>
+    <META content="MSHTML 11.00.10570.1001" name="GENERATOR">
+</HEAD>
+<BODY ng-app="sql" ng-controller="proList" ng-init="init()">
+<DIV class="everything">
+    <DIV class="banner">
+        <DIV class="container"></DIV>
+    </DIV>
+    <NAV class="navbar navbar-default" role="navigation">
+        <DIV class="container">
+            <DIV class="navbar-header">
+                <BUTTON class="navbar-toggle collapsed" data-target="#navbar-collapse"
+                        data-toggle="collapse" type="button"><SPAN
+                        class="sr-only">Toggle navigation</SPAN> <SPAN
+                        class="icon-bar"></SPAN><SPAN class="icon-bar"></SPAN><SPAN
+                        class="icon-bar"></SPAN></BUTTON>
+                <A class="navbar-brand" href="">主页</A>
+            </DIV>
+            <DIV class="collapse navbar-collapse" id="navbar-collapse">
+                <UL class="nav navbar-nav">
+                    <LI><A href="/Contests.html">SQL答题实验</A></LI>
+                    <LI><A href="/historyAnswer.html">历史答题分析</A></LI>
+                </UL>
+                <UL class="nav navbar-nav navbar-right">
+                    <LI><A href="">{{loginName.nickname}}</A></LI>
+                    <LI><A
+                            href="/logout">退出登录</A></LI>
+                </UL>
+            </DIV><!-- /.navbar-collapse -->
+        </DIV><!-- /.container-fluid -->     </NAV>
+    <DIV class="main">
+        <SCRIPT>
+            sessionUid = 0; </SCRIPT>
+
+        <SCRIPT src=""></SCRIPT>
+
+        <DIV class="container">
+            <DIV class="row block block-success" style="padding-top: 10px;">
+                <H3 class="problem-header">历史答题</H3>
+<!--                <DIV class="prob-info"><SPAN class="user-black">Start time:&nbsp;2019-07-20-->
+<!--21:44:02&nbsp;&nbsp;</SPAN> <SPAN class="user-black">End-->
+<!--time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>-->
+                <DIV>
+                    <CENTER></CENTER>
+                </DIV>
+            </DIV>
+            <DIV class="row">
+                <TABLE class="table table-bordered table-hover">
+                    <THEAD>
+
+                    <TH class="col-md-1">Ano</TH>
+                    <TH class="col-md-3">Title</TH>
+                    <TH class="col-md-5">SQL语句</TH>
+                    <TH class="col-md-1">分数</TH>
+                    <TH class="col-md-3">评论</TH>
+
+                    <TBODY>
+
+                    <TR ng-repeat="obj in data ">
+
+                        <TD>{{obj.aid}}</TD>
+                        <TD><A href="/problem.html#?pid=">{{obj.problem.title}}</A></TD>
+                        <TD>{{obj.input}}</TD>
+                        <TD>{{obj.score}}</TD>
+                        <TD>{{obj.comment}}</TD>
+                    </TR>
+                    </TBODY>
+                </TABLE>
+            </DIV>
+        </DIV>
+    </DIV>
+    <DIV class="footer">
+        <DIV class="container">
+            <DIV class="row">
+            </DIV>
+            <DIV class="row">
+                <DIV class="col-sm-11 text-center"><SPAN id="dt"></SPAN>
+                </DIV>
+            </DIV>
+        </DIV>
+    </DIV>
+</DIV>
+</BODY>
+</HTML>
