@@ -2,7 +2,6 @@ package cn.sdut.service;
 
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
-import cn.sdut.entity.Piedata;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +43,4 @@ public interface TeacherService {
      public void importstudent(MultipartFile mFile,int tid) throws Exception;
 //     获取学生答题整体情况
     public List findalldata(int tid) throws SQLException;
-    //     获取学生完成题目情况
-    public Piedata findpiedata(int tid) throws SQLException;
 }

@@ -1,8 +1,8 @@
 package cn.sdut.service.impl;
 
-import cn.sdut.domain.Answer;
-import cn.sdut.domain.Problem;
+import cn.sdut.domain.*;
 import cn.sdut.mapper.AnswerMapper;
+import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.service.StudentService;
@@ -32,6 +32,9 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
     @Autowired
     private AnswerMapper answerMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
+
     /**
      * 注入连接池和数据链接
      */
@@ -148,6 +151,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
+     * 查询cid对应的分类
+     *
+     * @param cid
+     * @return
+     */
+    @Override
+    public Category findAllcategory(Integer cid) {
+        Category category = categoryMapper.selectByPrimaryKey(cid);
+        ProblemExample problemExample = new ProblemExample();
+        ProblemExample.Criteria criteria = problemExample.createCriteria();
+        criteria.andCidEqualTo(cid);
+        List<Problem> problems = problemMapper.selectByExample(problemExample);
+        category.setProblemList(problems);
+        return category;
+    }
+
+    /**
      * 封装结果集
      *
      * @param rs
@@ -187,12 +207,60 @@ public class StudentServiceImpl implements StudentService {
         List list = this.convertList(resultSet);
         return list;
     }
+
+    /**
+     * 根据tid 和tid查询对应的问题分裂
+     *
+     * @param cid
+     * @param tid
+     * @return
+     */
+    @Override
+    public Category findCatogyByCidAndTid(Integer cid, Integer tid) {
+        Category category = categoryMapper.selectByPrimaryKey(cid);
+        ProblemExample problemExample = new ProblemExample();
+        ProblemExample.Criteria criteria = problemExample.createCriteria();
+        criteria.andCidEqualTo(cid);
+        criteria.andTidEqualTo(tid);
+        List<Problem> problems = problemMapper.selectByExample(problemExample);
+        category.setProblemList(problems);
+        return category;
+    }
+
+    /**
+     * 根据问题ID PID 查询对应的problem
+     *
+     * @param pid
+     * @return
+     */
+    @Override
+    public Problem selectProblemByPid(Integer pid) {
+        Problem problem = problemMapper.selectByPrimaryKey(pid);
+        return problem;
+    }
+
+    /**
+     * 查询学生id为CId 的学生回答的所有问题
+     *
+     * @param sid
+     * @return
+     */
+    @Override
+    public List<Answer> findByAnswerBySid(Integer sid) {
+        AnswerExample answerExample = new AnswerExample();
+        AnswerExample.Criteria criteria = answerExample.createCriteria();
+        criteria.andSidEqualTo(sid);
+        List<Answer> answers = answerMapper.selectByExample(answerExample);
+        for (Answer answer : answers) {
+            /**
+             * 这里注意不要把 正确 答案返回过去
+             */
+            Integer pid = answer.getPid();
+            Problem problem = problemMapper.selectByPrimaryKey(pid);
+            Problem problem1 = new Problem();
+            problem1.setTitle(problem.getTitle());
+            answer.setProblem(problem1);
+        }
+        return answers;
+    }
 }
-/**
- * 0451 8660 8812
- * 黑龙江大学电子信息计算机专硕 300分查看一下解锁 待定
- *
- * 河北农业大学：
- * 0312-7521776
- * 目前都没查看
- */
