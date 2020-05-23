@@ -14,6 +14,7 @@
     <result column="exampleinput" jdbcType="VARCHAR" property="exampleinput" />
     <result column="exampleoutput" jdbcType="VARCHAR" property="exampleoutput" />
     <result column="tablename" jdbcType="VARCHAR" property="tablename" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     pid, title, Description, input, output, hint, createDate, Language, cid, exampleinput, 
-    exampleoutput, tablename
+    exampleoutput, tablename, tid
   </sql>
   <select id="selectByExample" parameterType="cn.sdut.domain.ProblemExample" resultMap="BaseResultMap">
     select
@@ -111,13 +112,13 @@
     insert into problem (pid, title, Description, 
       input, output, hint, 
       createDate, Language, cid, 
-      exampleinput, exampleoutput, tablename
-      )
+      exampleinput, exampleoutput, tablename, 
+      tid)
     values (#{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{input,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR}, #{hint,jdbcType=VARCHAR}, 
       #{createdate,jdbcType=TIMESTAMP}, #{language,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
-      #{exampleinput,jdbcType=VARCHAR}, #{exampleoutput,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR}
-      )
+      #{exampleinput,jdbcType=VARCHAR}, #{exampleoutput,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR}, 
+      #{tid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.sdut.domain.Problem">
     insert into problem
@@ -158,6 +159,9 @@
       <if test="tablename != null">
         tablename,
       </if>
+      <if test="tid != null">
+        tid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pid != null">
@@ -195,6 +199,9 @@
       </if>
       <if test="tablename != null">
         #{tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -243,6 +250,9 @@
       <if test="record.tablename != null">
         tablename = #{record.tablename,jdbcType=VARCHAR},
       </if>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -261,7 +271,8 @@
       cid = #{record.cid,jdbcType=INTEGER},
       exampleinput = #{record.exampleinput,jdbcType=VARCHAR},
       exampleoutput = #{record.exampleoutput,jdbcType=VARCHAR},
-      tablename = #{record.tablename,jdbcType=VARCHAR}
+      tablename = #{record.tablename,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -302,6 +313,9 @@
       <if test="tablename != null">
         tablename = #{tablename,jdbcType=VARCHAR},
       </if>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
     </set>
     where pid = #{pid,jdbcType=INTEGER}
   </update>
@@ -317,7 +331,8 @@
       cid = #{cid,jdbcType=INTEGER},
       exampleinput = #{exampleinput,jdbcType=VARCHAR},
       exampleoutput = #{exampleoutput,jdbcType=VARCHAR},
-      tablename = #{tablename,jdbcType=VARCHAR}
+      tablename = #{tablename,jdbcType=VARCHAR},
+      tid = #{tid,jdbcType=INTEGER}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
 </mapper>
