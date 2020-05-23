@@ -132,4 +132,23 @@ public class Problem {
     public void setTid(Integer tid) {
         this.tid = tid;
     }
+
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "pid=" + pid +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", input='" + input + '\'' +
+                ", output='" + output + '\'' +
+                ", hint='" + hint + '\'' +
+                ", createdate=" + createdate +
+                ", language='" + language + '\'' +
+                ", cid=" + cid +
+                ", exampleinput='" + exampleinput + '\'' +
+                ", exampleoutput='" + exampleoutput + '\'' +
+                ", tablename='" + tablename + '\'' +
+                ", tid=" + tid +
+                '}';
+    }
 }

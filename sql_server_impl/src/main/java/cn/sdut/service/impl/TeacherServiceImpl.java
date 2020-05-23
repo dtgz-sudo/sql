@@ -1,11 +1,9 @@
 package cn.sdut.service.impl;
 
 import cn.sdut.ImportExcel;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Student;
-import cn.sdut.domain.Teacher;
-import cn.sdut.domain.TeacherExample;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
+import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.mapper.TeacherMapper;
@@ -36,13 +34,15 @@ import java.util.*;
 @Service
 public class TeacherServiceImpl  implements TeacherService {
     @Autowired
-    TeacherMapper teacherMapper;
+  private   TeacherMapper teacherMapper;
     @Autowired
-    DataSource dataSource;
+    private    DataSource dataSource;
     @Autowired
-    ProblemMapper problemMapper;
+    private   ProblemMapper problemMapper;
     @Autowired
-    StudentMapper studentMapper;
+    private    StudentMapper studentMapper;
+    @Autowired
+    private  CategoryMapper categoryMapper;
     /**
      * 登录
      * @param teacher
@@ -291,5 +291,16 @@ public class TeacherServiceImpl  implements TeacherService {
         preparedStatement.close();
         connection.close();
         return listdata;
+    }
+
+    /**
+     * 获取全部分类
+     *
+     * @return
+     */
+    @Override
+    public List<Category> findAllCategory() {
+        List<Category> categories = categoryMapper.selectByExample(null);
+        return categories;
     }
 }

@@ -1,5 +1,6 @@
 package cn.sdut.service;
 
+import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import org.springframework.stereotype.Service;
@@ -43,4 +44,10 @@ public interface TeacherService {
      public void importstudent(MultipartFile mFile,int tid) throws Exception;
 //     获取学生答题整体情况
     public List findalldata(int tid) throws SQLException;
+
+    /**
+     * 获取全部分类
+     * @return
+     */
+  public   List<Category> findAllCategory();
 }

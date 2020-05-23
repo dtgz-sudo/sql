@@ -1,8 +1,6 @@
 package cn.sdut.controller;
 
-import cn.sdut.domain.Category;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Teacher;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
@@ -26,8 +24,7 @@ import java.util.List;
 public class TeacherController {
     @Autowired
     TeacherService teacherService;
-    @Autowired
-    CategoryMapper categoryMapper;
+
 
     /**
      * 老师登录的controller
@@ -94,7 +91,8 @@ public class TeacherController {
         System.out.println("findAllcategory");
         Result result = null;
         try {
-            List<Category> categories = categoryMapper.selectByExample(null);
+            List<Category> categories=  teacherService.findAllCategory();
+
             System.out.println("category :" + categories);
             result = new Result(true, "查询分类成功", categories);
         }catch (Exception e){
@@ -143,6 +141,29 @@ public class TeacherController {
             e.printStackTrace();
             result = new Result(false, "查询失败");
         }
+        return result;
+    }
+    /**
+     * 查看学生历史答题情况
+     * @param sid
+     * @return
+     */
+    @RequestMapping("/findStudentAnswer/{sid}")
+    public Result findStudentAnswer(@PathVariable("sid") Integer sid) {
+        System.out.println("findStudentAnswer");
+        Result result = null;
+        try {
+
+            //result = new Result(true, "查询历史答案", answers);
+           // System.out.println(answers);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询历史答案失败");
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         return result;
     }
 }
