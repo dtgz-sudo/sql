@@ -4,6 +4,7 @@ import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Alldata;
+import cn.sdut.entity.Piedata;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
@@ -143,6 +144,24 @@ public class TeacherController {
             e.printStackTrace();
             result = new Result(false, "查询失败");
         }
+        return result;
+    }
+
+    @RequestMapping("/findpiedata")
+    public <body> Result findpiedata(@RequestParam(value = "tid")String tid) {
+        System.out.println("*****************************");
+        System.out.println("findpiedata");
+        Result result = null;
+        System.out.println(tid);
+        int int_tid = Integer.parseInt(tid);
+        try {
+            Piedata piedata = teacherService.findpiedata(int_tid);
+            result = new Result(true, "查询成功", piedata);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = new Result(false, "查询失败");
+        }
+
         return result;
     }
 }
