@@ -3,6 +3,7 @@ package cn.sdut.service.impl;
 import cn.sdut.ImportExcel;
 import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
+import cn.sdut.entity.Piedata;
 import cn.sdut.mapper.AnswerMapper;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
@@ -341,4 +342,45 @@ public class TeacherServiceImpl  implements TeacherService {
         }
         return list;
     }
+
+    //    查询学生部分完成的人数 select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = 1) and snum > 0)C
+//  查询学生全部完成的人数select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = 1))C
+    @Override
+    public Piedata findpiedata(int tid) throws SQLException {
+        System.out.println("teacherservicefindpiedata");
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        connection= dataSource.getConnection();
+        String sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where tid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = ?) and snum > 0)C";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,tid);
+        preparedStatement.setInt(2,tid);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Map> listpart = this.convertList(resultSet);
+
+        sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where tid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = ?))C";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,tid);
+        preparedStatement.setInt(2,tid);
+        ResultSet resultSet2 = preparedStatement.executeQuery();
+        List<Map> listall = this.convertList(resultSet2);
+
+        sql = "select count(*) as allstudent from student where tid = ?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,tid);
+        ResultSet resultSet3 = preparedStatement.executeQuery();
+        List<Map> all = this.convertList(resultSet3);
+        long partnum = (long)listpart.get(0).get("num");
+        long allnum = (long)listall.get(0).get("num");
+        long allstudent = (long)all.get(0).get("allstudent");
+
+        Piedata piedata = new Piedata();
+        piedata.setAllvalue(allnum);
+        piedata.setPartvalue(partnum);
+        piedata.setNotvalue(allstudent-allnum-partnum);
+        preparedStatement.close();
+        connection.close();
+        return piedata;
+    }
+
 }

@@ -5,6 +5,7 @@ import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Alldata;
+import cn.sdut.entity.Piedata;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -192,4 +196,7 @@ public class TeacherController {
         }
         return result;
     }
+
+
+
 }

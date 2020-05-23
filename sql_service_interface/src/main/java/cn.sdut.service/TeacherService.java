@@ -3,11 +3,9 @@ package cn.sdut.service;
 import cn.sdut.domain.Answer;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import cn.sdut.entity.Piedata;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -58,4 +56,8 @@ public interface TeacherService {
      * @param list
      */
  public    void updateComment(List<Answer> list);
+    //    查询学生部分完成的人数 select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = 1) and snum > 0)C
+//  查询学生全部完成的人数select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = 1))C
+
+    public Piedata findpiedata(int tid) throws SQLException;
 }
