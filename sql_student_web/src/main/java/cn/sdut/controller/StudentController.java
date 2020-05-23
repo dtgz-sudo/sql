@@ -1,15 +1,13 @@
 package cn.sdut.controller;
 
-import cn.sdut.domain.Answer;
-import cn.sdut.domain.Category;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.ProblemExample;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.AnswerMapper;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +43,6 @@ public class StudentController {
         Result result = null;
         try {
             Category category = categoryMapper.selectByPrimaryKey(cid);
-
             ProblemExample problemExample = new ProblemExample();
             ProblemExample.Criteria criteria = problemExample.createCriteria();
             criteria.andCidEqualTo(cid);
@@ -60,7 +57,63 @@ public class StudentController {
 
         return result;
     }
-
+    /**
+     * 获取学生的实验分类
+     * 限制只能查询自己老师的题目
+     * @param cid
+     * @return
+     */
+    @RequestMapping("/findCatogyByTeacher/{cid}/{tid}")
+    public Result findCatogyByTeacher(@PathVariable("cid") Integer cid,@PathVariable("tid") Integer tid) {
+        System.out.println("findCatogyByTeacheran");
+        Result result = null;
+        try {
+            Category category = categoryMapper.selectByPrimaryKey(cid);
+            ProblemExample problemExample = new ProblemExample();
+            ProblemExample.Criteria criteria = problemExample.createCriteria();
+            criteria.andCidEqualTo(cid);
+            criteria.andTidEqualTo(tid);
+            List<Problem> problems = problemMapper.selectByExample(problemExample);
+            category.setProblemList(problems);
+            result = new Result(true, "查询分类成功", category);
+            System.out.println(category.getProblemList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询分类失败");
+        }
+        return result;
+    }
+    /**
+     * 查看学生历史答题情况
+     * @param sid
+     * @return
+     */
+    @RequestMapping("/findStudentAnswer/{sid}")
+    public Result findStudentAnswer(@PathVariable("sid") Integer sid) {
+        System.out.println("findStudentAnswer");
+        Result result = null;
+        try {
+            AnswerExample answerExample = new AnswerExample();
+            AnswerExample.Criteria criteria = answerExample.createCriteria();
+            criteria.andSidEqualTo(sid);
+            List<Answer> answers = answerMapper.selectByExample(answerExample);
+            for (Answer answer : answers) {
+                Integer pid = answer.getPid();
+                Problem problem = problemMapper.selectByPrimaryKey(pid);
+                answer.setProblem(problem);
+            }
+            result = new Result(true, "查询历史答案", answers);
+            System.out.println(answers);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询历史答案失败");
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        return result;
+    }
     /**
      * 根据前端传过来的pid查询对应的problem
      * @param pid

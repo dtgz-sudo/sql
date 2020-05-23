@@ -50,11 +50,11 @@
                 $http.get("../index/findLoginStudent").success(function (resp) {
                     if (resp.success) {
                         $scope.loginName = resp.data;
-                        $scope.tid = resp.data.tid;
-                        var url = "../student/findCatogyByTeacher/"+$scope.cid+"/"+$scope.tid;
+                        $scope.sid = resp.data.sid;
+                        var url = "../student/findStudentAnswer/"+$scope.sid;
                         $http.post(url).success(function (resp) {
                             if (resp.success) {
-                                $scope.category = resp.data;
+                                $scope.data = resp.data;
                             } else {
                                 console.log(resp.message);
                             }
@@ -115,10 +115,10 @@
 
         <DIV class="container">
             <DIV class="row block block-success" style="padding-top: 10px;">
-                <H3 class="problem-header">{{category.categoryname}}</H3>
-                <DIV class="prob-info"><SPAN class="user-black">Start time:&nbsp;2019-07-20
-21:44:02&nbsp;&nbsp;</SPAN> <SPAN class="user-black">End
-time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>
+                <H3 class="problem-header">历史答题</H3>
+<!--                <DIV class="prob-info"><SPAN class="user-black">Start time:&nbsp;2019-07-20-->
+<!--21:44:02&nbsp;&nbsp;</SPAN> <SPAN class="user-black">End-->
+<!--time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>-->
                 <DIV>
                     <CENTER></CENTER>
                 </DIV>
@@ -127,14 +127,21 @@ time:&nbsp;2019-08-31 21:44:03</SPAN></DIV>
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
 
-                    <TH class="col-md-1">Cno</TH>
-                    <TH class="col-md-7">Problem</TH>
+                    <TH class="col-md-1">Ano</TH>
+                    <TH class="col-md-3">Title</TH>
+                    <TH class="col-md-5">SQL语句</TH>
+                    <TH class="col-md-1">分数</TH>
+                    <TH class="col-md-3">评论</TH>
 
                     <TBODY>
 
-                    <TR ng-repeat="obj in category.problemList ">
-                        <TD>{{obj.pid}}</TD>
-                        <TD><A href="/problem.html#?pid={{obj.pid}}">{{obj.title}}</A></TD>
+                    <TR ng-repeat="obj in data ">
+
+                        <TD>{{obj.aid}}</TD>
+                        <TD><A href="/problem.html#?pid=">{{obj.problem.title}}</A></TD>
+                        <TD>{{obj.input}}</TD>
+                        <TD>{{obj.score}}</TD>
+                        <TD>{{obj.comment}}</TD>
                     </TR>
                     </TBODY>
                 </TABLE>

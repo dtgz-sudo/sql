@@ -4,25 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Answer implements Serializable {
-    @Override
-    public String toString() {
-        return "Answer{" +
-                "aid=" + aid +
-                ", pid=" + pid +
-                ", sid=" + sid +
-                ", language='" + language + '\'' +
-                ", input='" + input + '\'' +
-                ", output='" + output + '\'' +
-                ", score=" + score +
-                ", createdate=" + createdate +
-                '}';
-    }
+
 
     private Integer aid;
 
     private Integer pid;
 
     private Integer sid;
+    private Integer  tid;
 
     private String language;
 
@@ -33,6 +22,25 @@ public class Answer implements Serializable {
     private Double score;
 
     private Date createdate;
+    private Problem problem;
+
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Problem getProblem() {
+        return problem;
+    }
+
+    public void setProblem(Problem problem) {
+        this.problem = problem;
+    }
 
     public Integer getAid() {
         return aid;
@@ -96,5 +104,30 @@ public class Answer implements Serializable {
 
     public void setCreatedate(Date createdate) {
         this.createdate = createdate;
+    }
+
+    public Integer getTid() {
+        return tid;
+    }
+
+    public void setTid(Integer tid) {
+        this.tid = tid;
+    }
+
+    @Override
+    public String   toString() {
+        return "Answer{" +
+                "aid=" + aid +
+                ", pid=" + pid +
+                ", sid=" + sid +
+                ", tid=" + tid +
+                ", language='" + language + '\'' +
+                ", input='" + input + '\'' +
+                ", output='" + output + '\'' +
+                ", score=" + score +
+                ", createdate=" + createdate +
+                ", problem=" + problem +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

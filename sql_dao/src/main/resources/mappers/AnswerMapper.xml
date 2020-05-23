@@ -10,6 +10,8 @@
     <result column="output" jdbcType="VARCHAR" property="output" />
     <result column="score" jdbcType="DOUBLE" property="score" />
     <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    aid, pid, sid, Language, input, output, score, createDate
+    aid, pid, sid, Language, input, output, score, createDate, tid, comment
   </sql>
   <select id="selectByExample" parameterType="cn.sdut.domain.AnswerExample" resultMap="BaseResultMap">
     select
@@ -105,10 +107,12 @@
   <insert id="insert" parameterType="cn.sdut.domain.Answer">
     insert into answer (aid, pid, sid, 
       Language, input, output, 
-      score, createDate)
+      score, createDate, tid, 
+      comment)
     values (#{aid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, 
       #{language,jdbcType=VARCHAR}, #{input,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR}, 
-      #{score,jdbcType=DOUBLE}, #{createdate,jdbcType=TIMESTAMP})
+      #{score,jdbcType=DOUBLE}, #{createdate,jdbcType=TIMESTAMP}, #{tid,jdbcType=INTEGER}, 
+      #{comment,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sdut.domain.Answer">
     insert into answer
@@ -137,6 +141,12 @@
       <if test="createdate != null">
         createDate,
       </if>
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="aid != null">
@@ -162,6 +172,12 @@
       </if>
       <if test="createdate != null">
         #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +214,12 @@
       <if test="record.createdate != null">
         createDate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.tid != null">
+        tid = #{record.tid,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +234,9 @@
       input = #{record.input,jdbcType=VARCHAR},
       output = #{record.output,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=DOUBLE},
-      createDate = #{record.createdate,jdbcType=TIMESTAMP}
+      createDate = #{record.createdate,jdbcType=TIMESTAMP},
+      tid = #{record.tid,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +265,12 @@
       <if test="createdate != null">
         createDate = #{createdate,jdbcType=TIMESTAMP},
       </if>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
     </set>
     where aid = #{aid,jdbcType=INTEGER}
   </update>
@@ -252,7 +282,9 @@
       input = #{input,jdbcType=VARCHAR},
       output = #{output,jdbcType=VARCHAR},
       score = #{score,jdbcType=DOUBLE},
-      createDate = #{createdate,jdbcType=TIMESTAMP}
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      tid = #{tid,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
     where aid = #{aid,jdbcType=INTEGER}
   </update>
 </mapper>

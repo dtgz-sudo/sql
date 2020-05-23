@@ -27,6 +27,8 @@ public class Problem {
 
     private String tablename;
 
+    private Integer tid;
+
     public Integer getPid() {
         return pid;
     }
@@ -123,21 +125,11 @@ public class Problem {
         this.tablename = tablename == null ? null : tablename.trim();
     }
 
-    @Override
-    public String toString() {
-        return "Problem{" +
-                "pid=" + pid +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", input='" + input + '\'' +
-                ", output='" + output + '\'' +
-                ", hint='" + hint + '\'' +
-                ", createdate=" + createdate +
-                ", language='" + language + '\'' +
-                ", cid=" + cid +
-                ", exampleinput='" + exampleinput + '\'' +
-                ", exampleoutput='" + exampleoutput + '\'' +
-                ", tablename='" + tablename + '\'' +
-                '}';
+    public Integer getTid() {
+        return tid;
+    }
+
+    public void setTid(Integer tid) {
+        this.tid = tid;
     }
 }
