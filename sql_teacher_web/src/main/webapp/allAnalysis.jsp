@@ -117,39 +117,19 @@
                         series: [{
                             name: '0分',
                             type: 'bar',
-                            data: [],
-                            markLine : {
-                                data : [
-                                    {type : 'average', name : '平均值'}
-                                ]
-                            }
+                            data: []
                         },{
                                 name: '50分',
                                 type: 'bar',
-                                data: [],
-                                markLine : {
-                                    data : [
-                                        {type : 'average', name : '平均值'}
-                                    ]
-                                }
+                                data: []
                             },{
                             name: '70分',
                             type: 'bar',
-                            data: [],
-                            markLine : {
-                                data : [
-                                    {type : 'average', name : '平均值'}
-                                ]
-                            }
+                            data: []
                             },{
                             name: '100分',
                             type: 'bar',
-                            data: [],
-                            markLine : {
-                                data : [
-                                    {type : 'average', name : '平均值'}
-                                ]
-                            }
+                            data: []
                         }]
                     });
 

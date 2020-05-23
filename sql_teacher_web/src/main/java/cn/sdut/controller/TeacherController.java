@@ -3,6 +3,7 @@ package cn.sdut.controller;
 import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
 import cn.sdut.domain.Teacher;
+import cn.sdut.entity.Alldata;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
@@ -136,11 +137,12 @@ public class TeacherController {
         System.out.println(tid);
         int int_tid = Integer.parseInt(tid);
         try {
-            teacherService.findalldata(int_tid);
+            List<Alldata> findalldata = teacherService.findalldata(int_tid);
+            result = new Result(true, "查询成功", findalldata);
         } catch (SQLException e) {
             e.printStackTrace();
+            result = new Result(false, "查询失败");
         }
-//        result = new Result(true, "查询成功", list);
         return result;
     }
 }

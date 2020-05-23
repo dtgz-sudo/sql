@@ -243,6 +243,7 @@ public class TeacherServiceImpl  implements TeacherService {
     //    select count(*) as num,pid,score from (select pid,sid,MAX(score) as score from answer group by sid,pid having sid in (select sid from student where tid = 1))A GROUP BY pid,score
     @Override
     public List findalldata(int tid) throws SQLException {
+        System.out.println("teacherservicefindalldata");
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         connection= dataSource.getConnection();
@@ -257,22 +258,38 @@ public class TeacherServiceImpl  implements TeacherService {
         for (int i = 0;i < list.size();) {
             Alldata data1 = new Alldata();
             int pid = (int)list.get(i).get("pid");
-            int score = (int)list.get(i).get("score");
-            int num = (int)list.get(i).get("num");
+            double score = (double)list.get(i).get("score");
+            long num = (long)list.get(i).get("num");
             data1.setPid(pid);
             if(score == 0) data1.setNum0(num);
             else if(score == 50) data1.setNum50(num);
             else if(score == 70) data1.setNum70(num);
             else if(score == 100) data1.setNum100(num);
-            if(i != list.size() - 1) i++;
-            while((int)list.get(i).get("pid") == pid)
-            {
-
+            if(i != list.size() - 1){
+                i++;
+                while(i < list.size()) {
+                    if((int)list.get(i).get("pid") == pid)
+                    {
+                        score = (double)list.get(i).get("score");
+                        num = (long)list.get(i).get("num");
+                        if(score == 0) data1.setNum0(num);
+                        else if(score == 50) data1.setNum50(num);
+                        else if(score == 70) data1.setNum70(num);
+                        else if(score == 100) data1.setNum100(num);
+                        i++;
+                        continue;
+                    }
+                    break;
+                }
+                listdata.add(data1);
+            }
+            else{
+                listdata.add(data1);
+                i++;
             }
         }
-
         preparedStatement.close();
         connection.close();
-        return null;
+        return listdata;
     }
 }

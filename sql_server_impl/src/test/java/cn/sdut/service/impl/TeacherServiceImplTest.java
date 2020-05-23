@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:spring/*.xml")
@@ -36,7 +37,10 @@ public class TeacherServiceImplTest {
         System.out.println(login);
 
     }
-    
+    @Test
+    public void testfindalldata() throws SQLException {
+        teacherService.findalldata(1);
+    }
 
     public void testTestLogin() {
     }
