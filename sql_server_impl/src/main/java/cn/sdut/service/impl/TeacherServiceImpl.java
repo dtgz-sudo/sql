@@ -125,7 +125,7 @@ public class TeacherServiceImpl  implements TeacherService {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 throw throwables;
-            }
+                }
             preparedStatement.close();
             connection.close();
 
