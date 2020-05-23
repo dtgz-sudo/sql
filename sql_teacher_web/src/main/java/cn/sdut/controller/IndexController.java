@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * 登陆成功面用的的 controller
@@ -62,5 +60,13 @@ public class IndexController {
         System.out.println(principal);
         return principal.getName();
     }
-
+    @RequestMapping("/findallstudent")
+    public Result findallstudent(@RequestParam(value = "tid")String tid) {
+        Result result = null;
+        System.out.println(tid);
+        int int_tid = Integer.parseInt(tid);
+        List findallstudent = teacherService.findallstudent(int_tid);
+        result = new Result(true, "获取成功",findallstudent);
+        return result;
+    }
 }

@@ -3,6 +3,7 @@ package cn.sdut.service.impl;
 import cn.sdut.ImportExcel;
 import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
+import cn.sdut.entity.Personaldata;
 import cn.sdut.entity.Piedata;
 import cn.sdut.mapper.AnswerMapper;
 import cn.sdut.mapper.ProblemMapper;
@@ -381,6 +382,38 @@ public class TeacherServiceImpl  implements TeacherService {
         preparedStatement.close();
         connection.close();
         return piedata;
+    }
+//查询所有学生
+    @Override
+    public List findallstudent(int tid) {
+        StudentExample studentExample = new StudentExample();
+        StudentExample.Criteria criteria = studentExample.createCriteria();
+        criteria.andTidEqualTo(tid);
+        List<Student> students = studentMapper.selectByExample(studentExample);
+        return students;
+    }
+
+    @Override
+    public List findpersonaldata(int sid) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        connection= dataSource.getConnection();
+        String sql = "select MAX(score) as score,pid from answer where sid = ? GROUP BY pid";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,sid);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Map> list = this.convertList(resultSet);
+
+        List<Personaldata> listdata = new ArrayList<Personaldata>();
+        for (int i = 0;i<list.size();i++)
+        {
+            Personaldata personaldata = new Personaldata();
+            personaldata.setPid((int)list.get(i).get("pid"));
+            personaldata.setScore((double)list.get(i).get("score"));
+            listdata.add(personaldata);
+        }
+
+        return listdata;
     }
 
 }

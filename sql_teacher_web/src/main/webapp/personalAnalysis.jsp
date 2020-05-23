@@ -55,7 +55,7 @@
                             for(var i=0;i<result.data.length;i++){
                                 $('<option value="'+result.data[i].sid+'">'+result.data[i].nickname+'</option>').prependTo("#selectstudent")
                             }
-
+                            drawChart();
                         }
                     }
                 })
@@ -109,127 +109,92 @@
                         <td><div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">选择学生</label>
                             <div class="col-sm-10 form-inline">
-                                <select name="selectstudent" class="form-control input-sm" id="selectstudent">
+                                <select name="selectstudent" class="form-control input-sm" id="selectstudent" onchange="drawChart()">
                                 </select>
                             </div>
-                        </div>                <div id="test" style="width: 600px;height:400px;"></div>
-<%--                            <script type="text/javascript">--%>
-
-<%--                                var myChart = echarts.init(document.getElementById('test'));--%>
-<%--                                var drawChart = function ()--%>
-<%--                                {--%>
-<%--                                    // 显示标题，图例和空的坐标轴--%>
-<%--                                    myChart.setOption({--%>
-<%--                                        title: {--%>
-<%--                                            text: '学生成绩统计'--%>
-<%--                                        },--%>
-<%--                                        tooltip: {--%>
-<%--                                            trigger: 'axis'--%>
-<%--                                        },--%>
-<%--                                        toolbox: {--%>
-<%--                                            show : true,--%>
-<%--                                            feature : {--%>
-<%--                                                dataView : {show: true, readOnly: false},--%>
-<%--                                                magicType : {show: true, type: ['line', 'bar']},--%>
-<%--                                                restore : {show: true},--%>
-<%--                                                saveAsImage : {show: true}--%>
-<%--                                            }--%>
-<%--                                        },--%>
-<%--                                        legend: {--%>
-<%--                                            data:['0分','50分','70分','100分']--%>
-<%--                                        },--%>
-<%--                                        xAxis: {--%>
-<%--                                            data: []--%>
-<%--                                        },--%>
-<%--                                        yAxis: {},--%>
-<%--                                        series: [{--%>
-<%--                                            name: '0分',--%>
-<%--                                            type: 'bar',--%>
-<%--                                            data: []--%>
-<%--                                        },{--%>
-<%--                                            name: '50分',--%>
-<%--                                            type: 'bar',--%>
-<%--                                            data: []--%>
-<%--                                        },{--%>
-<%--                                            name: '70分',--%>
-<%--                                            type: 'bar',--%>
-<%--                                            data: []--%>
-<%--                                        },{--%>
-<%--                                            name: '100分',--%>
-<%--                                            type: 'bar',--%>
-<%--                                            data: []--%>
-<%--                                        }]--%>
-<%--                                    });--%>
-
-<%--                                    myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画--%>
-
-<%--                                    var pid=[];    //题号数组（实际用来盛放X轴坐标值）--%>
-<%--                                    var num0=[];    //0分数组（实际用来盛放Y坐标值）--%>
-<%--                                    var num50=[];    //50分数组（实际用来盛放Y坐标值）--%>
-<%--                                    var num70=[];    //70分数组（实际用来盛放Y坐标值）--%>
-<%--                                    var num100=[];    //100分数组（实际用来盛放Y坐标值）--%>
-
-<%--                                    $.ajax({--%>
-<%--                                        type : "post",--%>
-<%--                                        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）--%>
-<%--                                        url : "../teacher/findalldata",    //请求发送--%>
-<%--                                        data : {"tid": tid},--%>
-<%--                                        dataType : "json",        //返回数据形式为json--%>
-<%--                                        success : function(result) {--%>
-<%--                                            //请求成功时执行该函数内容，result即为服务器返回的json对象--%>
-<%--                                            if (result) {--%>
-<%--                                                for(var i=0;i<result.data.length;i++){--%>
-<%--                                                    pid.push(result.data[i].pid);    //挨个取出类别并填入类别数组--%>
-<%--                                                }--%>
-<%--                                                for(var i=0;i<result.data.length;i++){--%>
-<%--                                                    num0.push(result.data[i].num0);--%>
-<%--                                                }--%>
-<%--                                                for(var i=0;i<result.data.length;i++){--%>
-<%--                                                    num50.push(result.data[i].num50);--%>
-<%--                                                }--%>
-<%--                                                for(var i=0;i<result.data.length;i++){--%>
-<%--                                                    num70.push(result.data[i].num70);--%>
-<%--                                                }--%>
-<%--                                                for(var i=0;i<result.data.length;i++){--%>
-<%--                                                    num100.push(result.data[i].num100);--%>
-<%--                                                }--%>
-<%--                                                myChart.hideLoading();    //隐藏加载动画--%>
-<%--                                                myChart.setOption({        //加载数据图表--%>
-<%--                                                    xAxis: {--%>
-<%--                                                        data: pid--%>
-<%--                                                    },--%>
-<%--                                                    series: [{--%>
-<%--                                                        // 根据名字对应到相应的系列--%>
-<%--                                                        name: '0分',--%>
-<%--                                                        data: num0--%>
-<%--                                                    },{--%>
-<%--                                                        // 根据名字对应到相应的系列--%>
-<%--                                                        name: '50分',--%>
-<%--                                                        data: num50--%>
-<%--                                                    },{--%>
-<%--                                                        // 根据名字对应到相应的系列--%>
-<%--                                                        name: '70分',--%>
-<%--                                                        data: num70--%>
-<%--                                                    },{--%>
-<%--                                                        // 根据名字对应到相应的系列--%>
-<%--                                                        name: '100分',--%>
-<%--                                                        data: num100--%>
-<%--                                                    }]--%>
-<%--                                                });--%>
-
-<%--                                            }--%>
-
-<%--                                        },--%>
-<%--                                        error : function(errorMsg) {--%>
-<%--                                            //请求失败时执行该函数--%>
-<%--                                            alert("图表请求数据失败!");--%>
-<%--                                            myChart.hideLoading();--%>
-<%--                                        }--%>
-<%--                                    })--%>
-<%--                                }--%>
-
-<%--                            </script>--%>
+                        </div>
                             </td>
+                        <td><div id="test" style="width: 600px;height:400px;"></div>
+                            <script type="text/javascript">
+
+                                var myChart = echarts.init(document.getElementById('test'));
+                                var drawChart = function ()
+                                {
+                                    // 显示标题，图例和空的坐标轴
+                                    myChart.setOption({
+                                        title: {
+                                            text: '各题目成绩'
+                                        },
+                                        tooltip: {
+                                            trigger: 'axis'
+                                        },
+                                        toolbox: {
+                                            show : true,
+                                            feature : {
+                                                dataView : {show: true, readOnly: false},
+                                                magicType : {show: true, type: ['line', 'bar']},
+                                                restore : {show: true},
+                                                saveAsImage : {show: true}
+                                            }
+                                        },
+                                        legend: {
+                                            data:['分数']
+                                        },
+                                        xAxis: {
+                                            data: []
+                                        },
+                                        yAxis: {},
+                                        series: [{
+                                            name: '分数',
+                                            type: 'line',
+                                            data: []
+                                        }]
+                                    });
+
+                                    myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
+
+                                    var pid=[];    //题号数组（实际用来盛放X轴坐标值）
+                                    var num=[];    //分数组（实际用来盛放Y坐标值）
+                                    var sid = $("#selectstudent option:selected").val();
+                                    $.ajax({
+                                        type : "post",
+                                        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                                        url : "../teacher/findpersonaldata",    //请求发送
+                                        data : {"sid": sid},
+                                        dataType : "json",        //返回数据形式为json
+                                        success : function(result) {
+                                            //请求成功时执行该函数内容，result即为服务器返回的json对象
+                                            if (result) {
+                                                for(var i=0;i<result.data.length;i++){
+                                                    pid.push(result.data[i].pid);    //挨个取出类别并填入类别数组
+                                                }
+                                                for(var i=0;i<result.data.length;i++){
+                                                    num.push(result.data[i].score);    //挨个取出类别并填入类别数组
+                                                }
+                                                myChart.hideLoading();    //隐藏加载动画
+                                                myChart.setOption({        //加载数据图表
+                                                    xAxis: {
+                                                        data: pid
+                                                    },
+                                                    series: [{
+                                                        // 根据名字对应到相应的系列
+                                                        name: '分数',
+                                                        data: num
+                                                    }]
+                                                });
+
+                                            }
+
+                                        },
+                                        error : function(errorMsg) {
+                                            //请求失败时执行该函数
+                                            alert("图表请求数据失败!");
+                                            myChart.hideLoading();
+                                        }
+                                    })
+                                }
+
+                            </script></td>
                     </tr>
                 </table>
 

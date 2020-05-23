@@ -60,4 +60,8 @@ public interface TeacherService {
 //  查询学生全部完成的人数select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = 1))C
 
     public Piedata findpiedata(int tid) throws SQLException;
+//查询所有学生
+    public List findallstudent(int tid);
+    //查询每个学生的题目答题分数
+    public List findpersonaldata(int sid) throws SQLException;
 }

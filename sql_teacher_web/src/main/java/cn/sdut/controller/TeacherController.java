@@ -197,6 +197,38 @@ public class TeacherController {
         return result;
     }
 
+    @RequestMapping("/findpiedata")
+    public <body> Result findpiedata(@RequestParam(value = "tid")String tid) {
+        System.out.println("*****************************");
+        System.out.println("findpiedata");
+        Result result = null;
+        System.out.println(tid);
+        int int_tid = Integer.parseInt(tid);
+        try {
+            Piedata piedata = teacherService.findpiedata(int_tid);
+            result = new Result(true, "查询成功", piedata);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = new Result(false, "查询失败");
+        }
 
+        return result;
+    }
+    @RequestMapping("/findpersonaldata")
+    public <body> Result findpersonaldata(@RequestParam(value = "sid")String sid){
+        System.out.println("findpersonaldata");
+        System.out.println(sid);
+        int int_sid = Integer.parseInt(sid);
+        List listdata = null;
+        Result result = null;
+        try {
+            listdata = teacherService.findpersonaldata(int_sid);
+            result = new Result(true, "查询成功", listdata);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = new Result(false, "查询失败");
+        }
+        return result;
+    }
 
 }

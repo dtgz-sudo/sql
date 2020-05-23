@@ -33,7 +33,7 @@
         <form-login
                 login-page="/login.html"
                 login-processing-url="/loginBySpringSecurity"
-                default-target-url="/allAnalysis.jsp"
+                default-target-url="/personalAnalysis.jsp"
                 authentication-failure-url="/login.html"
                 always-use-default-target="true"/>
 
