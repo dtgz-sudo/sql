@@ -239,6 +239,22 @@ public class StudentServiceImpl implements StudentService {
         return problem;
     }
 
+    @Override
+    public Student findStudentBySid(Integer cid) {
+        Student student = studentMapper.selectByPrimaryKey(cid);
+        return student;
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param student
+     */
+    @Override
+    public void updateStudent(Student student) {
+        studentMapper.updateByPrimaryKey(student);
+    }
+
     /**
      * 查询学生id为CId 的学生回答的所有问题
      *

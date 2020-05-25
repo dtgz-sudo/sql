@@ -3,6 +3,7 @@ package cn.sdut.service;
 import cn.sdut.domain.Answer;
 import cn.sdut.domain.Category;
 import cn.sdut.domain.Problem;
+import cn.sdut.domain.Student;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -55,4 +56,11 @@ public interface StudentService {
      * @return
      */
     public Problem selectProblemByPid(Integer pid);
+
+   public Student findStudentBySid(Integer cid);
+
+    /**
+     * 更新用户信息
+     */
+   public void updateStudent(Student student);
 }

@@ -72,4 +72,17 @@ public class Student {
     public void setTid(Integer tid) {
         this.tid = tid;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "sid=" + sid +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", createdate=" + createdate +
+                ", permission='" + permission + '\'' +
+                ", tid=" + tid +
+                '}';
+    }
 }

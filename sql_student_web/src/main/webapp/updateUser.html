@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML>
+
+<HTML>
+<HEAD>
+    <META charset="utf-8">
+    <META http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <META http-equiv="X-UA-Compatible" content="IE=9">
+    <TITLE>修改密码</TITLE>
+    <LINK href="Login_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--IE-->
+    <LINK href="Login_files/home.css" rel="stylesheet" type="text/css">
+    <LINK href="Login_files/base.css" rel="stylesheet" type="text/css">
+    <LINK href="Login_files/login.css" rel="stylesheet" type="text/css">
+    <!--    使用angularjs框架的双向绑定-->
+    <script src="plugins/angularjs/angular.min.js"></script>
+    <script type="text/javascript">
+
+        // 定义sql模块
+        var app = angular.module("sql", []);
+        // 设置控制器
+        app.controller("loginController", function ($scope, $http) {
+            $scope.init = function () {  $http.get("../index/findLoginStudent").success(function (resp) {
+                    if (resp.success) {
+                        $scope.sid = resp.data.sid;
+                        $scope.stu={"sid":null,"password":null};
+                        $scope.stu .sid = resp.data.sid;
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+            };
+
+            // 定义方法
+            $scope.update = function () {
+                $scope.stu.password = $scope.oldPassword;
+                //验证旧密码
+                $http.post("../student/verifyPassword/",$scope.stu).success(function (resp) {
+                    if (resp.success) {
+                        if($scope.password == $scope.password2)
+                        {
+                            // 两次密码输入正确 修改数据
+
+                            $scope.stu.password = $scope.password;
+                            $http.post("../student/updatePassword/",$scope.stu).success(function (resp) {
+                                if (resp.success) {
+                                    window.location.href='../logout';
+                                } else {
+                                    alert(resp.message);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            alert("两次密码不一致");
+                        }
+                    } else {
+                        alert(resp.message);
+                    }
+                });
+            };
+        });
+
+    </script>
+
+<BODY ng-app="sql" ng-controller="loginController" ng-init="init()">
+<DIV class="everything">
+    <DIV class="banner">
+        <DIV class="container"></DIV>
+    </DIV>
+    <DIV class="main">
+        <DIV class="login">
+            <H2 class="text-center">修改密码</H2>
+            <FORM action="#" >
+                <DIV class="account-input">
+                    <INPUT type="passworld" placeholder="原密码"  ng-model="oldPassword">
+                </DIV>
+                <DIV class="account-input">
+                    <INPUT type="password" placeholder="新密码"  ng-model="password">
+                </DIV>
+                <DIV class="account-input">
+                    <INPUT type="password" placeholder="确认密码"  ng-model="password2">
+                </DIV>
+<!--                ng-click="login()"-->
+                    <BUTTON type="button" ng-click="update()">修改密码</BUTTON>
+            </FORM>
+        </DIV>
+    </DIV>
+</DIV>
+</BODY>
+</HTML>

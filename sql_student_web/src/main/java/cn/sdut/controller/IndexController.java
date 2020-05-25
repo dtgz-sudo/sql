@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * 登陆成功面用的的 controller
@@ -119,6 +120,7 @@ public class IndexController {
                 StudentExample.Criteria criteria = studentExample.createCriteria();
                 criteria.andNicknameEqualTo(name);
                 List<Student> students = studentMapper.selectByExample(studentExample);
+                ListIterator<Student> studentListIterator = students.listIterator();
                 result = new Result(true, "获取用户成功", students.get(0));
             }
 

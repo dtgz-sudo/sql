@@ -1,10 +1,10 @@
 package cn.sdut.controller;
 
-import cn.sdut.domain.*;
+import cn.sdut.domain.Answer;
+import cn.sdut.domain.Category;
+import cn.sdut.domain.Problem;
+import cn.sdut.domain.Student;
 import cn.sdut.entity.Result;
-import cn.sdut.mapper.AnswerMapper;
-import cn.sdut.mapper.CategoryMapper;
-import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.swing.*;
 import java.util.Date;
 import java.util.List;
 
@@ -128,10 +127,51 @@ public class StudentController {
         try {
             answer.setCreatedate(new Date());
             studentService.submitAnswer(answer);
-            result = new Result(true, "本题得分:"+answer.getScore());
+            result = new Result(true, "本题得分:" + answer.getScore());
         } catch (Exception e) {
             e.printStackTrace();
             result = new Result(false, "提交答案失败");
+        }
+        return result;
+    }
+
+
+    @RequestMapping("/verifyPassword")
+    public Result verifyPassword(@RequestBody Student oldStudent) {
+        System.out.println("verifyPassword");
+        System.out.println(oldStudent);
+        Result result = null;
+        try {
+            Integer sid = oldStudent.getSid();
+            String password = oldStudent.getPassword();
+            Student student = studentService.findStudentBySid(sid);
+            if ( student.getPassword().equals(password) ) {
+                result = new Result(true, "密码校验成功");
+            } else {
+                result = new Result(false, "密码校验失败");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "密码校验失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/updatePassword")
+    public Result updatePassword(@RequestBody Student student) {
+        System.out.println("verifyPassword");
+        System.out.println(student);
+        Result result = null;
+        try {
+            String password = student.getPassword();
+            student = studentService.findStudentBySid(student.getSid());
+            student.setPassword(password);
+            studentService.updateStudent(student);
+            result = new Result(true, "更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "更新失败");
         }
         return result;
     }
