@@ -8,7 +8,7 @@
     <!-- 加载配置文件
         classpath*: 的意思是jar包里面的配置文件也加载
     -->
-    <context:property-placeholder location="classpath*:config/db.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath*:config/db.properties"/>
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -17,6 +17,11 @@
         <property name="url" value="jdbc:mysql://47.95.204.207:3306/sql?characterEncoding=utf-8"/>
         <property name="username" value="sql"/>
         <property name="password" value="sql"/>
+        <!--
+                <property name="url" value="jdbc:mysql://47.95.204.207:3306/sql?characterEncoding=utf-8"/>
+                <property name="username" value="sql"/>
+                <property name="password" value="sql"/>
+        -->
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="maxActive" value="10"/>
         <property name="minIdle" value="5"/>

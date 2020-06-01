@@ -101,19 +101,16 @@ public class TeacherServiceImpl  implements TeacherService {
         String output = "";
         PreparedStatement preparedStatement = null;
         try {
-
             preparedStatement = connection.prepareStatement(sql);
             if ( sql.toLowerCase().contains("select") ) {
                 //查询
                 final ResultSet resultSet = preparedStatement.executeQuery();
                 // 讲结果集封装到list集合中 并别返回到数据中
                 List list = this.convertList(resultSet);
-                //
                 Map<String, Object> map = new HashMap();
                 map.put("resultSet", list);
                 map.put("num", list.size());
                 output = JSON.toJSONString(map);
-
             } else {
                 /**
                  * 增删改的策略：
@@ -123,14 +120,11 @@ public class TeacherServiceImpl  implements TeacherService {
                 Integer num = preparedStatement.executeUpdate();
                 // 获取当前操作的数据库的全部数据
                 List list = this.qurryAllData(sql, connection,problem.getTablename());
-
                 Map<String, Object> map = new HashMap();
                 map.put("resultSet", list);
                 map.put("num", num);
                 output = JSON.toJSONString(map);
-
             }
-
             } catch (SQLException throwables) {
                 // 回滚操作
                 connection.rollback();
@@ -147,7 +141,6 @@ public class TeacherServiceImpl  implements TeacherService {
                 }
             preparedStatement.close();
             connection.close();
-
         }
         System.out.println(output);
         return output;
@@ -291,10 +284,15 @@ public class TeacherServiceImpl  implements TeacherService {
                     {
                         score = (double)list.get(i).get("score");
                         num = (long)list.get(i).get("num");
-                        if(score == 0) data1.setNum0(num);
-                        else if(score == 50) data1.setNum50(num);
-                        else if(score == 70) data1.setNum70(num);
-                        else if(score == 100) data1.setNum100(num);
+                        if(score == 0) {
+                            data1.setNum0(num);
+                        } else if(score == 50) {
+                            data1.setNum50(num);
+                        } else if(score == 70) {
+                            data1.setNum70(num);
+                        } else if(score == 100) {
+                            data1.setNum100(num);
+                        }
                         i++;
                         continue;
                     }
@@ -416,4 +414,25 @@ public class TeacherServiceImpl  implements TeacherService {
         return listdata;
     }
 
+    /**
+     * 根据主键查询数据
+     *
+     * @param sid
+     * @return
+     */
+    @Override
+    public Teacher findTeacherByTid(Integer sid) {
+        Teacher teacher = teacherMapper.selectByPrimaryKey(sid);
+        return teacher;
+    }
+
+    /**
+     * 数据库中更新teacher
+     *
+     * @param teacher
+     */
+    @Override
+    public void update(Teacher teacher) {
+        teacherMapper.updateByPrimaryKey(teacher);
+    }
 }

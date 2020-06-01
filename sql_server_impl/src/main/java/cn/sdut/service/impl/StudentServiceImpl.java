@@ -43,112 +43,145 @@ public class StudentServiceImpl implements StudentService {
 
     private Connection connection;
 
-    /**
-     * 添加answer 并且打分
-     * 注意要try catch
-     * 打分逻辑
-     * 1：先从数据库查询出老师输入的数据库和答案然后进行判断
-     * 2: 如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
-     * 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最多80分
-     * 3: 如果是查询数据的话先比对数据如果数据是正确的那么满分
-     * 如果数据不正确 只要查询出数据那么先给50分 然后判断关键字 （待更新）最多80分
-     *
-     * @param answer
-     */
-    @Transactional
-    @Override
-    public void submitAnswer(Answer answer) throws SQLException {
-        System.out.println("存储并且打分");
-        System.out.println(answer);
-        Double score = 0.0;
-        PreparedStatement preparedStatement = null;
-        String sqlStudent = null;
-        String outputStudent = null;
-        String outputTeacher=null;
-        Problem problem = null;
-        String sqlTeacher = null;
+        /**
+         * 添加answer 并且打分
+         * 注意要try catch
+         * 打分逻辑
+         * 1：先从数据库查询出老师输入的数据库和答案然后进行判断
+         * 2: 如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
+         * 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最多80分
+         * 3: 如果是查询数据的话先比对数据如果数据是正确的那么满分
+         * 如果数据不正确 只要查询出数据那么先给50分 然后判断关键字 （待更新）最多80分
+         *
+         * @param answer
+         */
+        @Transactional
+        @Override
+        public void submitAnswer(Answer answer) throws SQLException {
+            System.out.println("存储并且打分");
+            System.out.println(answer);
+            Double score = 0.0;
+            PreparedStatement preparedStatement = null;
+            String sqlStudent = null;
+            String outputStudent = null;
+            String outputTeacher=null;
+            Problem problem = null;
+            String sqlTeacher = null;
 
-        try {
-            connection = dataSource.getConnection();
-            connection.setAutoCommit(false);
-            sqlStudent = answer.getInput();
-            // 1：先从数据库查询出老师输入的数据库和答案然后进行判断
-            problem = problemMapper.selectByPrimaryKey(answer.getPid());
-            sqlTeacher  = problem.getInput().toLowerCase();
-            preparedStatement = connection.prepareStatement(sqlStudent);
-            //获取标准答案
-            outputTeacher  = problem.getOutput();
-            if ( sqlTeacher.contains("select") ) {
-                //2: 如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
-                // 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最高八十分
-                final ResultSet resultSet = preparedStatement.executeQuery();
-                 List liststudentExecute = this.convertList(resultSet);
-                Map<String, Object> map = new HashMap();
-                map.put("resultSet", liststudentExecute);
-                map.put("num", liststudentExecute.size());
-                outputStudent = JSON.toJSONString(map);
-                if ( outputTeacher.equals(outputStudent) ) {
-                    //执行结果和老师的完全一致
-                    score = 100d;
-                } else {
-                    //不报错先给50分
-                    score = 50.0;
-                    // 查获出来的数据数量正常+20
-                    //把老师的结果转换为map
-                    Map mapTeacher = JSON.parseObject(outputTeacher, Map.class);
-                    //查询数据相同+20
-                    Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
-                    if ( numTeacher.equals(liststudentExecute.size()) ) {
-                        score += 20d;
-                    }
-                }
-            } else {
-                //如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
-                // 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最多80分
-
-                Integer num = preparedStatement.executeUpdate();
-                List list = this.qurryAllData(sqlStudent, connection,problem.getTablename());
-                Map<String, Object> map = new HashMap();
-                map.put("resultSet", list);
-                map.put("num", num);
-                outputStudent = JSON.toJSONString(map);
-                if ( outputTeacher.equals(outputStudent) == true ) {
-                    // 执行结果和老师的完全一致
-                    score = 100d;
-                } else {
-                    // 执行结果和老师执行结果不一致但是程序不报错 可以执行
-                    score = 50.0;
-
-                    //把老师的执行结果解析成 map
-                    Map mapTeacher = JSON.parseObject(outputTeacher, Map.class);
-                    Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
-                    if ( numTeacher.equals(num) )
-                    {
-                        score +=20d;
-                    }
-                    // 判断关键字加分
-                }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            score = 0d;
-        } finally {
-
-            answer.setScore(score);
-            answer.setOutput(outputStudent);
-            answerMapper.insert(answer);
             try {
-                // 回滚操作
-                connection.rollback();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            preparedStatement.close();
-            connection.close();
-        }
+                connection = dataSource.getConnection();
+                connection.setAutoCommit(false);
+                sqlStudent = answer.getInput();
+                // 1：先从数据库查询出老师输入的数据库和答案然后进行判断
+                problem = problemMapper.selectByPrimaryKey(answer.getPid());
+                sqlTeacher  = problem.getInput().toLowerCase();
+                preparedStatement = connection.prepareStatement(sqlStudent);
+                //获取标准答案
+                outputTeacher  = problem.getOutput();
+                if ( sqlTeacher.contains("select") ) {
+                    //2: 如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
+                    // 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最高八十分
+                    final ResultSet resultSet = preparedStatement.executeQuery();
+                     List liststudentExecute = this.convertList(resultSet);
+                    Map<String, Object> map = new HashMap();
+                    map.put("resultSet", liststudentExecute);
+                    map.put("num", liststudentExecute.size());
+                    outputStudent = JSON.toJSONString(map);
+                    if ( outputTeacher.equals(outputStudent) ) {
+                        //执行结果和老师的完全一致
+                        score = 100d;
+                    } else {
+                        //不报错先给50分
+                        score = 50.0;
+                        // 查获出来的数据数量正常+20
+                        //把老师的结果转换为map
+                        Map mapTeacher = JSON.parseObject(outputTeacher, Map.class);
+                        //查询数据相同+20
+                        Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
+                        if ( numTeacher.equals(liststudentExecute.size()) ) {
+                            score += 20d;
+                        }
+                        // 判断关键字加分
+                        if(sqlStudent.contains(problem.getTablename()))
+                        {
+                            score += 5d;
+                        }
+                    }
+                } else {
+                    //如果是增删改 先操作数据库然后查询全部数据(默认升序) 比对数据如果全部正确满分
+                    // 如果 数据比对不正确 只要程序不报错先给 50分 然后判断关键（待更新） 最多80分
 
-    }
+                    Integer num = preparedStatement.executeUpdate();
+                    List list = this.qurryAllData(sqlStudent, connection,problem.getTablename());
+                    Map<String, Object> map = new HashMap();
+                    map.put("resultSet", list);
+                    map.put("num", num);
+                    outputStudent = JSON.toJSONString(map);
+                    if ( outputTeacher.equals(outputStudent) == true ) {
+                        // 执行结果和老师的完全一致
+                        score = 100d;
+                    } else {
+                        // 执行结果和老师执行结果不一致但是程序不报错 可以执行
+                        score = 50.0;
+                        //把老师的执行结果解析成 map
+                        Map mapTeacher = JSON.parseObject(outputTeacher, Map.class);
+                        Integer numTeacher = Integer.parseInt(mapTeacher.get("num").toString());
+                        if ( numTeacher.equals(num) )
+                        {
+                            score +=20d;
+                        }
+                        try {
+                            // 判断关键字加分
+                            if(sqlStudent.toLowerCase().contains(problem.getTablename().toLowerCase()))
+                            {
+                                score += 5d;
+                            }
+                            if(sqlTeacher.toLowerCase().contains("insert"))
+                            {
+                                if ( sqlStudent.toLowerCase().contains("insert"))
+                                {
+                                    score += 5d;
+                                }
+                            }
+                            if(sqlTeacher.toLowerCase().contains("update"))
+                            {
+                                if ( sqlStudent.toLowerCase().contains("update"))
+                                {
+                                    score += 5d;
+                                }
+                            }
+                            if(sqlTeacher.toLowerCase().contains("delete"))
+                            {
+                                if ( sqlStudent.toLowerCase().contains("delete"))
+                                {
+                                    score += 5d;
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("判断关键字错误");
+                        }
+
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                score = 0d;
+            } finally {
+
+                answer.setScore(score);
+                answer.setOutput(outputStudent);
+                answerMapper.insert(answer);
+                try {
+                    // 回滚操作
+                    connection.rollback();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                preparedStatement.close();
+                connection.close();
+            }
+        }
 
     /**
      * 查询cid对应的分类

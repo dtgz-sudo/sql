@@ -136,6 +136,11 @@ public class StudentController {
     }
 
 
+    /**
+     * 驗證輸入的密碼是否正確
+     * @param oldStudent
+     * @return
+     */
     @RequestMapping("/verifyPassword")
     public Result verifyPassword(@RequestBody Student oldStudent) {
         System.out.println("verifyPassword");

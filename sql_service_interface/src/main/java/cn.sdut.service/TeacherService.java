@@ -2,6 +2,7 @@ package cn.sdut.service;
 
 import cn.sdut.domain.Answer;
 import cn.sdut.domain.Problem;
+import cn.sdut.domain.Student;
 import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Piedata;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,4 +65,17 @@ public interface TeacherService {
     public List findallstudent(int tid);
     //查询每个学生的题目答题分数
     public List findpersonaldata(int sid) throws SQLException;
+
+    /**
+     * 根据主键查询数据
+     * @param sid
+     * @return
+     */
+ public   Teacher findTeacherByTid(Integer sid);
+
+    /**
+     * 数据库中更新teacher
+     * @param teacher
+     */
+    void update(Teacher teacher);
 }

@@ -85,14 +85,14 @@
             </DIV>
             <DIV class="collapse navbar-collapse" id="navbar-collapse">
                 <UL class="nav navbar-nav">
-                    <LI><A href="">学生导入</A></LI>
-                    <LI><A href="/addProblem.html">实验题目发布</A></LI>
-                    <LI><A href="">学生答题情况整体分析</A></LI>
-                    <LI><A href="">学生答题情况个体分析</A></LI>
-                    <LI><A href="">评价反馈</A></LI>
+                    <LI><A href="importStudent.html">学生导入</A></LI>
+                    <LI><A href="addProblem.html">实验题目发布</A></LI>
+                    <LI><A href="allAnalysis.jsp">学生答题情况整体分析</A></LI>
+                    <LI><A href="personalAnalysis.jsp">学生答题情况个体分析</A></LI>
+                    <LI><A href="historyAnswer.html">评价反馈</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
-                    <LI><A href="" id="loginName" ></A></LI>
+                    <LI><A href="updateUser.html" id="loginName" ></A></LI>
                     <LI><A
                             href="/logout">退出登录</A></LI>
                 </UL>

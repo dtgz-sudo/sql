@@ -1,9 +1,6 @@
 package cn.sdut.controller;
 
-import cn.sdut.domain.Answer;
-import cn.sdut.domain.Category;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Teacher;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
 import cn.sdut.entity.Piedata;
 import cn.sdut.entity.Result;
@@ -230,5 +227,54 @@ public class TeacherController {
         }
         return result;
     }
+    /**
+     * 驗證輸入的密碼是否正確
+     * @param obj
+     * @return
+     */
+    @RequestMapping("/verifyPassword")
+    public Result verifyPassword(@RequestBody Teacher obj) {
+        System.out.println("verifyPassword");
+        System.out.println(obj);
+        Result result = null;
+        try {
+            Integer sid = obj.getTid();
+            String password = obj.getPassword();
+            Teacher teacher = teacherService.findTeacherByTid(sid);
+            if ( teacher.getPassword().equals(password) ) {
+                result = new Result(true, "密码校验成功");
+            } else {
+                result = new Result(false, "密码校验失败");
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "密码校验失败");
+        }
+        return result;
+    }
+
+    /**
+     * 修改密码
+     * @param obj
+     * @return
+     */
+    @RequestMapping("/updatePassword")
+    public Result updatePassword(@RequestBody Teacher obj) {
+        System.out.println("verifyPassword");
+        System.out.println(obj);
+        Result result = null;
+        try {
+            String password = obj.getPassword();
+            Integer tid = obj.getTid();
+            Teacher teachher = teacherService.findTeacherByTid(tid);
+            teachher.setPassword(password);
+            teacherService.update(teachher);
+            result = new Result(true, "更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "更新失败");
+        }
+        return result;
+    }
 }

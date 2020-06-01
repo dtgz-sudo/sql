@@ -30,8 +30,9 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring/springmvc.xml,classpath*:spring/applicationContext*.xml</param-value>
         </init-param>
-        <load-on-startup>2</load-on-startup>
+        <load-on-startup>0</load-on-startup>
     </servlet>
+
     <!-- 拦截资源 -->
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>

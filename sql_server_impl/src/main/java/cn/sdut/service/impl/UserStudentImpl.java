@@ -53,7 +53,6 @@ public class UserStudentImpl implements UserDetailsService {
         }
         else
         {
-
             Student student = students.get(0);
 //            添加权限
             List<GrantedAuthority> list = new ArrayList<>();
