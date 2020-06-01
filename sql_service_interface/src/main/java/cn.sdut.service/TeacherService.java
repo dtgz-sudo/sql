@@ -78,4 +78,17 @@ public interface TeacherService {
      * @param teacher
      */
     void update(Teacher teacher);
+
+    /**
+     * 查看全部此老师题目
+     * @param tid
+     * @return
+     */
+    List<Problem> findAllProblemByTid(Integer tid);
+
+    /**
+     * 删除对应问题
+     * @param pid
+     */
+    public void  deleteProblemByPid(Integer pid);
 }

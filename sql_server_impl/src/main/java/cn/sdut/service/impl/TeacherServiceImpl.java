@@ -273,10 +273,15 @@ public class TeacherServiceImpl  implements TeacherService {
             double score = (double)list.get(i).get("score");
             long num = (long)list.get(i).get("num");
             data1.setPid(pid);
-            if(score == 0) data1.setNum0(num);
-            else if(score == 50) data1.setNum50(num);
-            else if(score == 70) data1.setNum70(num);
-            else if(score == 100) data1.setNum100(num);
+            if(score == 0) {
+                data1.setNum0(num);
+            } else if(score == 50) {
+                data1.setNum50(num);
+            } else if(score == 70) {
+                data1.setNum70(num);
+            } else if(score == 100) {
+                data1.setNum100(num);
+            }
             if(i != list.size() - 1){
                 i++;
                 while(i < list.size()) {
@@ -434,5 +439,30 @@ public class TeacherServiceImpl  implements TeacherService {
     @Override
     public void update(Teacher teacher) {
         teacherMapper.updateByPrimaryKey(teacher);
+    }
+
+    /**
+     * 查看全部此老师题目
+     *
+     * @param tid
+     * @return
+     */
+    @Override
+    public List<Problem> findAllProblemByTid(Integer tid) {
+        ProblemExample example = new ProblemExample();
+        ProblemExample.Criteria criteria = example.createCriteria();
+        criteria.andTidEqualTo(tid);
+        List<Problem> problems = problemMapper.selectByExample(example);
+        return problems;
+    }
+
+    /**
+     * 删除对应问题
+     *
+     * @param tid
+     */
+    @Override
+    public void deleteProblemByPid(Integer pid) {
+        problemMapper.deleteByPrimaryKey(pid);
     }
 }

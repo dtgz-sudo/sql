@@ -2,6 +2,7 @@
 <HTML>
 <HEAD>
 
+    <title>历史题目</title>
     <META charset="utf-8">
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -52,6 +53,21 @@
                     }
                 });
             };
+            // 删除题目
+            $scope.deleteProblem = function (pid) {
+               console.log(pid);
+               var id = pid.obj.pid;
+                var url = "../teacher/deleteProblem/"+id;
+                console.log(url);
+                $http.get(url).success(function (resp) {
+                    if (resp.success) {
+                        alert("删除成功");
+                        $scope.init();
+                    } else {
+                        alert(resp.message);
+                    }
+                });
+            };
             $scope.init = function () {
                 $scope.url = $location.absUrl();
                 $scope.cid = $location.search()['cid'];
@@ -60,7 +76,7 @@
                     if (resp.success) {
                         $scope.loginName = resp.data;
                         $scope.tid = resp.data.tid;
-                        var url = "../teacher/findCommontAnswer/"+$scope.tid;
+                        var url = "../teacher/findAllProblem/"+$scope.tid;
                         $http.post(url).success(function (resp) {
                             if (resp.success) {
                                // $scope.data = resp.data;
@@ -104,7 +120,7 @@
                     <LI><A href="addProblem.html">实验题目发布</A></LI>
                     <LI><A href="allAnalysis.jsp">学生答题情况整体分析</A></LI>
                     <LI><A href="personalAnalysis.jsp">学生答题情况个体分析</A></LI>
-                    <LI><A href="historyProblem.html">删除题目</A></LI>
+                    <LI><A href="historyAnswer.html">评价反馈</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
                     <LI><A href="/updateUser.html">{{loginName.nickname}}</A></LI>
@@ -121,30 +137,28 @@
 
         <DIV class="container">
             <DIV class="row block block-success" style="padding-top: 10px;">
-                <H3 class="problem-header">学生答题</H3>
+                <H3 class="problem-header">历史题目</H3>
                 <DIV>
-                    <input  type="button" value="提交" ng-click="submit()">
+                    <input  type="button" value="删除" ng-click="submit()">
                 </DIV>
             </DIV>
+
             <DIV class="row">
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
-
-                    <TH class="col-md-1">学生姓名</TH>
+                    <TH class="col-md-1">题目id</TH>
                     <TH class="col-md-1">题目标题</TH>
                     <TH class="col-md-5">SQL语句</TH>
-                    <TH class="col-md-1">分数</TH>
-                    <TH class="col-md-3">评论</TH>
+                    <TH class="col-md-1">删除</TH>
 
+<!--                    {{list}}-->
                     <TBODY>
-
                     <TR ng-repeat="obj in list ">
-
-                        <TD>{{obj.stuName}}</TD>
+                        <TD>{{obj.pid}}</TD>
                         <TD>{{obj.title}}</TD>
-                        <TD>{{obj.sql}}</TD>
-                        <TD>{{obj.score}}</TD>
-                        <TD><input type="text" ng-model="obj.comment"></TD>
+                        <TD>{{obj.input}}</TD>
+
+                        <TD><button name="delete" ng-moude="obj.pid" ng-click="deleteProblem(this)">删除</button> </TD>
                     </TR>
                     </TBODY>
                 </TABLE>

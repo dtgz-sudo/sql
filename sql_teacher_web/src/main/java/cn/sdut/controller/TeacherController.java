@@ -1,6 +1,9 @@
 package cn.sdut.controller;
 
-import cn.sdut.domain.*;
+import cn.sdut.domain.Answer;
+import cn.sdut.domain.Category;
+import cn.sdut.domain.Problem;
+import cn.sdut.domain.Teacher;
 import cn.sdut.entity.Alldata;
 import cn.sdut.entity.Piedata;
 import cn.sdut.entity.Result;
@@ -11,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -277,4 +277,44 @@ public class TeacherController {
         }
         return result;
     }
+
+    /**
+     * 次老师全部历史题目
+     *
+     * @param tid
+     * @param
+     * @return
+     */
+    @RequestMapping("/findAllProblem/{tid}")
+    public Result findAllProblem(@PathVariable(value = "tid") Integer tid) {
+        System.out.println("*****************************");
+        System.out.println("*********findAllProblem*********");
+        Result result = null;
+
+        try {
+            List<Problem> list = teacherService.findAllProblemByTid(tid);
+            result = new Result(true, "查询成功", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/deleteProblem/{pid}")
+    public Result deleteProblem(@PathVariable(value = "pid") Integer pid) {
+        System.out.println("*****************************");
+        System.out.println("*********deleteProblem*********");
+        Result result = null;
+
+        try {
+            teacherService.deleteProblemByPid(pid);
+            result = new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "删除失败");
+        }
+        return result;
+    }
+
 }
