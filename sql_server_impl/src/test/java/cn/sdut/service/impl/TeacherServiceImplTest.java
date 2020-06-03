@@ -1,5 +1,6 @@
 package cn.sdut.service.impl;
 
+import cn.sdut.EditDistance;
 import cn.sdut.domain.Teacher;
 import cn.sdut.service.TeacherService;
 
@@ -49,6 +50,12 @@ public class TeacherServiceImplTest {
     public void testfindpersonaldata() throws SQLException {
         //   teacherService.findpiedata(1);
         teacherService.findpersonaldata(1);
+    }
+    @Test
+    public void test(){
+        double v = EditDistance.getsimilarity("select * from sql_course", "");
+        System.out.println(v*100);
+
     }
     public void testTestLogin() {
     }
