@@ -273,11 +273,11 @@ public class TeacherServiceImpl  implements TeacherService {
             double score = (double)list.get(i).get("score");
             long num = (long)list.get(i).get("num");
             data1.setPid(pid);
-            if(score == 0) {
+            if(score >= 0&&score <= 49) {
                 data1.setNum0(num);
-            } else if(score == 50) {
+            } else if(score >= 50&&score <= 69) {
                 data1.setNum50(num);
-            } else if(score == 70) {
+            } else if(score >= 70&&score <= 99) {
                 data1.setNum70(num);
             } else if(score == 100) {
                 data1.setNum100(num);
@@ -289,11 +289,11 @@ public class TeacherServiceImpl  implements TeacherService {
                     {
                         score = (double)list.get(i).get("score");
                         num = (long)list.get(i).get("num");
-                        if(score == 0) {
+                        if(score >= 0&&score <= 49) {
                             data1.setNum0(num);
-                        } else if(score == 50) {
+                        } else if(score >= 50&&score <= 69) {
                             data1.setNum50(num);
-                        } else if(score == 70) {
+                        } else if(score >= 70&&score <= 99) {
                             data1.setNum70(num);
                         } else if(score == 100) {
                             data1.setNum100(num);
@@ -459,7 +459,7 @@ public class TeacherServiceImpl  implements TeacherService {
     /**
      * 删除对应问题
      *
-     * @param tid
+     * @param pid
      */
     @Override
     public void deleteProblemByPid(Integer pid) {
