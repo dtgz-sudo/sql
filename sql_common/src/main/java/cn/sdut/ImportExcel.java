@@ -41,18 +41,23 @@ public class ImportExcel {
 
         List<Map<String, Object>> list = new ArrayList<>();
 
-        for(int i = 1; i <= lastRowNum; i++ ){
-            Map<String, Object> map = new HashMap<>();
-            Row row = sheet.getRow(i);
-            for(int j = 0; j < lastCellNum; j++){
-                // 得到列名
-                String key = titleRow.getCell(j).getStringCellValue();
-                Cell cell = row.getCell(j);
-                cell.setCellType(CellType.STRING);
+        try {
+            for(int i = 1; i <= lastRowNum; i++ ){
+                Map<String, Object> map = new HashMap<>();
+                Row row = sheet.getRow(i);
+                for(int j = 0; j < lastCellNum; j++){
+                    // 得到列名
+                    String key = titleRow.getCell(j).getStringCellValue();
+                    Cell cell = row.getCell(j);
+                    cell.setCellType(CellType.STRING);
 
-                map.put(key, cell.getStringCellValue());
+                    map.put(key, cell.getStringCellValue());
+                }
+                list.add(map);
             }
-            list.add(map);
+        } catch (Exception e) {
+            System.out.println("文件分析失败");
+            e.printStackTrace();
         }
         workbook.close();
         return list;

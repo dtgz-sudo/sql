@@ -7,6 +7,7 @@ import cn.sdut.domain.Student;
 import cn.sdut.entity.Result;
 import cn.sdut.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -150,7 +151,12 @@ public class StudentController {
             Integer sid = oldStudent.getSid();
             String password = oldStudent.getPassword();
             Student student = studentService.findStudentBySid(sid);
-            if ( student.getPassword().equals(password) ) {
+            String password1 = student.getPassword();
+
+            // 密码加密
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        
+            if ( encoder.matches(password,password1) ) {
                 result = new Result(true, "密码校验成功");
             } else {
                 result = new Result(false, "密码校验失败");
@@ -163,6 +169,11 @@ public class StudentController {
         return result;
     }
 
+    /**
+     * 修改密码
+     * @param student
+     * @return
+     */
     @RequestMapping("/updatePassword")
     public Result updatePassword(@RequestBody Student student) {
         System.out.println("verifyPassword");
@@ -171,6 +182,9 @@ public class StudentController {
         try {
             String password = student.getPassword();
             student = studentService.findStudentBySid(student.getSid());
+            // 密码加密
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            password= encoder.encode(password);
             student.setPassword(password);
             studentService.updateStudent(student);
             result = new Result(true, "更新成功");

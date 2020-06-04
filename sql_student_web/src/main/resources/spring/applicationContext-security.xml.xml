@@ -47,11 +47,16 @@
         <!--关闭跨域攻击-->
         <csrf disabled="true"/>
     </http>
+    <!--    加密方式-->
+    <beans:bean id="encoding" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+
+    </beans:bean>
     <!-- 认真管理器 从数据库中查询用户并且赋予权限
          使用明文加密 没有使用md5加密
         -->
     <authentication-manager>
         <authentication-provider user-service-ref="userStudentImpl">
+            <password-encoder ref="encoding"></password-encoder>
         </authentication-provider>
     </authentication-manager>
 

@@ -31,7 +31,7 @@
             <param-name>contextConfigLocation</param-name>
             <!--			springmvc 和 springSecurity的配置文件一起加载到springioc的容器中
                             那么就只存在一个ioc容器了 -->
-            <param-value>classpath:spring/springmvc.xml,classpath*:spring/applicationContext*.xml</param-value>
+            <param-value>classpath*:spring/applicationContext*.xml,classpath:spring/springmvc.xml</param-value>
             <!--			只加载springmvc的配置文件-->
             <!--            <param-value>classpath:spring/springmvc.xml</param-value>-->
         </init-param>

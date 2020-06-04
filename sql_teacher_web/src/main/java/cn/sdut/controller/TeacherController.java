@@ -10,6 +10,7 @@ import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -234,6 +235,7 @@ public class TeacherController {
      */
     @RequestMapping("/verifyPassword")
     public Result verifyPassword(@RequestBody Teacher obj) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println("verifyPassword");
         System.out.println(obj);
         Result result = null;
@@ -241,7 +243,8 @@ public class TeacherController {
             Integer sid = obj.getTid();
             String password = obj.getPassword();
             Teacher teacher = teacherService.findTeacherByTid(sid);
-            if ( teacher.getPassword().equals(password) ) {
+            String password1 = teacher.getPassword();
+            if ( encoder.matches(password,password1) ) {
                 result = new Result(true, "密码校验成功");
             } else {
                 result = new Result(false, "密码校验失败");
@@ -268,6 +271,9 @@ public class TeacherController {
             String password = obj.getPassword();
             Integer tid = obj.getTid();
             Teacher teachher = teacherService.findTeacherByTid(tid);
+            // 密码加密
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            password= encoder.encode(password);
             teachher.setPassword(password);
             teacherService.update(teachher);
             result = new Result(true, "更新成功");
@@ -287,6 +293,7 @@ public class TeacherController {
      */
     @RequestMapping("/findAllProblem/{tid}")
     public Result findAllProblem(@PathVariable(value = "tid") Integer tid) {
+
         System.out.println("*****************************");
         System.out.println("*********findAllProblem*********");
         Result result = null;
@@ -316,5 +323,7 @@ public class TeacherController {
         }
         return result;
     }
+
+
 
 }

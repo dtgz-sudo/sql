@@ -13,6 +13,7 @@ import cn.sdut.service.TeacherService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ import java.util.*;
  * @Service 添加到ioc容器
  */
 
-
+@Transactional
 @Service
 public class TeacherServiceImpl  implements TeacherService {
     @Autowired
@@ -240,6 +241,8 @@ public class TeacherServiceImpl  implements TeacherService {
             SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
             String stringdate = sdf.format(date);
             Date date1 = sdf.parse(stringdate);
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            password = encoder.encode(password);
             student.setPassword(password);
             student.setCreatedate(date1);
             student.setNickname(nickname);
