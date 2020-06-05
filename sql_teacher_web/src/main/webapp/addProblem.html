@@ -24,13 +24,13 @@
         // 设置控制器
         app.controller("addProblemController", function ($scope, $http) {
 
-            $scope.p = {cid: 1,hint:'默认升序排列'};
+            $scope.p = {cid: 1,hint:'默认升序排列',tid:1};
             $scope.init = function () {
                 $http.get("../index/findLoginUser").success(function (resp) {
                     if (resp.success) {
                         $scope.loginName = resp.data;
                        // 老师的id
-                        $scope.p.cid = resp.data.tid;
+                        $scope.p.tid = resp.data.tid;
                     } else {
                         console.log(resp.message);
                     }
@@ -57,6 +57,7 @@
                             $http.post("../teacher/add", $scope.p).success(function (resp) {
                                 if (resp.success) {
                                     alert("新增成功 ")
+                                    window.location.href="/historyProblem.html";
                                 } else {
                                     alert(resp.message);
                                 }

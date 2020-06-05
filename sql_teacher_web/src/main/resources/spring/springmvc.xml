@@ -39,7 +39,7 @@
         <!--前置-->
         <property name="prefix" value="/"></property>
         <!--后缀-->
-        <property name="suffix" value=".html"></property>
+        <property name="suffix" value=".jsp"></property>
     </bean>
     <!--静态资源不处理，走默认的Servlet-->
     <mvc:default-servlet-handler/>

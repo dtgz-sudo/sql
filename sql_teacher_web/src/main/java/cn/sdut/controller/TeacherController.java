@@ -9,12 +9,17 @@ import cn.sdut.entity.Piedata;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
 import cn.sdut.service.TeacherService;
+import com.sun.deploy.net.HttpResponse;
+import com.sun.org.apache.bcel.internal.generic.MONITORENTER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +43,7 @@ public class TeacherController {
      * @param teacher
      * @return
      */
+    @ResponseBody
     @RequestMapping("/login")
     public Result login(@RequestBody Teacher teacher) {
         Result result = null;
@@ -53,6 +59,7 @@ public class TeacherController {
         return result;
     }
 
+    @ResponseBody
     @RequestMapping("/add")
     public Result add(@RequestBody Problem problem) {
         System.out.println(problem);
@@ -70,6 +77,7 @@ public class TeacherController {
         return result;
     }
 
+    @ResponseBody
     @RequestMapping("/inputSql")
     public Result inputSql(@RequestBody Problem problem) {
         System.out.println(problem);
@@ -90,7 +98,7 @@ public class TeacherController {
         }
         return result;
     }
-
+    @ResponseBody
     @RequestMapping("/findAllcategory")
     public <body> Result findAllcategory() {
         System.out.println("*****************************");
@@ -114,24 +122,28 @@ public class TeacherController {
      * @return
      */
     @RequestMapping("/importStudent")
-    public ModelAndView importStudent(@RequestParam(value = "file1") MultipartFile mFile,@RequestParam(value = "tid") String  tid) {
+    public Result  importStudent(@RequestParam(value = "file1") MultipartFile mFile, @RequestParam(value = "tid") String  tid, HttpServletResponse response ) throws IOException {
         System.out.println(tid  );
         System.out.println("*****************************");
         System.out.println("importStudent");
         Result result = null;
+        ModelAndView mv = new ModelAndView();
         int int_tid = Integer.parseInt(tid);
         try {
             teacherService.importstudent(mFile,int_tid);
+            result = new Result(true, "导入成功");
         } catch (Exception e) {
             e.printStackTrace();
+            result = new Result(true, "导入失败");
+        }finally {
+            response.sendRedirect("http://localhost:8081/allAnalysis.jsp");
         }
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("importStudent");
-        return mv;
+        return result;
     }
 
 
 
+    @ResponseBody
     @RequestMapping("/findalldata")
     public <body> Result finddata(@RequestParam(value = "tid")String tid) {
         System.out.println("*****************************");
@@ -156,6 +168,7 @@ public class TeacherController {
      * @param
      * @return
      */
+    @ResponseBody
     @RequestMapping("/findCommontAnswer/{tid}")
     public Result findCommontAnswer(@PathVariable(value = "tid") Integer tid) {
         System.out.println("*****************************");
@@ -178,6 +191,7 @@ public class TeacherController {
      * @param
      * @return
      */
+    @ResponseBody
     @RequestMapping("/submitComment/{tid}")
     public Result submitComment(@RequestBody List<Answer> list, @PathVariable("tid") Integer tid) {
         System.out.println("*****************************");
@@ -194,7 +208,7 @@ public class TeacherController {
         }
         return result;
     }
-
+    @ResponseBody
     @RequestMapping("/findpiedata")
     public <body> Result findpiedata(@RequestParam(value = "tid")String tid) {
         System.out.println("*****************************");
@@ -212,6 +226,7 @@ public class TeacherController {
 
         return result;
     }
+    @ResponseBody
     @RequestMapping("/findpersonaldata")
     public <body> Result findpersonaldata(@RequestParam(value = "sid")String sid){
         System.out.println("findpersonaldata");
@@ -233,6 +248,7 @@ public class TeacherController {
      * @param obj
      * @return
      */
+    @ResponseBody
     @RequestMapping("/verifyPassword")
     public Result verifyPassword(@RequestBody Teacher obj) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -262,6 +278,7 @@ public class TeacherController {
      * @param obj
      * @return
      */
+    @ResponseBody
     @RequestMapping("/updatePassword")
     public Result updatePassword(@RequestBody Teacher obj) {
         System.out.println("verifyPassword");
@@ -291,6 +308,7 @@ public class TeacherController {
      * @param
      * @return
      */
+    @ResponseBody
     @RequestMapping("/findAllProblem/{tid}")
     public Result findAllProblem(@PathVariable(value = "tid") Integer tid) {
 
@@ -307,7 +325,7 @@ public class TeacherController {
         }
         return result;
     }
-
+    @ResponseBody
     @RequestMapping("/deleteProblem/{pid}")
     public Result deleteProblem(@PathVariable(value = "pid") Integer pid) {
         System.out.println("*****************************");
