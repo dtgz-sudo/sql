@@ -54,19 +54,11 @@ public class EditDistance {
                     */
                     arr[i][j] = (Math.min(Math.min(arr[i-1][j], arr[i][j-1]), arr[i-1][j-1])) + 1;
                 }
+                showAttr(arr,sourceLen,targetLen);
             }
         }
 
-//        System.out.println("----------矩阵打印---------------");
-//        //矩阵打印
-//        for(int i=0;i<sourceLen+1;i++){
-//
-//            for(int j=0;j<targetLen+1;j++){
-//                System.out.print(arr[i][j]+"\t");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("----------矩阵打印---------------");
+
 
         return arr[sourceLen][targetLen];
     }
@@ -84,13 +76,27 @@ public class EditDistance {
         double maxlen = Math.max(str1.length(),str2.length());
         double res = (maxlen - distance)/maxlen;
 
-        //System.out.println("distance="+distance);
-        //System.out.println("maxlen:"+maxlen);
-        //System.out.println("(maxlen - distance):"+(maxlen - distance));
+        System.out.println("distance="+distance);
+        System.out.println("maxlen:"+maxlen);
+        System.out.println("(maxlen - distance):"+(maxlen - distance));
         DecimalFormat df=new DecimalFormat("0.00");
         String s = df.format(res);
         Double value = Double.valueOf(s);
         return value;
+    }
+
+    private  static  void showAttr(  int[][]  arr,int sourceLen,int targetLen)
+    {
+        System.out.println("----------矩阵打印---------------");
+        //矩阵打印
+        for(int i=0;i<sourceLen+1;i++){
+
+            for(int j=0;j<targetLen+1;j++){
+                System.out.print(arr[i][j]+"\t");
+            }
+            System.out.println();
+        }
+        System.out.println("----------矩阵打印---------------");
     }
 
 }
