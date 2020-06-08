@@ -16,6 +16,7 @@
         <module>sql_server_impl</module>
         <module>sql_teacher_web</module>
         <module>sql_student_web</module>
+        <module>mybatis_gen_demo</module>
     </modules>
 
 

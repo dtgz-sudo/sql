@@ -8,7 +8,6 @@ import cn.sdut.mapper.ProblemMapper;
 import cn.sdut.mapper.StudentMapper;
 import cn.sdut.service.StudentService;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -316,7 +315,7 @@ public class StudentServiceImpl implements StudentService {
             Problem problem = problemMapper.selectByPrimaryKey(pid);
             Problem problem1 = new Problem();
             problem1.setTitle(problem.getTitle());
-            answer.setProblem(problem1);
+          //  answer.setProblem(problem1);
         }
         return answers;
     }

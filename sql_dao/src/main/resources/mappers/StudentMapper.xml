@@ -3,7 +3,7 @@
 <mapper namespace="cn.sdut.mapper.StudentMapper">
   <resultMap id="BaseResultMap" type="cn.sdut.domain.Student">
     <id column="sid" jdbcType="INTEGER" property="sid" />
-    <id column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
@@ -86,17 +86,16 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="cn.sdut.domain.StudentKey" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
     from student
     where sid = #{sid,jdbcType=INTEGER}
-      and nickname = #{nickname,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="cn.sdut.domain.StudentKey">
-    delete from student
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete
+    from student
     where sid = #{sid,jdbcType=INTEGER}
-      and nickname = #{nickname,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.sdut.domain.StudentExample">
     delete from student
@@ -222,6 +221,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.sdut.domain.Student">
     update student
     <set>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
@@ -242,17 +244,16 @@
       </if>
     </set>
     where sid = #{sid,jdbcType=INTEGER}
-      and nickname = #{nickname,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.sdut.domain.Student">
     update student
-    set password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=TIMESTAMP},
-      permission = #{permission,jdbcType=VARCHAR},
-      tid = #{tid,jdbcType=INTEGER},
-      class_id = #{classId,jdbcType=INTEGER}
+    set nickname   = #{nickname,jdbcType=VARCHAR},
+        password   = #{password,jdbcType=VARCHAR},
+        email      = #{email,jdbcType=VARCHAR},
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+        permission = #{permission,jdbcType=VARCHAR},
+        tid        = #{tid,jdbcType=INTEGER},
+        class_id   = #{classId,jdbcType=INTEGER}
     where sid = #{sid,jdbcType=INTEGER}
-      and nickname = #{nickname,jdbcType=VARCHAR}
   </update>
 </mapper>
