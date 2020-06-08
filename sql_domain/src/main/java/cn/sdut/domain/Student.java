@@ -2,12 +2,8 @@ package cn.sdut.domain;
 
 import java.util.Date;
 
-public class Student {
-    private Integer sid;
-
+public class Student extends StudentKey {
     private String password;
-
-    private String nickname;
 
     private String email;
 
@@ -17,13 +13,7 @@ public class Student {
 
     private Integer tid;
 
-    public Integer getSid() {
-        return sid;
-    }
-
-    public void setSid(Integer sid) {
-        this.sid = sid;
-    }
+    private Integer classId;
 
     public String getPassword() {
         return password;
@@ -31,14 +21,6 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
     }
 
     public String getEmail() {
@@ -73,16 +55,11 @@ public class Student {
         this.tid = tid;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "sid=" + sid +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", createdate=" + createdate +
-                ", permission='" + permission + '\'' +
-                ", tid=" + tid +
-                '}';
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 }

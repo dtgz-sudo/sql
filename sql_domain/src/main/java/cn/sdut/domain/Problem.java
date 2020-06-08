@@ -29,6 +29,8 @@ public class Problem {
 
     private Integer tid;
 
+    private Integer hid;
+
     public Integer getPid() {
         return pid;
     }
@@ -133,22 +135,11 @@ public class Problem {
         this.tid = tid;
     }
 
-    @Override
-    public String toString() {
-        return "Problem{" +
-                "pid=" + pid +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", input='" + input + '\'' +
-                ", output='" + output + '\'' +
-                ", hint='" + hint + '\'' +
-                ", createdate=" + createdate +
-                ", language='" + language + '\'' +
-                ", cid=" + cid +
-                ", exampleinput='" + exampleinput + '\'' +
-                ", exampleoutput='" + exampleoutput + '\'' +
-                ", tablename='" + tablename + '\'' +
-                ", tid=" + tid +
-                '}';
+    public Integer getHid() {
+        return hid;
+    }
+
+    public void setHid(Integer hid) {
+        this.hid = hid;
     }
 }

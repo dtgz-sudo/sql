@@ -56,11 +56,14 @@
     <!-- 认真管理器 从数据库中查询用户并且赋予权限
          使用明文加密 没有使用md5加密
         -->
+
     <authentication-manager>
         <authentication-provider user-service-ref="userTeacherImpl">
 <!--            制定加密方式为BCryptPasswordEncoder-->
             <password-encoder ref="encoding"></password-encoder>
+
         </authentication-provider>
+
     </authentication-manager>
 
 </beans:beans>

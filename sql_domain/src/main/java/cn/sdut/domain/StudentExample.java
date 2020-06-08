@@ -1,6 +1,8 @@
 package cn.sdut.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class StudentExample {
     protected String orderByClause;
@@ -163,76 +165,6 @@ public class StudentExample {
             return (Criteria) this;
         }
 
-        public Criteria andPasswordIsNull() {
-            addCriterion("password is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordIsNotNull() {
-            addCriterion("password is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordEqualTo(String value) {
-            addCriterion("password =", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotEqualTo(String value) {
-            addCriterion("password <>", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordGreaterThan(String value) {
-            addCriterion("password >", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordGreaterThanOrEqualTo(String value) {
-            addCriterion("password >=", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordLessThan(String value) {
-            addCriterion("password <", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordLessThanOrEqualTo(String value) {
-            addCriterion("password <=", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordLike(String value) {
-            addCriterion("password like", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotLike(String value) {
-            addCriterion("password not like", value, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordIn(List<String> values) {
-            addCriterion("password in", values, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotIn(List<String> values) {
-            addCriterion("password not in", values, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordBetween(String value1, String value2) {
-            addCriterion("password between", value1, value2, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andPasswordNotBetween(String value1, String value2) {
-            addCriterion("password not between", value1, value2, "password");
-            return (Criteria) this;
-        }
-
         public Criteria andNicknameIsNull() {
             addCriterion("nickname is null");
             return (Criteria) this;
@@ -300,6 +232,76 @@ public class StudentExample {
 
         public Criteria andNicknameNotBetween(String value1, String value2) {
             addCriterion("nickname not between", value1, value2, "nickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordIsNull() {
+            addCriterion("password is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordIsNotNull() {
+            addCriterion("password is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordEqualTo(String value) {
+            addCriterion("password =", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordNotEqualTo(String value) {
+            addCriterion("password <>", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordGreaterThan(String value) {
+            addCriterion("password >", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordGreaterThanOrEqualTo(String value) {
+            addCriterion("password >=", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordLessThan(String value) {
+            addCriterion("password <", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordLessThanOrEqualTo(String value) {
+            addCriterion("password <=", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordLike(String value) {
+            addCriterion("password like", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordNotLike(String value) {
+            addCriterion("password not like", value, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordIn(List<String> values) {
+            addCriterion("password in", values, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordNotIn(List<String> values) {
+            addCriterion("password not in", values, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordBetween(String value1, String value2) {
+            addCriterion("password between", value1, value2, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordNotBetween(String value1, String value2) {
+            addCriterion("password not between", value1, value2, "password");
             return (Criteria) this;
         }
 
@@ -562,6 +564,66 @@ public class StudentExample {
             addCriterion("tid not between", value1, value2, "tid");
             return (Criteria) this;
         }
+
+        public Criteria andClassIdIsNull() {
+            addCriterion("class_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdIsNotNull() {
+            addCriterion("class_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdEqualTo(Integer value) {
+            addCriterion("class_id =", value, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdNotEqualTo(Integer value) {
+            addCriterion("class_id <>", value, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdGreaterThan(Integer value) {
+            addCriterion("class_id >", value, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("class_id >=", value, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdLessThan(Integer value) {
+            addCriterion("class_id <", value, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdLessThanOrEqualTo(Integer value) {
+            addCriterion("class_id <=", value, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdIn(List<Integer> values) {
+            addCriterion("class_id in", values, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdNotIn(List<Integer> values) {
+            addCriterion("class_id not in", values, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdBetween(Integer value1, Integer value2) {
+            addCriterion("class_id between", value1, value2, "classId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("class_id not between", value1, value2, "classId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -632,7 +694,7 @@ public class StudentExample {
             this.condition = condition;
             this.value = value;
             this.typeHandler = typeHandler;
-            if (value instanceof List<?>) {
+            if (value instanceof List<?> ) {
                 this.listValue = true;
             } else {
                 this.singleValue = true;

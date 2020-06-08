@@ -744,6 +744,66 @@ public class AnswerExample {
             addCriterion("comment not between", value1, value2, "comment");
             return (Criteria) this;
         }
+
+        public Criteria andHidIsNull() {
+            addCriterion("hid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidIsNotNull() {
+            addCriterion("hid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidEqualTo(Integer value) {
+            addCriterion("hid =", value, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidNotEqualTo(Integer value) {
+            addCriterion("hid <>", value, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidGreaterThan(Integer value) {
+            addCriterion("hid >", value, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("hid >=", value, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidLessThan(Integer value) {
+            addCriterion("hid <", value, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidLessThanOrEqualTo(Integer value) {
+            addCriterion("hid <=", value, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidIn(List<Integer> values) {
+            addCriterion("hid in", values, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidNotIn(List<Integer> values) {
+            addCriterion("hid not in", values, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidBetween(Integer value1, Integer value2) {
+            addCriterion("hid between", value1, value2, "hid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHidNotBetween(Integer value1, Integer value2) {
+            addCriterion("hid not between", value1, value2, "hid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -814,7 +874,7 @@ public class AnswerExample {
             this.condition = condition;
             this.value = value;
             this.typeHandler = typeHandler;
-            if (value instanceof List<?>) {
+            if (value instanceof List<?> ) {
                 this.listValue = true;
             } else {
                 this.singleValue = true;

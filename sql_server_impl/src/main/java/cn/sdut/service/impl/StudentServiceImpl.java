@@ -68,7 +68,6 @@ public class StudentServiceImpl implements StudentService {
             String outputTeacher=null;
             Problem problem = null;
             String sqlTeacher = null;
-
             try {
                 connection = dataSource.getConnection();
                 connection.setAutoCommit(false);
