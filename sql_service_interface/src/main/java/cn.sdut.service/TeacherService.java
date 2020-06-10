@@ -1,9 +1,6 @@
 package cn.sdut.service;
 
-import cn.sdut.domain.Answer;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Student;
-import cn.sdut.domain.Teacher;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Piedata;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,4 +88,6 @@ public interface TeacherService {
      * @param pid
      */
     public void  deleteProblemByPid(Integer pid);
+    //查询该教师所有教学班级
+    public List<Classes> findAllclasses(int tid) throws SQLException;
 }

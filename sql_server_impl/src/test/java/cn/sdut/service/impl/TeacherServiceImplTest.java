@@ -53,8 +53,7 @@ public class TeacherServiceImplTest {
     }
     @Test
     public void test(){
-        double v = EditDistance.getsimilarity("select * from sql_course", "");
-        System.out.println(v*100);
+        teacherService.findCommontAnswer(1);
 
     }
     public void testTestLogin() {

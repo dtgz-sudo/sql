@@ -40,13 +40,31 @@
                     // 老师的id
                     tid = loginName.data.tid;
                     // 等待老师的id获取到之后再去执行绘图方法
-                    drawChart();
-                    drawPieChart();
+                    select_head();
                 }
             });
-
+            function select_head() {
+                $.ajax({
+                    type : "post",//提交方式
+                    url : "../index/findallhead",//提交的路径
+                    data:{"tid":tid},
+                    dataType : "json",
+                    cache : false,
+                    success : function(result) {
+                        if (result) {
+                            for(var i=0;i<result.data.length;i++){
+                                $('<option value="'+result.data[i].hid+'">'+result.data[i].hid+'</option>').prependTo("#selecthead")
+                            }
+                            drawCharts();
+                        }
+                    }
+                })
+            };
         });
-
+        function drawCharts() {
+            drawChart();
+            drawPieChart();
+        }
     </script>
 
 
@@ -75,6 +93,10 @@
                     <LI><A href="allAnalysis.jsp">学生答题情况整体分析</A></LI>
                     <LI><A href="personalAnalysis.jsp">学生答题情况个体分析</A></LI>
                     <LI><A href="historyAnswer.html">评价反馈</A></LI>
+                    <LI><A href="historyProblem.html">题目管理</A></LI>
+                    <LI><A href="head.html">教学头次管理</A></LI>
+                    <LI><A href="classes.html">教学班级管理</A></LI>
+                    <LI><A href="student.html">学生管理</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
                     <LI><A href="updateUser.html" id="loginName" ></A></LI>
@@ -89,8 +111,14 @@
             <div class="block block-success"></div>
             <div class="block-content">
                 <table>
+                    <tr><td><div class="form-group form-group-sm">
+                        选择头次
+                            <select name="selecthead" class="form-control input-sm" id="selecthead" onchange="drawCharts()">
+                            </select>
+                    </div></td></tr>
+                    <tr><br></tr>
                     <tr>
-                        <td>                <div id="test" style="width: 600px;height:400px;"></div>
+                        <td><div id="test" style="width: 600px;height:400px;"></div>
                             <script type="text/javascript">
 
                                 var myChart = echarts.init(document.getElementById('test'));
@@ -146,12 +174,12 @@
                                     var num50=[];    //50分数组（实际用来盛放Y坐标值）
                                     var num70=[];    //70分数组（实际用来盛放Y坐标值）
                                     var num100=[];    //100分数组（实际用来盛放Y坐标值）
-
+                                    var hid = $("#selecthead option:selected").val();
                                     $.ajax({
                                         type : "post",
                                         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
                                         url : "../teacher/findalldata",    //请求发送
-                                        data : {"tid": tid},
+                                        data : {"hid": hid},
                                         dataType : "json",        //返回数据形式为json
                                         success : function(result) {
                                             //请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -252,6 +280,7 @@
                                         ]
                                     })
                                     myChartpie.showLoading();    //数据加载完之前先显示一段简单的loading动画
+                                    var hid = $("#selecthead option:selected").val();
                                     var piedata = [];
                                     var allvalue;
                                     var partvalue;
@@ -260,7 +289,7 @@
                                         type : "post",
                                         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
                                         url : "../teacher/findpiedata",    //请求发送
-                                        data : {"tid": tid},
+                                        data : {"hid": hid},
                                         dataType : "json",        //返回数据形式为json
                                         success : function(result) {
                                             //请求成功时执行该函数内容，result即为服务器返回的json对象

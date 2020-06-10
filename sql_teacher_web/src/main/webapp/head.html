@@ -1,8 +1,8 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <HTML>
 <HEAD>
 
-    <title>历史题目</title>
+    <title>教学头次管理</title>
     <META charset="utf-8">
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -41,11 +41,11 @@
         var app = angular.module("sql", []);
         // 设置控制器
         app.controller("proList", function ($scope, $http, $location) {
-            // 提交反馈
+            // 添加头次
             $scope.submit = function () {
                 console.log($scope.list);
-                var url = "../teacher/submitComment/"+$scope.tid;
-                $http.post(url,$scope.list).success(function (resp) {
+                var url = "../teacher/addhead/"+$scope.tid;
+                $http.post(url).success(function (resp) {
                     if (resp.success) {
                         $scope.list = resp.data;
                     } else {
@@ -53,11 +53,11 @@
                     }
                 });
             };
-            // 删除题目
-            $scope.deleteProblem = function (pid) {
-               console.log(pid);
-               var id = pid.obj.pid;
-                var url = "../teacher/deleteProblem/"+id;
+            // 删除头次
+            $scope.deletehead = function (hid) {
+                console.log(hid);
+                var id = hid.obj.hid;
+                var url = "../teacher/deletehead/"+id;
                 console.log(url);
                 $http.get(url).success(function (resp) {
                     if (resp.success) {
@@ -76,10 +76,10 @@
                     if (resp.success) {
                         $scope.loginName = resp.data;
                         $scope.tid = resp.data.tid;
-                        var url = "../teacher/findAllProblem/"+$scope.tid;
+                        var url = "../teacher/findAllheadpost/"+$scope.tid;
                         $http.post(url).success(function (resp) {
                             if (resp.success) {
-                               // $scope.data = resp.data;
+                                // $scope.data = resp.data;
                                 $scope.list = resp.data;
                             } else {
                                 console.log(resp.message);
@@ -141,28 +141,24 @@
 
         <DIV class="container">
             <DIV class="row block block-success" style="padding-top: 10px;">
-                <H3 class="problem-header">历史题目</H3>
+                <H3 class="problem-header">教学头次管理</H3>
                 <DIV>
-                    <input  type="button" value="删除" ng-click="submit()">
+                    <input  type="button" value="添加" ng-click="submit()">
                 </DIV>
             </DIV>
 
             <DIV class="row">
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
-                    <TH class="col-md-1">题目id</TH>
-                    <TH class="col-md-1">题目标题</TH>
-                    <TH class="col-md-5">SQL语句</TH>
-                    <TH class="col-md-1">删除</TH>
+                    <TH class="col-md-5">教学头次</TH>
+                    <TH class="col-md-1">操作</TH>
 
-<!--                    {{list}}-->
+                    <!--                    {{list}}-->
                     <TBODY>
                     <TR ng-repeat="obj in list ">
-                        <TD>{{obj.pid}}</TD>
-                        <TD>{{obj.title}}</TD>
-                        <TD>{{obj.input}}</TD>
+                        <TD>{{obj.hid}}</TD>
 
-                        <TD><button name="delete" ng-moude="obj.pid" ng-click="deleteProblem(this)">删除</button> </TD>
+                        <TD><button name="delete" ng-moude="obj.hid" ng-click="deletehead(this)">删除</button> </TD>
                     </TR>
                     </TBODY>
                 </TABLE>

@@ -40,28 +40,67 @@
                     // 老师的id
                     tid = loginName.data.tid;
                     // 等待老师的id获取到之后再去执行绘图方法
-                    select_student();
+                    select_head();
                 }
             });
-            function select_student() {
-                $.ajax({
-                    type : "post",//提交方式
-                    url : "../index/findallstudent",//提交的路径
-                    data:{"tid":tid},
-                    dataType : "json",
-                    cache : false,
-                    success : function(result) {
-                        if (result) {
-                            for(var i=0;i<result.data.length;i++){
-                                $('<option value="'+result.data[i].sid+'">'+result.data[i].nickname+'</option>').prependTo("#selectstudent")
-                            }
-                            drawChart();
-                        }
-                    }
-                })
-            }
-        });
 
+
+        });
+        function select_head() {
+            $.ajax({
+                type : "post",//提交方式
+                url : "../index/findallhead",//提交的路径
+                data:{"tid":tid},
+                dataType : "json",
+                cache : false,
+                success : function(result) {
+                    if (result) {
+                        for(var i=0;i<result.data.length;i++){
+                            $('<option value="'+result.data[i].hid+'">'+result.data[i].hid+'</option>').prependTo("#selecthead")
+                        }
+                        select_classes();
+                    }
+                }
+            })
+        };
+        function select_classes() {
+            $('#selectclasses option').remove();
+            var hid = $("#selecthead option:selected").val();
+            $.ajax({
+                type : "post",//提交方式
+                url : "../index/findallclasses",//提交的路径
+                data:{"hid":hid},
+                dataType : "json",
+                cache : false,
+                success : function(result) {
+                    if (result) {
+                        for(var i=0;i<result.data.length;i++){
+                            $('<option value="'+result.data[i].classId+'">'+result.data[i].className+'</option>').prependTo("#selectclasses")
+                        }
+                        select_student();
+                    }
+                }
+            })
+        };
+        function select_student() {
+            $('#selectstudent option').remove();
+            var class_id = $("#selectclasses option:selected").val();
+            $.ajax({
+                type : "post",//提交方式
+                url : "../index/findallstudent",//提交的路径
+                data:{"class_id":class_id},
+                dataType : "json",
+                cache : false,
+                success : function(result) {
+                    if (result) {
+                        for(var i=0;i<result.data.length;i++){
+                            $('<option value="'+result.data[i].sid+'">'+result.data[i].nickname+'</option>').prependTo("#selectstudent")
+                        }
+                        drawChart();
+                    }
+                }
+            })
+        };
     </script>
 
 
@@ -90,6 +129,10 @@
                     <LI><A href="allAnalysis.jsp">学生答题情况整体分析</A></LI>
                     <LI><A href="personalAnalysis.jsp">学生答题情况个体分析</A></LI>
                     <LI><A href="historyAnswer.html">评价反馈</A></LI>
+                    <LI><A href="historyProblem.html">题目管理</A></LI>
+                    <LI><A href="head.html">教学头次管理</A></LI>
+                    <LI><A href="classes.html">教学班级管理</A></LI>
+                    <LI><A href="student.html">学生管理</A></LI>
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
                     <LI><A href="updateUser.html" id="loginName" ></A></LI>
@@ -107,13 +150,24 @@
                 <table>
                     <tr>
                         <td><div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label">选择学生</label>
-                            <div class="col-sm-10 form-inline">
+                            选择头次
+                                <select name="selecthead" class="form-control input-sm" id="selecthead" onchange="select_classes()">
+                                </select>
+                        </div>
+                        </td>
+                        <td><div class="form-group form-group-sm">
+                            选择班级
+                                <select name="selectclasses" class="form-control input-sm" id="selectclasses" onchange="select_student()">
+                                </select>
+                        </div>
+                        </td>
+                        <td><div class="form-group form-group-sm">
+                            选择学生
                                 <select name="selectstudent" class="form-control input-sm" id="selectstudent" onchange="drawChart()">
                                 </select>
-                            </div>
                         </div>
-                            </td>
+                        </td></tr>
+                        <tr>
                         <td><div id="test" style="width: 600px;height:400px;"></div>
                             <script type="text/javascript">
 

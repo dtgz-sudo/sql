@@ -58,7 +58,6 @@ public class UserTeacherImpl implements UserDetailsService {
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(teacher.getPermission());
             list.add(simpleGrantedAuthority);
             user = new User(username, teacher.getPassword(), list);
-
         }
         System.out.println("user :" + user);
 

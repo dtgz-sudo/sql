@@ -53,7 +53,7 @@
         </javaClientGenerator>
 
         <!--各种表结构-->
-        <table tableName="student"></table>
+        <table tableName="classes"></table>
     </context>
 
 </generatorConfiguration>

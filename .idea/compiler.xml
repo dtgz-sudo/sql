@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sql_common" />
         <module name="sql_service_interface" />
+        <module name="mybatis_gen_demo" />
         <module name="sql_server_impl" />
         <module name="sql_dao" />
         <module name="sql_student_web" />
@@ -16,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="mybatis_gen_demo" target="1.7" />
       <module name="sql" target="1.7" />
       <module name="sql_common" target="1.7" />
       <module name="sql_dao" target="1.7" />

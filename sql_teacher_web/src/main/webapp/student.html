@@ -1,8 +1,8 @@
-﻿<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <HTML>
 <HEAD>
 
-    <title>历史题目</title>
+    <title>学生管理</title>
     <META charset="utf-8">
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -41,11 +41,12 @@
         var app = angular.module("sql", []);
         // 设置控制器
         app.controller("proList", function ($scope, $http, $location) {
-            // 提交反馈
+            // 一键删除
             $scope.submit = function () {
+                var classId = $("#selectclasses option:selected").val();
                 console.log($scope.list);
-                var url = "../teacher/submitComment/"+$scope.tid;
-                $http.post(url,$scope.list).success(function (resp) {
+                var url = "../teacher/deletestudent/"+classId;
+                $http.post(url).success(function (resp) {
                     if (resp.success) {
                         $scope.list = resp.data;
                     } else {
@@ -53,21 +54,21 @@
                     }
                 });
             };
-            // 删除题目
-            $scope.deleteProblem = function (pid) {
-               console.log(pid);
-               var id = pid.obj.pid;
-                var url = "../teacher/deleteProblem/"+id;
-                console.log(url);
-                $http.get(url).success(function (resp) {
+            function updata(){
+                var classId = $("#selectclasses option:selected").val();
+                var url = "../teacher/findAllstudentByclassid/"+classId;
+                $http.post(url).success(function (resp) {
                     if (resp.success) {
-                        alert("删除成功");
-                        $scope.init();
+                        // $scope.data = resp.data;
+                        $scope.list = resp.data;
                     } else {
-                        alert(resp.message);
+                        console.log(resp.message);
                     }
                 });
-            };
+            }
+            $scope.updatastudent = function(){
+                updata();
+            }
             $scope.init = function () {
                 $scope.url = $location.absUrl();
                 $scope.cid = $location.search()['cid'];
@@ -76,16 +77,21 @@
                     if (resp.success) {
                         $scope.loginName = resp.data;
                         $scope.tid = resp.data.tid;
-                        var url = "../teacher/findAllProblem/"+$scope.tid;
-                        $http.post(url).success(function (resp) {
-                            if (resp.success) {
-                               // $scope.data = resp.data;
-                                $scope.list = resp.data;
-                            } else {
-                                console.log(resp.message);
+                        $.ajax({
+                            type : "post",//提交方式
+                            url : "../teacher/findclasses",//提交的路径
+                            data:{"tid":$scope.tid},
+                            dataType : "json",
+                            cache : false,
+                            success : function(result) {
+                                if (result) {
+                                    for(var i=0;i<result.data.length;i++){
+                                        $('<option value="'+result.data[i].classId+'">'+result.data[i].className+'</option>').prependTo("#selectclasses")
+                                    }
+                                    updata();
+                                }
                             }
                         });
-
                     } else {
                         console.log(resp.message);
                     }
@@ -141,28 +147,37 @@
 
         <DIV class="container">
             <DIV class="row block block-success" style="padding-top: 10px;">
-                <H3 class="problem-header">历史题目</H3>
+                <H3 class="problem-header">学生管理</H3>
                 <DIV>
-                    <input  type="button" value="删除" ng-click="submit()">
+                    <table>
+                        <tr>
+                            <td><div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label">班级</label>
+                                <div class="col-sm-2 form-inline">
+                                    <select name="selectclasses" class="form-control input-sm" id="selectclasses" ng-model="class_id" ng-change="updatastudent()">
+                                    </select>
+                                </div>
+                            </div>
+                            </td>
+                            <td><input  type="button" value="一键删除" ng-click="submit()"></td>
+                        </tr>
+                    </table>
                 </DIV>
             </DIV>
 
             <DIV class="row">
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
-                    <TH class="col-md-1">题目id</TH>
-                    <TH class="col-md-1">题目标题</TH>
-                    <TH class="col-md-5">SQL语句</TH>
-                    <TH class="col-md-1">删除</TH>
+                    <TH class="col-md-1">学生编号</TH>
+                    <TH class="col-md-3">学生姓名</TH>
+                    <TH class="col-md-3">电子邮箱</TH>
 
-<!--                    {{list}}-->
+                    <!--                    {{list}}-->
                     <TBODY>
                     <TR ng-repeat="obj in list ">
-                        <TD>{{obj.pid}}</TD>
-                        <TD>{{obj.title}}</TD>
-                        <TD>{{obj.input}}</TD>
-
-                        <TD><button name="delete" ng-moude="obj.pid" ng-click="deleteProblem(this)">删除</button> </TD>
+                        <TD>{{obj.sid}}</TD>
+                        <TD>{{obj.nickname}}</TD>
+                        <TD>{{obj.email}}</TD>
                     </TR>
                     </TBODY>
                 </TABLE>

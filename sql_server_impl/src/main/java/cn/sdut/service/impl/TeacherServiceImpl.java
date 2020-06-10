@@ -236,6 +236,8 @@ public class TeacherServiceImpl  implements TeacherService {
             String nickname = (String)studentMap.get("nickname");
             String email = (String)studentMap.get("email");
             String permission = (String)studentMap.get("permission");
+            String class_id = (String)studentMap.get("class_id");
+            Integer classid = Integer.valueOf(class_id);
             Date date = new Date();
             String strDateFormat = "yyyy-MM-dd HH:mm:ss";
             SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
@@ -249,6 +251,7 @@ public class TeacherServiceImpl  implements TeacherService {
             student.setEmail(email);
             student.setPermission(permission);
             student.setTid(tid);
+            student.setClassId(classid);
             studentMapper.insert(student);
         }
 
@@ -257,14 +260,14 @@ public class TeacherServiceImpl  implements TeacherService {
 //    查询学生整体答题情况
     //    select count(*) as num,pid,score from (select pid,sid,MAX(score) as score from answer group by sid,pid having sid in (select sid from student where tid = 1))A GROUP BY pid,score
     @Override
-    public List findalldata(int tid) throws SQLException {
+    public List findalldata(int hid) throws SQLException {
         System.out.println("teacherservicefindalldata");
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         connection= dataSource.getConnection();
-        String sql = "select count(*) as num,pid,score from (select pid,sid,MAX(score) as score from answer group by sid,pid having sid in (select sid from student where tid = ?))A GROUP BY pid,score";
+        String sql = "select count(*) as num,pid,score from (select pid,sid,MAX(score) as score from answer where hid = ? group by sid,pid)A GROUP BY pid,score";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
+        preparedStatement.setInt(1,hid);
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Map> list = this.convertList(resultSet);
 
@@ -350,31 +353,31 @@ public class TeacherServiceImpl  implements TeacherService {
         return list;
     }
 
-    //    查询学生部分完成的人数 select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = 1) and snum > 0)C
-//  查询学生全部完成的人数select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = 1))C
+    //    查询学生部分完成的人数 select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where hid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where hid = ?) and snum > 0)C
+//  查询学生全部完成的人数select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where hid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where hid = ?))C
     @Override
-    public Piedata findpiedata(int tid) throws SQLException {
+    public Piedata findpiedata(int hid) throws SQLException {
         System.out.println("teacherservicefindpiedata");
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         connection= dataSource.getConnection();
-        String sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where tid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where tid = ?) and snum > 0)C";
+        String sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where hid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum < (select count(*) as allnum from problem where hid = ?) and snum > 0)C";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
-        preparedStatement.setInt(2,tid);
+        preparedStatement.setInt(1,hid);
+        preparedStatement.setInt(2,hid);
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Map> listpart = this.convertList(resultSet);
 
-        sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where tid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where tid = ?))C";
+        sql = "select count(*) as num from (select sid from (select count(*) as snum,sid from (select MAX(score),sid,pid from answer where hid = ? GROUP BY sid,pid)A GROUP BY sid)B where snum >= (select count(*) as allnum from problem where hid = ?))C";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
-        preparedStatement.setInt(2,tid);
+        preparedStatement.setInt(1,hid);
+        preparedStatement.setInt(2,hid);
         ResultSet resultSet2 = preparedStatement.executeQuery();
         List<Map> listall = this.convertList(resultSet2);
 
-        sql = "select count(*) as allstudent from student where tid = ?";
+        sql = "select count(*) as allstudent from student where class_id in (select class_id from classes where hid = ?)";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,tid);
+        preparedStatement.setInt(1,hid);
         ResultSet resultSet3 = preparedStatement.executeQuery();
         List<Map> all = this.convertList(resultSet3);
         long partnum = (long)listpart.get(0).get("num");
@@ -391,10 +394,10 @@ public class TeacherServiceImpl  implements TeacherService {
     }
 //查询所有学生
     @Override
-    public List findallstudent(int tid) {
+    public List findallstudent(int class_id) {
         StudentExample studentExample = new StudentExample();
         StudentExample.Criteria criteria = studentExample.createCriteria();
-        criteria.andTidEqualTo(tid);
+        criteria.andClassIdEqualTo(class_id);
         List<Student> students = studentMapper.selectByExample(studentExample);
         return students;
     }
@@ -467,5 +470,29 @@ public class TeacherServiceImpl  implements TeacherService {
     @Override
     public void deleteProblemByPid(Integer pid) {
         problemMapper.deleteByPrimaryKey(pid);
+    }
+//查询所有教学班级
+    @Override
+    public List<Classes> findAllclasses(int tid) throws SQLException {
+        Connection connection = null;
+        connection= dataSource.getConnection();
+        String sql = "select * from classes where hid in (select hid from head where tid = ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,tid);
+        ResultSet resultSet3 = preparedStatement.executeQuery();
+        List<Map> all = this.convertList(resultSet3);
+        List<Classes> list = new ArrayList<Classes>();
+        for(int i = 0;i < all.size();i++)
+        {
+            Classes classes = new Classes();
+            Map map = all.get(i);
+            classes.setClassId((int)map.get("class_id"));
+            classes.setClassName((String)map.get("class_name"));
+            classes.setHid((int)map.get("hid"));
+            list.add(classes);
+        }
+        preparedStatement.close();
+        connection.close();
+        return list;
     }
 }

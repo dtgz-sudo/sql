@@ -52,15 +52,15 @@ public class StudentController {
     /**
      * 获取学生的实验分类
      * 限制只能查询自己老师的题目
-     * @param cid
+     * @param sid
      * @return
      */
-    @RequestMapping("/findCatogyByTeacher/{cid}/{tid}")
-    public Result findCatogyByTeacher(@PathVariable("cid") Integer cid, @PathVariable("tid") Integer tid) {
+    @RequestMapping("/findCatogyByTeacher/{cid}/{sid}")
+    public Result findCatogyByTeacher(@PathVariable("cid") Integer cid, @PathVariable("sid") Integer sid) {
         System.out.println("findCatogyByTeacheran");
         Result result = null;
         try {
-            Category category = studentService.findCatogyByCidAndTid(cid,tid);
+            Category category = studentService.findCatogyByCidAndTid(cid,sid);
             result = new Result(true, "查询分类成功", category);
             System.out.println(category.getProblemList());
         } catch (Exception e) {

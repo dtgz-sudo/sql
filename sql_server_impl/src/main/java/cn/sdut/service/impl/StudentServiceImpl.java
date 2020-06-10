@@ -2,10 +2,7 @@ package cn.sdut.service.impl;
 
 import cn.sdut.EditDistance;
 import cn.sdut.domain.*;
-import cn.sdut.mapper.AnswerMapper;
-import cn.sdut.mapper.CategoryMapper;
-import cn.sdut.mapper.ProblemMapper;
-import cn.sdut.mapper.StudentMapper;
+import cn.sdut.mapper.*;
 import cn.sdut.service.StudentService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,8 @@ public class StudentServiceImpl implements StudentService {
     private AnswerMapper answerMapper;
     @Autowired
     private CategoryMapper categoryMapper;
-
+    @Autowired
+    private ClassesMapper classesMapper;
     /**
      * 注入连接池和数据链接
      */
@@ -175,7 +173,12 @@ public class StudentServiceImpl implements StudentService {
                 e.printStackTrace();
                 score = 0d;
             } finally {
-
+                Integer sid = answer.getSid();
+                Student student = studentMapper.selectByPrimaryKey(sid);
+                Integer classId = student.getClassId();
+                Classes classes = classesMapper.selectByPrimaryKey(classId);
+                Integer hid = classes.getHid();
+                answer.setHid(hid);
                 answer.setScore(score);
                 answer.setOutput(outputStudent);
                 answerMapper.insert(answer);
@@ -249,19 +252,25 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
-     * 根据tid 和tid查询对应的问题分裂
+     * 根据cid 和sid查询对应的问题分裂
      *
      * @param cid
-     * @param tid
+     * @param sid
      * @return
      */
     @Override
-    public Category findCatogyByCidAndTid(Integer cid, Integer tid) {
+    public Category findCatogyByCidAndTid(Integer cid, Integer sid) {
         Category category = categoryMapper.selectByPrimaryKey(cid);
+
+        Student student = studentMapper.selectByPrimaryKey(sid);
+        Integer classId = student.getClassId();
+//查询该班级所在头次
+        Classes classes = classesMapper.selectByPrimaryKey(classId);
+        Integer hid = classes.getHid();
         ProblemExample problemExample = new ProblemExample();
         ProblemExample.Criteria criteria = problemExample.createCriteria();
         criteria.andCidEqualTo(cid);
-        criteria.andTidEqualTo(tid);
+        criteria.andHidEqualTo(hid);
         List<Problem> problems = problemMapper.selectByExample(problemExample);
         category.setProblemList(problems);
         return category;

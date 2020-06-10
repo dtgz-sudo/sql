@@ -20,7 +20,6 @@ public class EditDistance {
         if(targetLen == 0){
             return sourceLen;
         }
-
         //定义矩阵(二维数组)
         int[][]  arr = new int[sourceLen+1][targetLen+1];
 
@@ -30,10 +29,8 @@ public class EditDistance {
         for(int j=0; j < targetLen+1; j++){
             arr[0][j] = j;
         }
-
         Character sourceChar = null;
         Character targetChar = null;
-
         for(int i=1; i < sourceLen+1 ; i++){
             sourceChar = sourceStr.charAt(i-1);
 
@@ -46,7 +43,8 @@ public class EditDistance {
                      */
                     arr[i][j] = arr[i-1][j-1];
                 }else{
-                    /*  如果source[i] 不等于target[j]，则根据插入、删除和替换三个策略，分别计算出使用三种策略得到的编辑距离，然后取最小的一个：
+                    /*  如果source[i] 不等于target[j]，则根据插入、删除和替换三个策略，
+                    分别计算出使用三种策略得到的编辑距离，然后取最小的一个：
                         d[i, j] = min(d[i, j - 1] + 1, d[i - 1, j] + 1, d[i - 1, j - 1] + 1 )    （递推式 2）
                         >> d[i, j - 1] + 1 表示对source[i]执行插入操作后计算最小编辑距离
                         >> d[i - 1, j] + 1 表示对source[i]执行删除操作后计算最小编辑距离
@@ -57,9 +55,6 @@ public class EditDistance {
                 showAttr(arr,sourceLen,targetLen);
             }
         }
-
-
-
         return arr[sourceLen][targetLen];
     }
 

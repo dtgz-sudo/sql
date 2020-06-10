@@ -51,7 +51,8 @@
                     if (resp.success) {
                         $scope.loginName = resp.data;
                         $scope.tid = resp.data.tid;
-                        var url = "../student/findCatogyByTeacher/"+$scope.cid+"/"+$scope.tid;
+                        //将传输数据由tid修改为sid
+                        var url = "../student/findCatogyByTeacher/"+$scope.cid+"/"+$scope.loginName.sid;
                         $http.post(url).success(function (resp) {
                             if (resp.success) {
                                 $scope.category = resp.data;

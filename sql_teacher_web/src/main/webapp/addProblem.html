@@ -42,6 +42,13 @@
                         alert(resp.message);
                     }
                 });
+                $http.post("../teacher/findAllhead",$scope.p.tid).success(function (resp) {
+                    if (resp.success) {
+                        $scope.headList = resp.data;
+                    } else {
+                        alert(resp.message);
+                    }
+                });
                 $scope.tableList = ["sql_course","sql_sc","sql_student"];
 
             };
@@ -99,6 +106,10 @@
                         <LI><A href="allAnalysis.jsp">学生答题情况整体分析</A></LI>
                         <LI><A href="personalAnalysis.jsp">学生答题情况个体分析</A></LI>
                         <LI><A href="historyAnswer.html">评价反馈</A></LI>
+                        <LI><A href="historyProblem.html">题目管理</A></LI>
+                        <LI><A href="head.html">教学头次管理</A></LI>
+                        <LI><A href="classes.html">教学班级管理</A></LI>
+                        <LI><A href="student.html">学生管理</A></LI>
                     </UL>
                     <UL class="nav navbar-nav navbar-right">
                         <LI><A href="updateUser.html" id="loginName" >{{loginName.nickname}}</A></LI>
@@ -115,6 +126,18 @@
             <div class="block-content">
                 <div class="block-container form-horizontal">
                     <form action="" method="post">
+                        <div class="form-group form-group-sm">
+                            <label class="col-sm-2 control-label">发布头次</label>
+                            <div class="col-sm-10 form-inline">
+                                <select name="lang" class="form-control input-sm"
+                                        ng-model="p.hid">
+
+                                    <option ng-repeat="head in headList" value="{{head.hid}}">
+                                        {{head.hid}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label">题目</label>
                             <div class="col-sm-10 form-inline">

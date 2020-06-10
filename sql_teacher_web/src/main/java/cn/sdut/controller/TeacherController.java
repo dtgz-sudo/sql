@@ -1,13 +1,13 @@
 package cn.sdut.controller;
 
-import cn.sdut.domain.Answer;
-import cn.sdut.domain.Category;
-import cn.sdut.domain.Problem;
-import cn.sdut.domain.Teacher;
+import cn.sdut.domain.*;
 import cn.sdut.entity.Alldata;
 import cn.sdut.entity.Piedata;
 import cn.sdut.entity.Result;
 import cn.sdut.mapper.CategoryMapper;
+import cn.sdut.mapper.ClassesMapper;
+import cn.sdut.mapper.HeadMapper;
+import cn.sdut.mapper.StudentMapper;
 import cn.sdut.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,7 +33,12 @@ public class TeacherController {
     TeacherService teacherService;
     @Autowired
     CategoryMapper categoryMapper;
-
+    @Autowired
+    private HeadMapper headMapper;
+    @Autowired
+    private ClassesMapper classesMapper;
+    @Autowired
+    private StudentMapper studentMapper;
     /**
      * 老师登录的controller
      *
@@ -112,7 +117,26 @@ public class TeacherController {
 
         return result;
     }
+    //查询该教师所有教学头次
+    @ResponseBody
+    @RequestMapping("/findAllhead")
+    public <body> Result findAllhead(@RequestBody Integer tid) {
+        System.out.println("*****************************");
+        System.out.println("findAllhead");
+        Result result = null;
+        try {
+            HeadExample headExample = new HeadExample();
+            HeadExample.Criteria criteria = headExample.createCriteria();
+            criteria.andTidEqualTo(tid);
+            List<Head> heads = headMapper.selectByExample(headExample);
+            result = new Result(true, "查询头次成功", heads);
+        }catch (Exception e){
+            e.printStackTrace();
+            result = new Result(false, "查询头次失败");
+        }
 
+        return result;
+    }
     /**
      *  根据excel表格 导入学生的数据
      * @param mFile
@@ -133,7 +157,7 @@ public class TeacherController {
             e.printStackTrace();
             result = new Result(true, "导入失败");
         }finally {
-            response.sendRedirect("http://localhost:8081/allAnalysis.jsp");
+            response.sendRedirect("/allAnalysis.jsp");
         }
         return result;
     }
@@ -142,14 +166,14 @@ public class TeacherController {
 
     @ResponseBody
     @RequestMapping("/findalldata")
-    public <body> Result finddata(@RequestParam(value = "tid")String tid) {
+    public <body> Result finddata(@RequestParam(value = "hid")String hid) {
         System.out.println("*****************************");
         System.out.println("findalldata");
         Result result = null;
-        System.out.println(tid);
-        int int_tid = Integer.parseInt(tid);
+        System.out.println(hid);
+        int int_hid = Integer.parseInt(hid);
         try {
-            List<Alldata> findalldata = teacherService.findalldata(int_tid);
+            List<Alldata> findalldata = teacherService.findalldata(int_hid);
             result = new Result(true, "查询成功", findalldata);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -207,20 +231,19 @@ public class TeacherController {
     }
     @ResponseBody
     @RequestMapping("/findpiedata")
-    public <body> Result findpiedata(@RequestParam(value = "tid")String tid) {
+    public <body> Result findpiedata(@RequestParam(value = "hid")String hid) {
         System.out.println("*****************************");
         System.out.println("findpiedata");
         Result result = null;
-        System.out.println(tid);
-        int int_tid = Integer.parseInt(tid);
+        System.out.println(hid);
+        int int_hid = Integer.parseInt(hid);
         try {
-            Piedata piedata = teacherService.findpiedata(int_tid);
+            Piedata piedata = teacherService.findpiedata(int_hid);
             result = new Result(true, "查询成功", piedata);
         } catch (SQLException e) {
             e.printStackTrace();
             result = new Result(false, "查询失败");
         }
-
         return result;
     }
     @ResponseBody
@@ -338,7 +361,172 @@ public class TeacherController {
         }
         return result;
     }
+    @ResponseBody
+    @RequestMapping("/findAllheadpost/{tid}")
+    public <body> Result findAllheadpost(@PathVariable("tid") Integer tid) {
+        System.out.println("*****************************");
+        System.out.println("findAllhead");
+        Result result = null;
+        try {
+            HeadExample headExample = new HeadExample();
+            HeadExample.Criteria criteria = headExample.createCriteria();
+            criteria.andTidEqualTo(tid);
+            List<Head> heads = headMapper.selectByExample(headExample);
+            result = new Result(true, "查询头次成功", heads);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询头次失败");
+        }
+        return result;
+    }
+    //添加教学头次
+    @ResponseBody
+    @RequestMapping("/addhead/{tid}")
+    public Result addhead(@PathVariable("tid") Integer tid) {
+        System.out.println("***********addhead");
+        Result result = null;
+        try {
+            Head head = new Head();
+            head.setTid(tid);
+            headMapper.insert(head);
+            HeadExample headExample = new HeadExample();
+            HeadExample.Criteria criteria = headExample.createCriteria();
+            criteria.andTidEqualTo(tid);
+            List<Head> heads = headMapper.selectByExample(headExample);
+            result = new Result(true, "添加成功", heads);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "添加失败");
+        }
+        return result;
+    }
+    //删除头次
+    @ResponseBody
+    @RequestMapping("/deletehead/{hid}")
+    public Result deletehead(@PathVariable(value = "hid") Integer hid) {
+        System.out.println("*****************************");
+        System.out.println("*********deletehead*********");
+        Result result = null;
 
+        try {
+            headMapper.deleteByPrimaryKey(hid);
+            result = new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "删除失败");
+        }
+        return result;
+    }
+    //查询该教师所有班级
+    @ResponseBody
+    @RequestMapping("/findAllclasses/{tid}")
+    public <body> Result findAllclasses(@PathVariable("tid") Integer tid) {
+        System.out.println("*****************************");
+        System.out.println("findAllclasses");
+        Result result = null;
+        try {
+            List<Classes> allclasses = teacherService.findAllclasses(tid);
+            result = new Result(true, "查询班级成功", allclasses);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询班级失败");
+        }
+        return result;
+    }
+    //添加班级
+    @ResponseBody
+    @RequestMapping("/addclasses/{hid}/{class_name}")
+    public Result addclasses(@PathVariable("hid") Integer hid,@PathVariable("class_name") String class_name) {
+        System.out.println("***********addclasses");
+        Result result = null;
+        try {
+            Classes classes = new Classes();
+            classes.setHid(hid);
+            classes.setClassName(class_name);
+            classesMapper.insert(classes);
+            result = new Result(true, "添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "添加失败");
+        }
+        return result;
+    }
+    //删除班级
+    @ResponseBody
+    @RequestMapping("/deleteclasses/{classId}")
+    public Result deleteclasses(@PathVariable(value = "classId") Integer classId) {
+        System.out.println("*****************************");
+        System.out.println("*********deleteclasses*********");
+        Result result = null;
 
+        try {
+            classesMapper.deleteByPrimaryKey(classId);
+            result = new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "删除失败");
+        }
+        return result;
+    }
+    //学生管理中查询该教师所有班级
+    @ResponseBody
+    @RequestMapping("/findclasses")
+    public <body> Result findclasses(@RequestParam(value = "tid")String tid) {
+        System.out.println("*****************************");
+        System.out.println("findclasses");
+        Result result = null;
+        try {
+            Integer int_tid = Integer.valueOf(tid);
+            List<Classes> allclasses = teacherService.findAllclasses(int_tid);
+            result = new Result(true, "查询班级成功", allclasses);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询班级失败");
+        }
+        return result;
+    }
+    //查询该班级下所有学生
+    @ResponseBody
+    @RequestMapping("/findAllstudentByclassid/{classId}")
+    public <body> Result findAllstudentByclassid(@PathVariable("classId") Integer classId) {
+        System.out.println("*****************************");
+        System.out.println("findAllstudentByclassid");
+        Result result = null;
+        try {
+            StudentExample studentExample = new StudentExample();
+            StudentExample.Criteria criteria = studentExample.createCriteria();
+            criteria.andClassIdEqualTo(classId);
+            List<Student> students = studentMapper.selectByExample(studentExample);
+            result = new Result(true, "查询学生成功", students);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "查询学生失败");
+        }
+        return result;
+    }
+    //一键删除该班级下所有学生
+    @ResponseBody
+    @RequestMapping("/deletestudent/{classId}")
+    public Result deletestudent(@PathVariable(value = "classId") Integer classId) {
+        System.out.println("*****************************");
+        System.out.println("*********deletestudent*********");
+        Result result = null;
 
+        try {
+            StudentExample studentExample = new StudentExample();
+            StudentExample.Criteria criteria = studentExample.createCriteria();
+            criteria.andClassIdEqualTo(classId);
+            studentMapper.deleteByExample(studentExample);
+
+            StudentExample studentExample1 = new StudentExample();
+            StudentExample.Criteria criteria1 = studentExample1.createCriteria();
+            criteria1.andClassIdEqualTo(classId);
+            List<Student> students = studentMapper.selectByExample(studentExample1);
+            result = new Result(true, "删除成功",students);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = new Result(false, "删除失败");
+        }
+        return result;
+    }
 }
