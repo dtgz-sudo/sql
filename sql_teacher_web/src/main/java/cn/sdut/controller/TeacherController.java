@@ -185,18 +185,18 @@ public class TeacherController {
     /**
      * 根据老师的id查询此老师全部未回答的学生问题
      *
-     * @param tid
+     * @param hid
      * @param
      * @return
      */
     @ResponseBody
-    @RequestMapping("/findCommontAnswer/{tid}")
-    public Result findCommontAnswer(@PathVariable(value = "tid") Integer tid) {
+    @RequestMapping("/findCommontAnswer/{hid}")
+    public Result findCommontAnswer(@PathVariable(value = "hid") Integer hid) {
         System.out.println("*****************************");
         Result result = null;
 
         try {
-            List<Map> list = teacherService.findCommontAnswer(tid);
+            List<Map> list = teacherService.findCommontAnswer(hid);
             result = new Result(true, "查询成功", list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -213,15 +213,15 @@ public class TeacherController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/submitComment/{tid}")
-    public Result submitComment(@RequestBody List<Answer> list, @PathVariable("tid") Integer tid) {
+    @RequestMapping("/submitComment/{hid}")
+    public Result submitComment(@RequestBody List<Answer> list, @PathVariable("hid") Integer hid) {
         System.out.println("*****************************");
         System.out.println(list);
         Result result = null;
 
         try {
             teacherService.updateComment(list);
-            List<Map> commontAnswer = teacherService.findCommontAnswer(tid);
+            List<Map> commontAnswer = teacherService.findCommontAnswer(hid);
             result = new Result(true, "查询成功", commontAnswer);
         } catch (Exception e) {
             e.printStackTrace();

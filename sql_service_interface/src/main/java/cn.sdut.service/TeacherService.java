@@ -47,7 +47,7 @@ public interface TeacherService {
      * @param tid
      * @return
      */
-   public List<Map> findCommontAnswer(Integer tid);
+   public List<Map> findCommontAnswer(Integer hid);
 
     /**
      * 提交评论

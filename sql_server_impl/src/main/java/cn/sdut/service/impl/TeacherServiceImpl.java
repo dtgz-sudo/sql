@@ -322,17 +322,17 @@ public class TeacherServiceImpl  implements TeacherService {
     }
 
     /**
-     * 查询指定老师未评论的问题
+     * 查询指定头次未评论的问题
      *
-     * @param tid
+     * @param hid
      * @return
      */
     @Override
-    public List<Map> findCommontAnswer(Integer tid) {
+    public List<Map> findCommontAnswer(Integer hid) {
         List<Map> list = new ArrayList<>();
         AnswerExample answerExample = new AnswerExample();
         AnswerExample.Criteria criteria = answerExample.createCriteria();
-        criteria.andTidEqualTo(tid);
+        criteria.andHidEqualTo(hid);
         criteria.andCommentIsNull();
         List<Answer> answers = answerMapper.selectByExample(answerExample);
         for (Answer answer : answers) {

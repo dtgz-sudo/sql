@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE HTML>
 <HTML>
 <HEAD>
-
+    <title>评论反馈</title>
     <META charset="utf-8">
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -43,7 +43,8 @@
             // 提交反馈
             $scope.submit = function () {
                 console.log($scope.list);
-                var url = "../teacher/submitComment/"+$scope.tid;
+                var hid = $("#selecthead option:selected").val();
+                var url = "../teacher/submitComment/"+hid;
                 $http.post(url,$scope.list).success(function (resp) {
                     if (resp.success) {
                         $scope.list = resp.data;
@@ -52,6 +53,21 @@
                     }
                 });
             };
+            $scope.updataAnswer = function(){
+                updata();
+            };
+            function updata(){
+                var hid = $("#selecthead option:selected").val();
+                var url = "../teacher/findCommontAnswer/"+hid;
+                $http.post(url).success(function (resp) {
+                    if (resp.success) {
+                        // $scope.data = resp.data;
+                        $scope.list = resp.data;
+                    } else {
+                        console.log(resp.message);
+                    }
+                });
+            }
             $scope.init = function () {
                 $scope.url = $location.absUrl();
                 $scope.cid = $location.search()['cid'];
@@ -60,13 +76,19 @@
                     if (resp.success) {
                         $scope.loginName = resp.data;
                         $scope.tid = resp.data.tid;
-                        var url = "../teacher/findCommontAnswer/"+$scope.tid;
-                        $http.post(url).success(function (resp) {
-                            if (resp.success) {
-                               // $scope.data = resp.data;
-                                $scope.list = resp.data;
-                            } else {
-                                console.log(resp.message);
+                        $.ajax({
+                            type : "post",//提交方式
+                            url : "../index/findallhead",//提交的路径
+                            data:{"tid":$scope.tid},
+                            dataType : "json",
+                            cache : false,
+                            success : function(result) {
+                                if (result) {
+                                    for(var i=0;i<result.data.length;i++){
+                                        $('<option value="'+result.data[i].hid+'">'+result.data[i].hid+'</option>').prependTo("#selecthead")
+                                    }
+                                    updata();
+                                }
                             }
                         });
 
@@ -112,8 +134,7 @@
                 </UL>
                 <UL class="nav navbar-nav navbar-right">
                     <LI><A href="/updateUser.html">{{loginName.nickname}}</A></LI>
-                    <LI><A
-                            href="/logout">退出登录</A></LI>
+                    <LI><A href="/logout">退出登录</A></LI>
                 </UL>
             </DIV><!-- /.navbar-collapse -->
         </DIV><!-- /.container-fluid -->     </NAV>
@@ -131,6 +152,13 @@
                 </DIV>
             </DIV>
             <DIV class="row">
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label">教学头次</label>
+                    <div class="col-sm-2 form-inline">
+                        <select name="selecthead" class="form-control input-sm" id="selecthead" ng-model="hid" ng-change="updataAnswer()">
+                        </select>
+                    </div>
+                </div>
                 <TABLE class="table table-bordered table-hover">
                     <THEAD>
 
